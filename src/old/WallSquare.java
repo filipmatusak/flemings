@@ -12,7 +12,9 @@ public class WallSquare extends Square {
 
     /** Vrati jednoznakovu textovu reprezentaciu policka
      * a pripadneho robota na nom. */
-    Color color = Color.BURLYWOOD;
+    public WallSquare(){
+        setColor(Color.BURLYWOOD);
+    }
 
      @Override
     public String toString() {
@@ -25,10 +27,10 @@ public class WallSquare extends Square {
     }
 
     public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size,color);
+        Rectangle r = new Rectangle(size,size, getColor());
         r.setY(column * size);
         r.setX(row * size);
         System.out.println(row + " " + column);
         return r;
-    };
+    }
 }

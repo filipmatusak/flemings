@@ -11,7 +11,10 @@ public class EmptySquare extends Square implements RobotHolder {
 
     /** Robot pritomny na policku, alebo null, ak tam ziaden nie je. */
     Robot myRobot;
-    Color color = Color.BROWN;
+
+    public EmptySquare(){
+        this.setColor(Color.BROWN);
+    }
     /** Z policka odisiel robot, uprav si podla toho stav a vykonaj
      * dalsie nasledky tejto zmeny, napr. padajuci roboti z horneho
      * suseda.  Tuto metodu spravidla vola robot. */
@@ -40,9 +43,6 @@ public class EmptySquare extends Square implements RobotHolder {
         myRobot = otherRobot;
     }
 
-    /** Na toto policko sa pokusa vojst robot. Ak nemame robota,
-     * dovolime mu to a skusime ci nepada nizsie. Pozri aj
-     * dokumentaciu tejto metody v triede {@link robots.Square#receiveRobot Square}. */
     @Override
     public boolean receiveRobot(Robot otherRobot) {
         // ak uz mame robota, vratime false
@@ -57,13 +57,6 @@ public class EmptySquare extends Square implements RobotHolder {
         }
     }
 
-    /** Na toto policko zhora pada robot, pricom zatial ide o pad z
-     * vysky height. Ak uz mame robota, posleme mu, ze ho zabil pad
-     * ineho robota, co rekurzivne spadne padajuceho robota na toto
-     * policko.  Z tejto funkcie vsak vratime false, lebo sa nepadalo
-     * rovno dalej.  Ked je policko prazdne, prevezmeme noveho robota
-     * a pripadne eho posleme padat dalej.  Pozri aj dokumentaciu tejto
-     * metody v triede {@link robots.Square#fallingRobot Square}. */
     @Override
     public boolean fallingRobot(Robot otherRobot, int height) {
         // ak mame na policku robota
@@ -82,9 +75,6 @@ public class EmptySquare extends Square implements RobotHolder {
         }
     }
 
-    /** Aktualny robot z tohto policka sa chce posunut dolava alebo doprava.
-     * co vybavime volanim receiveRobot pre suseda.
-     * Pozri aj dokumentaciu tejto metody v {@link robots.RobotHolder#actionMove RobotHolder}. */
     @Override
     public boolean actionMove(Direction direction) {
         if (myRobot == null) {
@@ -97,9 +87,6 @@ public class EmptySquare extends Square implements RobotHolder {
         }
     }
 
-    /** Policko pod tymto polickom sa vyprazdilo, treba sa vyrovnat s
-     * dosledkami.  Ak mame robota, tento zacne padat dole. Pozri aj
-     * dokumentaciu tejto metody v triede {@link robots.Square#emptiedBelow Square}.. */
     @Override
     protected void emptiedBelow() {
         if (myRobot != null) {
@@ -160,10 +147,10 @@ public class EmptySquare extends Square implements RobotHolder {
     }
 
     public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size,color);
+        Rectangle r = new Rectangle(size,size, getColor());
         r.setY(column * size);
         r.setX(row * size);
         System.out.println(row + " " + column);
         return r;
-    };
+    }
 }

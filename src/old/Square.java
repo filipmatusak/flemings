@@ -1,7 +1,6 @@
 package old;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /** Abstraktná trieda reprezentujuca jeden štvorček hracej plochy.
  * Poskytuje základné implementácie jednotlivých metód, v ktorých sa
@@ -17,7 +16,7 @@ public abstract class Square {
     /** Referencia na svet */
     protected World world;
 
-    Color color;
+    private Color color;
     int size;
 
     public void setSize(int s){
@@ -84,7 +83,6 @@ public abstract class Square {
      * (spodny sused).
      */
     protected void emptiedBelow() {
-        return; // nerob nic.
     }
 
     /** Vrati jednoznakovu textovu reprezentaciu policka
@@ -97,12 +95,12 @@ public abstract class Square {
      */
     public abstract void exploding();
 
-    public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size,color);
-        r.setY(row*size);
-        r.setX(column * size);
-        System.out.println(row + " " + column);
-        return r;
-    };
 
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }

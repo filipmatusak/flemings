@@ -26,7 +26,7 @@ public class World {
     public World(Square[][] squares, int entryRow, int entryCol, Pane pane_, int s) {
         sizeOfSquare = s;
         pane = pane_;
-        robots = new ArrayList<Robot>(); // vytvorime prazdne pole robotov
+        robots = new ArrayList<>(); // vytvorime prazdne pole robotov
         this.squares = squares;            // ulozime si pole stvrcekov
         nRows = squares.length;          // zistime rozmery pola
         nCols = squares[0].length;
@@ -44,13 +44,7 @@ public class World {
         }
     }
 
-    public void print(){
-        for(int i = 0; i < entryCol; i++){
-            for(int j = 0; j < entryRow; j++){
-                pane.getChildren().add(squares[j][i].print());
-            }
-        }
-    }
+
 
     /** Vykona jeden tah hry, t.j. necha kazdeho aktivneho robota
      * spravit tah a vrati true, ak je aspon jeden aktivny robot. */
