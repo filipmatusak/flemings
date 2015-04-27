@@ -7,7 +7,9 @@ public class SoilSquare extends Square{
     /** Vrati jednoznakovu textovu reprezentaciu policka
      * a pripadneho robota na nom. */
 
-    Color color = Color.DARKGRAY;
+    public SoilSquare(){
+        this.setColor(Color.DARKGRAY);
+    }
 
      @Override
     public String toString() {

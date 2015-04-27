@@ -16,7 +16,7 @@ public abstract class Square {
     /** Referencia na svet */
     protected World world;
 
-    private Color color;
+    Color color;
     int size;
 
     public void setSize(int s){

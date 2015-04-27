@@ -17,4 +17,8 @@ public class ColoredRectangle extends Rectangle {
         this.color = color;
         this.setFill(color);
     }
+
+    public void setBack(){
+        this.setFill(color);
+    }
 }

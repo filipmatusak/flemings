@@ -1,6 +1,8 @@
 package sample;
 
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -13,9 +15,14 @@ public class MapEditor {
     int height, width;
     Pane pane;
     Paint selectedColor, oldColor;
+    SquareChoiceMenu squareChoiceMenu;
 
     public MapEditor(Main root){
         this.root = root;
+
+        squareChoiceMenu = new SquareChoiceMenu(this);
+
+
     }
 
     public void run(){
@@ -23,7 +30,24 @@ public class MapEditor {
         width = root.map.width;
         map = new ColoredRectangle[height][width];
         pane = new Pane();
-        selectedColor = Color.AZURE;
+        selectedColor = null;
+
+        pane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(event.isSecondaryButtonDown()){
+                    squareChoiceMenu.show(event.getX(), event.getY());
+                }
+            }
+        });
+
+        pane.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(!event.isSecondaryButtonDown()) squareChoiceMenu.close();
+            }
+        });
+
 
         for(int i = 0; i < height; i++){
             for(int j = 0; j < width; j++){
@@ -36,20 +60,22 @@ public class MapEditor {
                 r.setStrokeWidth(0.05);
                 r.setOnMouseExited(event -> r.setFill(r.getColor()));
                 r.setOnMouseMoved(event -> {
-                    if (selectedColor != null) r.setFill(selectedColor);
+                     if (selectedColor != null) r.setFill(selectedColor);
+                    if(event.isSecondaryButtonDown()) r.setBack();
                 });
                 r.setOnMousePressed(event -> {
                     r.setFill(selectedColor);
                     r.setFill(r.getColor());
                 });
                 r.setOnMouseDragged(event -> {
+                    if(event.isSecondaryButtonDown()) return;
                     if (selectedColor != null) {
                         r.setFill(selectedColor);
-                        r.setColor(selectedColor);
+                        if(event.isPrimaryButtonDown()) r.setColor(selectedColor);
                     }
                     Double a = event.getX(), b = event.getY();
                     Integer aa = a.intValue() / root.map.squareSize, bb = b.intValue() / root.map.squareSize;
-                    if (aa >= 0 && aa < width &&
+                    if ( !event.isSecondaryButtonDown() && aa >= 0 && aa < width &&
                             bb >= 0 && bb < height &&
                             map[bb][aa] != r) {
                         r.setFill(r.getColor());

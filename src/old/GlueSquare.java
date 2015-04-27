@@ -11,7 +11,9 @@ public class GlueSquare extends EmptySquare implements RobotHolder {
      * policko.  Z tejto funkcie vsak vratime false, lebo sa nepadalo
      * rovno dalej.  Ked je policko prazdne, prilepime noveho robota.
      */
-    Color color = Color.GREENYELLOW;
+    public GlueSquare(){
+        this.setColor(Color.GREENYELLOW);
+    }
     @Override
     public boolean fallingRobot(Robot otherRobot, int height) {
         // ak mame na policku robota
