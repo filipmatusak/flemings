@@ -29,8 +29,6 @@ public class MapEditor {
         pane = new Pane();
         selectedColor = null;
 
-
-
         pane.setOnMousePressed(event -> {
             if (event.isSecondaryButtonDown()) {
                 squareChoiceMenu.show(event.getX() + root.mainStage.getX(),

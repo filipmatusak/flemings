@@ -1,6 +1,8 @@
 package sample;
 
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -35,10 +37,26 @@ public class SquareChoiceMenu {
         initializeTypes();
         printSquares();
 
-        pane.setOnMouseMoved(event -> {
-            if (!event.isSecondaryButtonDown()) close();
+        scene.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                close();
+            }
         });
 
+        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                close();
+            }
+        });
+
+        scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                event.consume();
+            }
+        });
 
     }
 
@@ -65,10 +83,18 @@ public class SquareChoiceMenu {
             });
 
             s.setOnMouseExited(event -> {
-                if(!stage.isShowing()) return;
+                if (!stage.isShowing()) return;
                 s.setStroke(null);
                 selected = null;
             });
+
+            s.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    s.setStroke(null);
+                }
+            });
+
         }
     }
 
