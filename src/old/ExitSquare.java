@@ -9,7 +9,9 @@ import javafx.scene.shape.Rectangle;
 public class ExitSquare extends EmptySquare {
 
 
-    Color color = Color.MEDIUMSEAGREEN;
+    public ExitSquare(){
+        this.setColor(Color.MEDIUMSEAGREEN);
+    }
     @Override
     public boolean receiveRobot(Robot otherRobot) {
         if (myRobot != null) {
@@ -47,5 +49,5 @@ public class ExitSquare extends EmptySquare {
         r.setX(row * size);
         System.out.println(row + " " + column);
         return r;
-    };
+    }
 }
