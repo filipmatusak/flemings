@@ -24,6 +24,7 @@ public class SquareChoiceMenu {
     int row, col = 3;
     int size = 40, space = 10;
     Paint selected;
+    Boolean isIn;
 
     public SquareChoiceMenu(MapEditor mapEditor){
         this.mapEditor = mapEditor;
@@ -40,7 +41,7 @@ public class SquareChoiceMenu {
         scene.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                close();
+                if(isIn) close();
             }
         });
 
@@ -86,6 +87,7 @@ public class SquareChoiceMenu {
                 if (!stage.isShowing()) return;
                 s.setStroke(null);
                 selected = null;
+                isIn = true;
             });
 
             s.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -100,8 +102,9 @@ public class SquareChoiceMenu {
 
     public void show(Double x, Double y){
         stage.setX(x);
-        stage.setY(y+20);
+        stage.setY(y + 20);
         stage.show();
+        isIn = false;
     }
 
     public void close(){
