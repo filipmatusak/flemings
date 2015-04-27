@@ -64,7 +64,7 @@ public class EmptySquare extends Square implements RobotHolder {
             if (height > 1) {  // ukoncime pad ineho robota
                 otherRobot.fell(height - 1);
             }
-            myRobot.killed();         // zabijeme nasho robota
+            myRobot.killed();
             return false;
         } else {
             // toto policko je teraz prazdne, prijmeme noveho robota
