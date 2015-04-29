@@ -74,8 +74,8 @@ public class MapEditor {
                     if (selectedColor != null) r.setFill(selectedColor);
                     if(event.isSecondaryButtonDown()) r.setBack();
                 });
-                r.setOnMousePressed(event -> {
-                    r.setFill(selectedColor);
+                r.setOnMouseClicked(event -> {
+                    if(selectedColor != null && !event.isSecondaryButtonDown()) r.setColor(selectedColor);
                 });
                 r.setOnMouseDragged(event -> {
                     if(event.isSecondaryButtonDown()) return;
