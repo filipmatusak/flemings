@@ -8,7 +8,7 @@ package old;
  * policka prisluchajucu zvolenej akcii. Policko akciu bud vykona,
  * alebo ak sa neda, vrati false. Tento zakladny typ robota v prvych
  * tahoch sa pokusa chodit, a po zadanom pocte tahov zastane. */
-public class Robot {
+public class Robot{
 
     /** Mozne stavy robota */
     protected static enum Status {

@@ -21,7 +21,7 @@ public class Main extends Application {
         menu = new Pane();
         map = new Map(this, 30, 60);
 
-        scene = new Scene(menu, 100, 100);
+        scene = new Scene(menu);
 
         MapEditor mapEditor = new MapEditor(this);
         mapEditor.run();

@@ -1,6 +1,7 @@
 package old;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /** Abstraktná trieda reprezentujuca jeden štvorček hracej plochy.
  * Poskytuje základné implementácie jednotlivých metód, v ktorých sa
@@ -96,7 +97,7 @@ public abstract class Square {
     public abstract void exploding();
 
 
-    public Color getColor() {
+    public Paint getColor() {
         return color;
     }
 

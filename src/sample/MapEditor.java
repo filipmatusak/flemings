@@ -1,19 +1,29 @@
 package sample;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
 import old.EmptySquare;
 import old.WallSquare;
+
 
 public class MapEditor {
     Main root;
     MapEditor thiz;
     ColoredRectangle[][] map;
     int height, width;
-    Pane pane;
+    BorderPane pane;
+    Pane drawingPane;
     Paint selectedColor;
+    Stage stage;
     SquareChoiceMenu squareChoiceMenu;
 
     public MapEditor(Main root){
@@ -26,13 +36,15 @@ public class MapEditor {
         height = root.map.height;
         width = root.map.width;
         map = new ColoredRectangle[height][width];
-        pane = new Pane();
+        pane = new BorderPane();
+        drawingPane = new Pane();
+        stage = new Stage();
         selectedColor = null;
 
         pane.setOnMousePressed(event -> {
             if (event.isSecondaryButtonDown()) {
-                squareChoiceMenu.show(event.getX() + root.mainStage.getX(),
-                        event.getY() + root.mainStage.getY());
+                squareChoiceMenu.show(event.getX() + stage.getX(),
+                        event.getY() + stage.getY());
             }
         });
 
@@ -42,19 +54,27 @@ public class MapEditor {
 
         initializeSquares();
 
-        for(int i = 0; i < height; i++){
-            map[i][0].setColor(new WallSquare().getColor());
-            map[i][width-1].setColor(new WallSquare().getColor());
-        }
-        for(int i = 0; i < width; i++){
-            map[0][i].setColor(new WallSquare().getColor());
-            map[height-1][i].setColor(new WallSquare().getColor());
-        }
-
         Scene scene = new Scene(pane);
-        root.mainStage.setScene(scene);
-        root.mainStage.show();
 
+        MenuBar menuBar = new MenuBar();
+        Menu menu = new Menu("Menu");
+        MenuItem menuSave = new MenuItem("Save");
+        MenuItem menuClear = new MenuItem("Clear");
+        menu.getItems().add(menuSave);
+        menu.getItems().add(menuClear);
+        menuBar.getMenus().add(menu);
+        menuClear.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setClearMap();
+            }
+        });
+
+        pane.setTop(menuBar);
+        pane.setCenter(drawingPane);
+
+        stage.setScene(scene);
+        stage.show();
 
     }
 
@@ -64,18 +84,16 @@ public class MapEditor {
             for(int j = 0; j < width; j++){
                 ColoredRectangle r = new ColoredRectangle(j*root.map.squareSize, i*root.map.squareSize,
                         root.map.squareSize,root.map.squareSize);
-                r.setColor(new EmptySquare().getColor());
-                r.setColor(r.getFill());
                 map[i][j] = r;
                 r.setStroke(Color.BLACK);
                 r.setStrokeWidth(0.05);
                 r.setOnMouseExited(event -> r.setFill(r.getColor()));
                 r.setOnMouseMoved(event -> {
                     if (selectedColor != null) r.setFill(selectedColor);
-                    if(event.isSecondaryButtonDown()) r.setBack();
+                    if (event.isSecondaryButtonDown()) r.setBack();
                 });
-                r.setOnMouseClicked(event -> {
-                    if(selectedColor != null && !event.isSecondaryButtonDown()) r.setColor(selectedColor);
+                r.setOnMousePressed(event -> {
+                    if(event.isPrimaryButtonDown() && selectedColor != null ) r.setColor(selectedColor);
                 });
                 r.setOnMouseDragged(event -> {
                     if(event.isSecondaryButtonDown()) return;
@@ -95,7 +113,24 @@ public class MapEditor {
                 });
                 r.setOnDragOver(event -> r.setFill(r.getColor()));
             }
-            pane.getChildren().addAll(map[i]);
+            drawingPane.getChildren().addAll(map[i]);
+        }
+        setClearMap();
+    }
+
+    void setClearMap(){
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                map[i][j].setColor(new EmptySquare().getColor());
+            }
+        }
+        for(int i = 0; i < height; i++){
+            map[i][0].setColor(new WallSquare().getColor());
+            map[i][width-1].setColor(new WallSquare().getColor());
+        }
+        for(int i = 0; i < width; i++){
+            map[0][i].setColor(new WallSquare().getColor());
+            map[height-1][i].setColor(new WallSquare().getColor());
         }
     }
 }

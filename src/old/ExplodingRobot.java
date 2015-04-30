@@ -22,7 +22,6 @@ public class ExplodingRobot extends Robot{
     protected void alternativeMove() {
         System.out.println("Robot " + id + " exploding");
         this.mySquare.actionExploding();
-        return;
     }
 
 }

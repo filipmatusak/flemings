@@ -23,6 +23,7 @@ public class SoilSquare extends Square{
     public void exploding() {
         Square b = new EmptySquare();
         this.world.newSquare( b, row, column);
+
         b.up.emptiedBelow();
     }
 
