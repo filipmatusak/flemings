@@ -2,6 +2,10 @@ package sample;
 
 import javafx.scene.shape.Rectangle;
 
+/**
+ * trieda reprezentujuca mapu
+ */
+
 public class Map {
     Main root;
     Rectangle[][] map;

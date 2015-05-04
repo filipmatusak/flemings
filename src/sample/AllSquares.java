@@ -4,6 +4,10 @@ import old.*;
 
 import java.util.ArrayList;
 
+/**
+ * ulozene vsetky typy policok
+ */
+
 public class AllSquares {
     public ArrayList<Square> getTypes(){
         ArrayList<Square> list = new ArrayList<>();

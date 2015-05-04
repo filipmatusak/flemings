@@ -14,7 +14,7 @@ public class MapConvector {
         this.root = root;
     }
 
-    public void formMapEditor(ColoredRectangle[][] map, File file) throws FileNotFoundException {
+    public void fromMapEditor(ColoredRectangle[][] map, File file) throws FileNotFoundException {
         PrintWriter out = new PrintWriter(file);
         out.println(map.length + " " + map[0].length);
         for (ColoredRectangle[] i : map) {
@@ -23,6 +23,7 @@ public class MapConvector {
             }
             out.println();
         }
+        out.close();
     }
 
     Square getSquare(Paint c){

@@ -12,6 +12,10 @@ import old.Square;
 
 import java.util.ArrayList;
 
+/**
+ * panel pre vyber policka na kreslenie
+ */
+
 public class SquareChoiceMenu {
 
     MapEditor mapEditor;

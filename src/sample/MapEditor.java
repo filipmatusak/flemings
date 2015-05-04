@@ -1,7 +1,5 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -12,8 +10,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import old.EmptySquare;
+import old.EntrySquare;
+import old.ExitSquare;
 import old.WallSquare;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
+/**
+ * funkcie a okno MapEditora
+ */
 
 public class MapEditor {
     Main root;
@@ -63,12 +69,8 @@ public class MapEditor {
         menu.getItems().add(menuSave);
         menu.getItems().add(menuClear);
         menuBar.getMenus().add(menu);
-        menuClear.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setClearMap();
-            }
-        });
+        menuClear.setOnAction(event -> setClearMap());
+        menuSave.setOnAction(event -> saveMap());
 
         pane.setTop(menuBar);
         pane.setCenter(drawingPane);
@@ -76,6 +78,46 @@ public class MapEditor {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    void saveMap(){
+        try {
+            isMapCorrect();
+        } catch (EditorExeption e){
+            ExceptionPrinter.print(e.getMessage());
+            return;
+        }
+        File file = root.fileCreator.openFile(stage);
+        try {
+            if(file != null ) root.mapConvector.fromMapEditor(map, file);
+        }
+        catch (FileNotFoundException e) {
+          //  e.printStackTrace();
+        }
+    }
+
+    boolean isMapCorrect() throws EditorExeption{
+        //ci obsahuje 1 vstupne policko
+        int in = 0;
+        for (ColoredRectangle[] i : map) {
+            for (ColoredRectangle j : i) if(j.getColor() == new EntrySquare().getColor()) in++;
+        }
+        if(in != 1) throw new EditorExeption("There must be 1 entry square!");
+
+        //ci ma cielove policko
+        boolean ok = false;
+        for (ColoredRectangle[] i : map) {
+            for (ColoredRectangle j : i) {
+                if (j.getColor() == new ExitSquare().getColor()) {
+                    ok = true;
+                    break;
+                }
+            }
+            if(ok) break;
+        }
+        if(!ok) throw new EditorExeption("There must be some exit square!");
+
+        return true;
     }
 
     void initializeSquares(){
