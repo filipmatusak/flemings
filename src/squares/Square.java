@@ -1,7 +1,9 @@
-package old;
+package squares;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import robots.Robot;
+import old.World;
 
 /** Abstraktná trieda reprezentujuca jeden štvorček hracej plochy.
  * Poskytuje základné implementácie jednotlivých metód, v ktorých sa

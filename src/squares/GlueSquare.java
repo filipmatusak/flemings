@@ -1,7 +1,11 @@
-package old;
+package squares;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import old.Direction;
+import robots.Robot;
+import old.RobotException;
+import old.RobotHolder;
 
 public class GlueSquare extends EmptySquare implements RobotHolder {
 
@@ -78,6 +82,6 @@ public class GlueSquare extends EmptySquare implements RobotHolder {
         r.setX(row * size);
         System.out.println(row + " " + column);
         return r;
-    };
+    }
 
 }

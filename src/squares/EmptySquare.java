@@ -1,7 +1,11 @@
-package old;
+package squares;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import old.Direction;
+import robots.Robot;
+import old.RobotException;
+import old.RobotHolder;
 
 /** Tato trieda reprezentuje prazdne policko, na ktorom moze
  * a nemusi prave byt nejaky robot. Musi sa vyrovnat s tahmi tohto robota

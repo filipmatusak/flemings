@@ -1,4 +1,8 @@
-package old;
+package robots;
+
+import old.Direction;
+import old.RobotException;
+import old.RobotHolder;
 
 /** Trieda Robot predstavuje zakladneho robota. Robot si pamata
  * policko, na ktorom stoji, ale okrem toho o svete nic nevie. Robot
@@ -11,7 +15,7 @@ package old;
 public class Robot{
 
     /** Mozne stavy robota */
-    protected static enum Status {
+    protected enum Status {
 
         ACTIVE, FINISHED, KILLED
     }
@@ -160,6 +164,5 @@ public class Robot{
 
     /** Spravi alternativny tah robota, t.j. nerobi nic. */
     protected void alternativeMove() {
-        return;
     }
 }

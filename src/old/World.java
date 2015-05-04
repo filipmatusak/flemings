@@ -1,6 +1,8 @@
 package old;
 
 import javafx.scene.layout.Pane;
+import robots.Robot;
+import squares.Square;
 
 import java.util.ArrayList;
 

@@ -1,30 +1,26 @@
-package old;
+package squares;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class SoilSquare extends Square{
+/** Tato trieda reprezentuje vstupne policko, co je specialny typ
+ * prazdneho policka. Od bezneho prazdneho policka sa lisi len tym,
+ * ze sa inak vykresluje. */
+public class EntrySquare extends EmptySquare {
+
     /** Vrati jednoznakovu textovu reprezentaciu policka
      * a pripadneho robota na nom. */
-
-    public SoilSquare(){
-        this.setColor(Color.DARKGRAY);
+    public EntrySquare(){
+        this.setColor(Color.SILVER);
     }
 
      @Override
     public String toString() {
-        return "S";
-    }
-
-    /**
-     * pri vybuchnuti policka zmenime jeho typ
-     */
-    @Override
-    public void exploding() {
-        Square b = new EmptySquare();
-        this.world.newSquare( b, row, column);
-
-        b.up.emptiedBelow();
+        if (myRobot != null) {
+            return myRobot.toString();
+        } else {
+            return "#";
+        }
     }
 
     public javafx.scene.shape.Rectangle print(){
@@ -33,5 +29,5 @@ public class SoilSquare extends Square{
         r.setX(row * size);
         System.out.println(row + " " + column);
         return r;
-    };
+    }
 }

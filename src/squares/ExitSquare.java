@@ -1,7 +1,9 @@
-package old;
+package squares;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import robots.Robot;
+import old.RobotException;
 
 /** Tato trieda reprezentuje koncove policko, co je specialny typ
  * prazdneho policka, ktore ale zachyti vsetkych prichadzajucich a padajucich

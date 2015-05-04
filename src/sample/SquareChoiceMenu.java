@@ -8,7 +8,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import old.Square;
+import squares.Square;
 
 import java.util.ArrayList;
 

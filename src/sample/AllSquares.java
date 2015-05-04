@@ -1,6 +1,6 @@
 package sample;
 
-import old.*;
+import squares.*;
 
 import java.util.ArrayList;
 

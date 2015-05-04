@@ -1,6 +1,8 @@
-package old;
+package robots;
 
-public class DiggingRobot extends Robot{
+import old.Direction;
+
+public class DiggingRobot extends Robot {
 
     public DiggingRobot(int changeTime, int maxHeight, String id) {
         super(changeTime, maxHeight, id);
@@ -10,9 +12,9 @@ public class DiggingRobot extends Robot{
      * Ak nejde, chce sa otocit. */
     @Override
     protected void alternativeMove() {
-        if(this.mySquare.actionDigging(this.direction)) return;
+        if(this.mySquare.actionDigging(this.direction)) {
+        }
         else normalMove();
-        return;
     }
 
     /** Vytvori jednoznakovu textovu reprezentaciu robota podla stavu */

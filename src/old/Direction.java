@@ -6,7 +6,7 @@ public enum Direction {
     LEFT, RIGHT;
 
     /** Metoda vrati opacne natocenie, teda ak this je LEFT, vrati RIGHT a naopak */
-    Direction otherDirection() {
+    public Direction otherDirection() {
         if (this == LEFT) {
             return RIGHT;
         } else {

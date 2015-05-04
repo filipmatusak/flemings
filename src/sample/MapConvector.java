@@ -1,7 +1,7 @@
 package sample;
 
 import javafx.scene.paint.Paint;
-import old.Square;
+import squares.Square;
 
 import java.io.File;
 import java.io.FileNotFoundException;

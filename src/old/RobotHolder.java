@@ -1,5 +1,7 @@
 package old;
 
+import robots.Robot;
+
 /** Interface určujúci metódy políčka, ktoré môže robot volať. Každá
  *  trieda, ktorá môže obsahovať robota, musí tieto metódy implementovať.
  *  V našom prípade je to trieda EmptySquare a jej podtriedy.

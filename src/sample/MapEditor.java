@@ -9,10 +9,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import old.EmptySquare;
-import old.EntrySquare;
-import old.ExitSquare;
-import old.WallSquare;
+import squares.EmptySquare;
+import squares.EntrySquare;
+import squares.ExitSquare;
+import squares.WallSquare;
 
 import java.io.File;
 import java.io.FileNotFoundException;

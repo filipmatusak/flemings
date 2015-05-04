@@ -1,5 +1,10 @@
 package old;
 
+import robots.DiggingRobot;
+import robots.ExplodingRobot;
+import robots.Robot;
+import squares.*;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -59,7 +64,7 @@ public class Robots {
      * @throws IOException
      */
     private static ArrayList<String> readLines(BufferedReader in) throws IOException {
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<>();
         while (true) {
             String line = in.readLine(); // nacitame riadok do retazca
             if (line == null || line.equals("")) { // skoncime, ked najdeme prazdny riadok

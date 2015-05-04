@@ -1,6 +1,8 @@
-package old;
+package robots;
 
-public class ExplodingRobot extends Robot{
+import old.Direction;
+
+public class ExplodingRobot extends Robot {
 
     public ExplodingRobot(int changeTime, int maxHeight, String id) {
         super(changeTime, maxHeight, id);
