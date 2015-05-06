@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///media/win/Users/ntb1/Programovanie/Java/flemings/flemings.iml" filepath="/media/win/Users/ntb1/Programovanie/Java/flemings/flemings.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flemings.iml" filepath="$PROJECT_DIR$/flemings.iml" />
     </modules>
   </component>
 </project>
