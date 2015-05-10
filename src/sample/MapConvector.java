@@ -33,7 +33,6 @@ public class MapConvector {
         int r, c;
         r = in.nextInt();
         c = in.nextInt();
-        System.out.println(r + " " + c);
         ColoredRectangle[][] map = new ColoredRectangle[r][c];
         String s;
         s = in.nextLine();
