@@ -60,6 +60,7 @@ public class MapEditor {
 
         initializeSquares();
         setSquares();
+        setClearMap();
 
         Scene scene = new Scene(pane);
 
@@ -83,6 +84,7 @@ public class MapEditor {
         stage.show();
 
     }
+
 
     void saveMap(){
         try {
@@ -112,6 +114,7 @@ public class MapEditor {
         }
     }
 
+    /**kontroly pre vyrobenu mapu*/
     boolean isMapCorrect() throws EditorExeption{
         //ci obsahuje 1 vstupne policko
         int in = 0;
@@ -136,6 +139,7 @@ public class MapEditor {
         return true;
     }
 
+    /**vyrobi policka pre map*/
     void initializeSquares(){
         pane.getChildren().clear();
         for(int i = 0; i < height; i++){
@@ -146,9 +150,9 @@ public class MapEditor {
             }
             drawingPane.getChildren().addAll(map[i]);
         }
-        setClearMap();
     }
 
+    /**vyrobu prazdnu mapu s okrajovymi polickami*/
     void setClearMap(){
         for(int i = 0; i < height; i++){
             for(int j = 0; j < width; j++){
@@ -165,11 +169,13 @@ public class MapEditor {
         }
     }
 
+    /**zobrazi mapu z map do editora*/
     void refreshMap(){
         drawingPane.getChildren().clear();
         for(int i = 0; i < map.length; i++) drawingPane.getChildren().addAll(map[i]);
     }
 
+    /**nastavy listenery a okraje pre stvorce*/
     void setSquares(){
         for(int i = 0; i < height; i++){
             for(int j = 0; j < width; j++){

@@ -14,6 +14,7 @@ public class MapConvector {
         this.root = root;
     }
 
+    /**ulozi mapu do suboru*/
     public void fromMapEditor(ColoredRectangle[][] map, File file) throws FileNotFoundException {
         PrintWriter out = new PrintWriter(file);
         out.println(map.length + " " + map[0].length);
@@ -26,6 +27,7 @@ public class MapConvector {
         out.close();
     }
 
+    /**pripravy mapu zo suboru pre editor*/
     public ColoredRectangle[][] toMapEditor(File file) throws FileNotFoundException {
         Scanner in = new Scanner(new FileReader(file));
         int r, c;
@@ -42,11 +44,11 @@ public class MapConvector {
                         root.map.squareSize,root.map.squareSize);
                 map[i][j].setColor(getSquare(s.charAt(j)).getColor());
             }
-
         }
         return map;
     }
 
+    /**podla farby zisti typ stvorca*/
     Square getSquare(Paint c){
        for(Square i: new AllSquares().getTypes()){
             if(i.getColor() == c) return i;
@@ -54,6 +56,7 @@ public class MapConvector {
         return null;
     }
 
+    /**podla znakovej reprezentacie stvorca zisti typ stvorca*/
     Square getSquare(Character c){
         for(Square i: new AllSquares().getTypes()){
             if(Objects.equals(i.toString(), c.toString())) return i;
