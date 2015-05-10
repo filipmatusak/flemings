@@ -3,9 +3,9 @@ package sample;
 import javafx.scene.paint.Paint;
 import squares.Square;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class MapConvector {
 
@@ -26,9 +26,37 @@ public class MapConvector {
         out.close();
     }
 
+    public ColoredRectangle[][] toMapEditor(File file) throws FileNotFoundException {
+        Scanner in = new Scanner(new FileReader(file));
+        int r, c;
+        r = in.nextInt();
+        c = in.nextInt();
+        System.out.println(r + " " + c);
+        ColoredRectangle[][] map = new ColoredRectangle[r][c];
+        String s;
+        s = in.nextLine();
+        for(int i = 0; i < r; i++){
+            s = in.nextLine();
+            for(int j = 0; j < c; j++){
+                map[i][j] = new ColoredRectangle(j*root.map.squareSize, i*root.map.squareSize,
+                        root.map.squareSize,root.map.squareSize);
+                map[i][j].setColor(getSquare(s.charAt(j)).getColor());
+            }
+
+        }
+        return map;
+    }
+
     Square getSquare(Paint c){
        for(Square i: new AllSquares().getTypes()){
             if(i.getColor() == c) return i;
+        }
+        return null;
+    }
+
+    Square getSquare(Character c){
+        for(Square i: new AllSquares().getTypes()){
+            if(Objects.equals(i.toString(), c.toString())) return i;
         }
         return null;
     }

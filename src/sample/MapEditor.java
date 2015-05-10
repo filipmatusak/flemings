@@ -59,6 +59,7 @@ public class MapEditor {
         });
 
         initializeSquares();
+        setSquares();
 
         Scene scene = new Scene(pane);
 
@@ -66,11 +67,14 @@ public class MapEditor {
         Menu menu = new Menu("Menu");
         MenuItem menuSave = new MenuItem("Save");
         MenuItem menuClear = new MenuItem("Clear");
+        MenuItem menuOpen = new MenuItem("Open");
+        menu.getItems().add(menuOpen);
         menu.getItems().add(menuSave);
         menu.getItems().add(menuClear);
         menuBar.getMenus().add(menu);
         menuClear.setOnAction(event -> setClearMap());
         menuSave.setOnAction(event -> saveMap());
+        menuOpen.setOnAction(event -> openMap());
 
         pane.setTop(menuBar);
         pane.setCenter(drawingPane);
@@ -87,12 +91,24 @@ public class MapEditor {
             ExceptionPrinter.print(e.getMessage());
             return;
         }
-        File file = root.fileCreator.openFile(stage);
+        File file = root.fileCreator.openFile(stage, true);
         try {
             if(file != null ) root.mapConvector.fromMapEditor(map, file);
         }
         catch (FileNotFoundException e) {
           //  e.printStackTrace();
+        }
+    }
+
+    void openMap(){
+        File file = root.fileCreator.openFile(stage, false);
+        try{
+            ColoredRectangle[][] m = root.mapConvector.toMapEditor(file);
+            map = m;
+            setSquares();
+            refreshMap();
+        } catch (Exception e) {
+            ExceptionPrinter.print(new EditorExeption("Wrong format!").getMessage());
         }
     }
 
@@ -127,6 +143,37 @@ public class MapEditor {
                 ColoredRectangle r = new ColoredRectangle(j*root.map.squareSize, i*root.map.squareSize,
                         root.map.squareSize,root.map.squareSize);
                 map[i][j] = r;
+            }
+            drawingPane.getChildren().addAll(map[i]);
+        }
+        setClearMap();
+    }
+
+    void setClearMap(){
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                map[i][j].setColor(new EmptySquare().getColor());
+            }
+        }
+        for(int i = 0; i < height; i++){
+            map[i][0].setColor(new WallSquare().getColor());
+            map[i][width-1].setColor(new WallSquare().getColor());
+        }
+        for(int i = 0; i < width; i++){
+            map[0][i].setColor(new WallSquare().getColor());
+            map[height-1][i].setColor(new WallSquare().getColor());
+        }
+    }
+
+    void refreshMap(){
+        drawingPane.getChildren().clear();
+        for(int i = 0; i < map.length; i++) drawingPane.getChildren().addAll(map[i]);
+    }
+
+    void setSquares(){
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                ColoredRectangle r = map[i][j];
                 r.setStroke(Color.BLACK);
                 r.setStrokeWidth(0.05);
                 r.setOnMouseExited(event -> r.setFill(r.getColor()));
@@ -155,24 +202,6 @@ public class MapEditor {
                 });
                 r.setOnDragOver(event -> r.setFill(r.getColor()));
             }
-            drawingPane.getChildren().addAll(map[i]);
-        }
-        setClearMap();
-    }
-
-    void setClearMap(){
-        for(int i = 0; i < height; i++){
-            for(int j = 0; j < width; j++){
-                map[i][j].setColor(new EmptySquare().getColor());
-            }
-        }
-        for(int i = 0; i < height; i++){
-            map[i][0].setColor(new WallSquare().getColor());
-            map[i][width-1].setColor(new WallSquare().getColor());
-        }
-        for(int i = 0; i < width; i++){
-            map[0][i].setColor(new WallSquare().getColor());
-            map[height-1][i].setColor(new WallSquare().getColor());
         }
     }
 }
