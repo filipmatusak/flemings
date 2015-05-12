@@ -1,0 +1,6 @@
+- pri pridavani robota ho trepa vlozit do TreeMap robots (v Robots) spolu s casom pridania
+- ak sa prida druhy robot v case, ked je este prvy na startovacom policku, druhy umiera
+- odstranit vysku robota - pri nacitavani a podmienkach (padanie)
+- cas neodstranime, len zmenime? kazdy typ robota ma iny cas?
+- pri vyrabani mapy kontrolovat, ze po okraji je stena (inak pri vytvarani sveta vyhodi Exception)
+- dorobit vyber rozmerov pri mape

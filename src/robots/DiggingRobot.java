@@ -9,7 +9,7 @@ public class DiggingRobot extends Robot {
     }
 
     /** Spravi alternativny tah robota, t.j. skusi kopat.
-     * Ak nejde, chce sa otocit. aaaa*/
+     * Ak nejde, chce sa otocit.*/
     @Override
     protected void alternativeMove() {
         if(this.mySquare.actionDigging(this.direction)) {

@@ -14,6 +14,7 @@ public class Main extends Application {
     public Stage mainStage;
     public FileCreator fileCreator;
     public MapConvector mapConvector;
+    public MapEditor mapEditor;
 
 
     @Override
@@ -25,14 +26,17 @@ public class Main extends Application {
 
         scene = new Scene(menu);
 
-        MapEditor mapEditor = new MapEditor(this);
-        mapEditor.run();
+        StartupMenu startup = new StartupMenu(this);
+        startup.run();
+
+        mapEditor = new MapEditor(this);
+    //    mapEditor.run();
 
         fileCreator = new FileCreator(this);
         mapConvector = new MapConvector(this);
 
-       // primaryStage.setScene(scene);
-       // primaryStage.show();
+
+
 
 
 
