@@ -62,7 +62,6 @@ public class MapEditor {
         stage.setWidth(width*m.squareSize);
         stage.setResizable(false);
 
-
         initializeSquares();
         setSquares();
 
@@ -71,14 +70,16 @@ public class MapEditor {
         MenuItem menuSave = new MenuItem("Save");
         MenuItem menuClear = new MenuItem("Clear");
         MenuItem menuOpen = new MenuItem("Open");
+        MenuItem menuExit = new MenuItem("Exit");
         menu.getItems().add(menuOpen);
         menu.getItems().add(menuSave);
         menu.getItems().add(menuClear);
+        menu.getItems().add(menuExit);
         menuBar.getMenus().add(menu);
         menuClear.setOnAction(event -> setClearMap());
         menuSave.setOnAction(event -> saveMap());
         menuOpen.setOnAction(event -> openMap());
-
+        menuExit.setOnAction(event -> exit());
         pane.setTop(menuBar);
         pane.setCenter(drawingPane);
 
@@ -115,8 +116,6 @@ public class MapEditor {
 
         open();
         setClearMap();
-
-
     }
 
 
@@ -134,6 +133,11 @@ public class MapEditor {
         catch (FileNotFoundException e) {
           //  e.printStackTrace();
         }
+    }
+
+    void exit(){
+
+        stage.close();
     }
 
     void openMap(){
@@ -209,9 +213,8 @@ public class MapEditor {
 
     /**zobrazi mapu z map do editora*/
     void refreshMap(){
-
         drawingPane.getChildren().clear();
-        for(int i = 0; i < map.length; i++) drawingPane.getChildren().addAll(map[i]);
+        for (ColoredRectangle[] aMap : map) drawingPane.getChildren().addAll(aMap);
     }
 
     /**nastavy listenery a okraje pre stvorce*/
@@ -243,7 +246,6 @@ public class MapEditor {
                         r.setFill(r.getColor());
                         map[bb][aa].fireEvent(event);
                     }
-
                 });
                 r.setOnDragOver(event -> r.setFill(r.getColor()));
             }
