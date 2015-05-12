@@ -2,6 +2,7 @@ package squares;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import robots.Robot;
 import old.World;
 
@@ -11,7 +12,7 @@ import old.World;
  * všeobecnosti štvorčeky vykonávajú akcie robota, ktorý je na nich a
  * v komunikácii so susedmi sa vyrovnajú aj s ich následkami.
  */
-public abstract class Square {
+public abstract class Square extends Rectangle {
     /** Susedny stvorcek */
     protected Square up, down, left, right;
     /** Suradnice tohto stvorceka */

@@ -7,10 +7,10 @@ import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class MapConvector {
+public class MapConvertor {
 
     Main root;
-    public MapConvector(Main root){
+    public MapConvertor(Main root){
         this.root = root;
     }
 
@@ -33,7 +33,6 @@ public class MapConvector {
         int r, c;
         r = in.nextInt();
         c = in.nextInt();
-        System.out.println(r + " " + c);
         ColoredRectangle[][] map = new ColoredRectangle[r][c];
         String s;
         s = in.nextLine();
