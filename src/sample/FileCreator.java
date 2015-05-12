@@ -16,12 +16,13 @@ public class FileCreator {
         this.root = root;
     }
 
-    public File openFile(Window window){
+    public File openFile(Window window, Boolean save){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose File");
     //    fileChooser.setInitialDirectory(new File("src/saves"));
         File file;
-        file = fileChooser.showSaveDialog(window);
+        if(save) file = fileChooser.showSaveDialog(window);
+        else file = fileChooser.showOpenDialog(window);
         return file;
     }
 
