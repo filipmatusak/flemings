@@ -91,6 +91,7 @@ public class SquareChoiceMenu {
     }
 
     public void show(Double x, Double y){
+        stage.setAlwaysOnTop(true);
         stage.setX(x);
         stage.setY(y + 20);
         stage.show();

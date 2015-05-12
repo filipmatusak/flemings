@@ -5,7 +5,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -24,6 +23,11 @@ public class StartupMenu {
         thiz = this;
         stage = new Stage();
         width = 250;
+    }
+
+    public final void show() {
+        stage.setAlwaysOnTop(true);
+        stage.show();
     }
 
     public void run(){
@@ -45,8 +49,9 @@ public class StartupMenu {
         map.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                root.mapEditor.run();
                 stage.close();
+                root.mapEditor = new MapEditor(root);
+                root.mapEditor.run();
             }
         });
         Button load = new Button("LOAD SAVED");
