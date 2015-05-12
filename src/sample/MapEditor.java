@@ -136,7 +136,7 @@ public class MapEditor {
     }
 
     void exit(){
-
+        root.startup.show();
         stage.close();
     }
 
