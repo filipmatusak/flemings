@@ -95,7 +95,7 @@ public class MapEditor {
         }
         File file = root.fileCreator.openFile(stage, true);
         try {
-            if(file != null ) root.mapConvector.fromMapEditor(map, file);
+            if(file != null ) root.mapConvertor.fromMapEditor(map, file);
         }
         catch (FileNotFoundException e) {
           //  e.printStackTrace();
@@ -105,7 +105,7 @@ public class MapEditor {
     void openMap(){
         File file = root.fileCreator.openFile(stage, false);
         try{
-            ColoredRectangle[][] m = root.mapConvector.toMapEditor(file);
+            ColoredRectangle[][] m = root.mapConvertor.toMapEditor(file);
             map = m;
             setSquares();
             refreshMap();

@@ -4,3 +4,7 @@
 - cas neodstranime, len zmenime? kazdy typ robota ma iny cas?
 - pri vyrabani mapy kontrolovat, ze po okraji je stena (inak pri vytvarani sveta vyhodi Exception)
 - dorobit vyber rozmerov pri mape
+
+- dorobit choice dialog pre pouzivatela pri vytvarani mapy na vyber poctu robotov kazdeho typu, ktori budu k dispozicii
+a targety (kolko robotov musi prezit na prejdenie kola)
+- z Editoru do Mapy a z Mapy do Worldu

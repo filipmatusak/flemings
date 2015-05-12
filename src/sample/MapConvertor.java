@@ -7,10 +7,10 @@ import java.io.*;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class MapConvector {
+public class MapConvertor {
 
     Main root;
-    public MapConvector(Main root){
+    public MapConvertor(Main root){
         this.root = root;
     }
 

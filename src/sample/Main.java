@@ -13,7 +13,7 @@ public class Main extends Application {
     public Pane menu;
     public Stage mainStage;
     public FileCreator fileCreator;
-    public MapConvector mapConvector;
+    public MapConvertor mapConvertor;
     public MapEditor mapEditor;
 
 
@@ -33,7 +33,7 @@ public class Main extends Application {
     //    mapEditor.run();
 
         fileCreator = new FileCreator(this);
-        mapConvector = new MapConvector(this);
+        mapConvertor = new MapConvertor(this);
 
 
 
