@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -77,6 +78,8 @@ public class StartupMenu {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+
+
 
     }
 }

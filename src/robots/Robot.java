@@ -1,8 +1,11 @@
 package robots;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
+import sample.Map;
 
 /** Trieda Robot predstavuje zakladneho robota. Robot si pamata
  * policko, na ktorom stoji, ale okrem toho o svete nic nevie. Robot
@@ -12,7 +15,7 @@ import old.RobotHolder;
  * policka prisluchajucu zvolenej akcii. Policko akciu bud vykona,
  * alebo ak sa neda, vrati false. Tento zakladny typ robota v prvych
  * tahoch sa pokusa chodit, a po zadanom pocte tahov zastane. */
-public class Robot{
+public class Robot extends ImageView {
 
     /** Mozne stavy robota */
     protected enum Status {
@@ -34,12 +37,19 @@ public class Robot{
     protected int changeTime;
     /** Aka je maximalna vyska padu, pri ktorej sa nezabije */
     protected int maxHeight;
+    Image image = new Image(getClass().getResourceAsStream("../graphics/robots/eva.png"));
 
     /** Konstruktor, ktory dostane pocet tahov, po ktorych
      * sa zmeni spravanie robota, maximalnu vysku, s ktorej moze spadnut a prezit
      * a meno robota.
      */
     public Robot(int changeTime, int maxHeight, String id) {
+        super();
+
+        super.setImage(image);
+        this.setFitWidth(new Map(null, 0, 0).getSquareSize());
+        this.setFitHeight(new Map(null, 0, 0).getSquareSize());
+
         mySquare = null;
         this.id = id;
         this.maxHeight = maxHeight;
@@ -149,9 +159,9 @@ public class Robot{
     }
 
     /** Vrati meno robota */
-    public String getId() {
+  /*  public String getId() {
         return id;
-    }
+    }*/
 
     /** Spravi normalny tah robota, t.j. skusa ist dopredu
      * a ak sa neda, otoci sa. */

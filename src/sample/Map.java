@@ -1,6 +1,6 @@
 package sample;
 
-import javafx.scene.shape.Rectangle;
+import squares.Square;
 
 
 /**
@@ -9,11 +9,11 @@ import javafx.scene.shape.Rectangle;
 
 public class Map {
     Main root;
-    Rectangle[][] map;
+    Square[][] map;
 
     Integer height = 20;
     Integer width = 20;
-    int squareSize = 20;
+    Integer squareSize = 20;
 
 
     public Map(Main root, int height, int width){
@@ -21,4 +21,7 @@ public class Map {
         this.height = height;
         this.width = width;
     }
+
+    public Square[][] getMap(){ return map;}
+    public Integer getSquareSize(){ return squareSize;}
 }

@@ -14,6 +14,23 @@ public class MapConvertor {
         this.root = root;
     }
 
+    public Map fileToMap(File file) throws FileNotFoundException {
+        Scanner in = new Scanner(new FileReader(file));
+        int r, c;
+        r = in.nextInt();
+        c = in.nextInt();
+        Map map = new Map(root, r, c);
+        String s;
+        s = in.nextLine();
+        for(int i = 0; i < r; i++){
+            s = in.nextLine();
+            for(int j = 0; j < c; j++){
+                map.map[i][j] = getSquare(s.charAt(j));
+            }
+        }
+        return map;
+    }
+
     /**ulozi mapu do suboru*/
     public void fromMapEditor(ColoredRectangle[][] map, File file) throws FileNotFoundException {
         PrintWriter out = new PrintWriter(file);

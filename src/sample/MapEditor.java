@@ -13,6 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
+import robots.Robot;
 import squares.EmptySquare;
 import squares.EntrySquare;
 import squares.ExitSquare;
@@ -31,7 +32,7 @@ public class MapEditor {
     Main root;
     MapEditor thiz;
     ColoredRectangle[][] map;
-    int height, width;
+    Integer height, width;
     BorderPane pane;
     Pane drawingPane;
     Paint selectedColor;
@@ -47,6 +48,28 @@ public class MapEditor {
         squareChoiceMenu = new SquareChoiceMenu(this);
     }
 
+    public void run(){
+        getMapSize();
+        if(close){
+            root.startup.show();
+            return;
+        }
+        m = new Map(root, height, width);
+        map = new ColoredRectangle[height][width];
+
+        open();
+        setClearMap();
+
+        Label l = new Label();
+
+      //  Image image = new Image(getClass().getResourceAsStream("../graphics/robots/eva.png"));
+//        Image image = new Image(getClass().getResourceAsStream("flemings/graphics/robots/eva.png"));
+      //  ImageView imageView = new ImageView(image);
+    //    l.setGraphic(imageView);
+        drawingPane.getChildren().add(new Robot(10,10,""));
+
+    }
+
     void open(){
         if(stage!=null) stage.close();
         height = m.height;
@@ -54,7 +77,6 @@ public class MapEditor {
         pane = new BorderPane();
         drawingPane = new Pane();
         stage = new Stage();
-        stage.setAlwaysOnTop(true);
         selectedColor = null;
 
         scene = new Scene(pane);
@@ -105,21 +127,7 @@ public class MapEditor {
         stage.show();
     }
 
-    public void run(){
-        getMapSize();
-        if(close){
-            root.startup.show();
-            return;
-        }
-        m = new Map(root, height, width);
-        map = new ColoredRectangle[height][width];
-
-        open();
-        setClearMap();
-    }
-
-
-    void saveMap(){
+        void saveMap(){
         try {
             isMapCorrect();
         } catch (EditorExeption e){
@@ -268,9 +276,9 @@ public class MapEditor {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField heightField = new TextField();
-        heightField.setPromptText("Height ( " + minH + " - " + maxH + " )");
+        heightField.setPromptText( + minH + " - " + maxH);
         TextField widthField = new TextField();
-        widthField.setPromptText("Width ( " + minW + " - " + maxW + " )");
+        widthField.setPromptText(minW + " - " + maxW );
 
         grid.add(new Label("Height:"), 0, 0);
         grid.add(heightField, 1, 0);
