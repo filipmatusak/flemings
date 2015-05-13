@@ -47,8 +47,6 @@ public class World {
         }
     }
 
-
-
     /** Vykona jeden tah hry, t.j. necha kazdeho aktivneho robota
      * spravit tah a vrati true, ak je aspon jeden aktivny robot. */
     public boolean move() {

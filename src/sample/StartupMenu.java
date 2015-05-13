@@ -5,7 +5,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -45,13 +44,19 @@ public class StartupMenu {
 
         Button level = new Button("CHOOSE LEVEL");
         level.setPrefWidth(width);
+        level.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+                root.level.chooseLevel();
+            }
+        });
         Button map = new Button("NEW WORLD");
         map.setPrefWidth(width);
         map.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 stage.close();
-                root.mapEditor = new MapEditor(root);
                 root.mapEditor.run();
             }
         });

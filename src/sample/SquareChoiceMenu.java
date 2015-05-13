@@ -63,8 +63,8 @@ public class SquareChoiceMenu {
 
         for(int i = 0; i < allTypes.size(); i++){
             Rectangle s = new Rectangle(size,size,allTypes.get(i).getColor());
-            int r = i/3;
-            int c = i%3;
+            int r = i/col;
+            int c = i%col;
             s.setX(space * (c + 1) + c * size);
             s.setY(space * (r + 1) + r * size);
             allRectangles.add(s);
