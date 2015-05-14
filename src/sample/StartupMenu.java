@@ -9,6 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.logging.Level;
+
 public class StartupMenu {
     Main root;
     StartupMenu thiz;
@@ -16,6 +18,7 @@ public class StartupMenu {
     VBox vbox;
     Label label;
     Stage stage;
+    LevelsMenu levelsMenu;
     int width;
 
     public StartupMenu(Main root){
@@ -83,8 +86,6 @@ public class StartupMenu {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-
-
 
     }
 }
