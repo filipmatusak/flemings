@@ -8,6 +8,11 @@ public class ExplodingRobot extends Robot {
         super(changeTime, maxHeight, id);
     }
 
+    public ExplodingRobot() {
+
+    }
+
+
     /** Vytvori jednoznakovu textovu reprezentaciu robota podla stavu */
     @Override
     public String toString() {

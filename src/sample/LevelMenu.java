@@ -9,15 +9,16 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class Level {
+public class LevelMenu {
     Main root;
     Integer row = 5, col = 3, space = 20, size = 50;
     Stage stage;
     Scene scene;
 
-    public Level(Main root){
+    public LevelMenu(Main root){
         this.root = root;
     }
 
@@ -44,12 +45,21 @@ public class Level {
                     @Override
                     public void handle(ActionEvent event) {
                         Button b = event.getSource() instanceof Button ? ((Button) event.getSource()) : null;
+                        assert b != null;
                         String levelPath = b.getId();
-                        //TODO: nacitat subor do Map per World pre Game
-                        //TODO: vytvorit game a spustit ju
+                        try {
+                            Map map = root.mapConvertor.fileToMap(new File(levelPath));
+                            //Zuzana, v map mas mapu, mozes ju dat do konstruktora Game
+                            // a potom ju tam pouzit v konstruktore World
+                            // mapa by mala byt v poriadku, ale ak nie
+                            // (nesedia farby, rozlozenie) daj vediet
+                            //TODO: vytvorit game a spustit ju,
 
-                        root.game = new Game(root);
+                            root.game = new Game(root);
 
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
                 all.add(b);

@@ -20,6 +20,7 @@ public class Map {
         this.root = root;
         this.height = height;
         this.width = width;
+        map = new Square[height][width];
     }
 
     public Square[][] getMap(){ return map;}

@@ -16,7 +16,7 @@ public class Main extends Application {
     public MapConvertor mapConvertor;
     public MapEditor mapEditor;
     public StartupMenu startup;
-    public Level level;
+    public LevelMenu level;
     public Game game;
 
 
@@ -36,7 +36,7 @@ public class Main extends Application {
 
         fileCreator = new FileCreator(this);
         mapConvertor = new MapConvertor(this);
-        level = new Level(this);
+        level = new LevelMenu(this);
 
 
 

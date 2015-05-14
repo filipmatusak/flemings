@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -43,8 +42,6 @@ public class LevelsMenu {
         pane = new BorderPane();
         pane.setPrefHeight(width);
         pane.setPrefWidth(width);
-    //    pane.setId("pane");
-    //    pane.getStylesheets().add("styles/styles.css");
 
         label = new Label("Choose a level from the given options:");
         pane.setCenter(label);

@@ -25,6 +25,8 @@ public abstract class Square extends Rectangle {
 
     public void setSize(int s){
         size = s;
+        this.setWidth(size);
+        this.setHeight(size);
     }
 
     /** Nastav si novy stvorcek ako suseda */
@@ -105,6 +107,7 @@ public abstract class Square extends Rectangle {
     }
 
     public void setColor(Color color) {
+        super.setFill(color);
         this.color = color;
     }
 }
