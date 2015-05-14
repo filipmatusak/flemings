@@ -1,20 +1,6 @@
 package sample;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import static javafx.stage.Modality.*;
-import static javafx.stage.StageStyle.*;
+import squares.Square;
 
 
 /**
@@ -23,11 +9,11 @@ import static javafx.stage.StageStyle.*;
 
 public class Map {
     Main root;
-    Rectangle[][] map;
+    Square[][] map;
 
     Integer height = 20;
     Integer width = 20;
-    int squareSize = 20;
+    Integer squareSize = 20;
 
 
     public Map(Main root, int height, int width){
@@ -35,4 +21,7 @@ public class Map {
         this.height = height;
         this.width = width;
     }
+
+    public Square[][] getMap(){ return map;}
+    public Integer getSquareSize(){ return squareSize;}
 }

@@ -2,6 +2,7 @@ package old;
 
 import javafx.scene.layout.Pane;
 import robots.Robot;
+import sample.Map;
 import squares.Square;
 
 import java.util.ArrayList;
@@ -25,11 +26,11 @@ public class World {
     /** Konstruktor, ktory dostane pole stvorcekov
      * a inicializuje hernu situaciu s 0 robotmi.
      */
-    public World(Square[][] squares, int entryRow, int entryCol, Pane pane_, int s) {
+    public World(Map map, int entryRow, int entryCol, Pane pane_, int s) {
         sizeOfSquare = s;
         pane = pane_;
         robots = new ArrayList<>(); // vytvorime prazdne pole robotov
-        this.squares = squares;            // ulozime si pole stvrcekov
+        this.squares = map.getMap();            // ulozime si pole stvrcekov
         nRows = squares.length;          // zistime rozmery pola
         nCols = squares[0].length;
         this.entryRow = entryRow;          // ulozime vstupny stvorcek
@@ -45,8 +46,6 @@ public class World {
             }
         }
     }
-
-
 
     /** Vykona jeden tah hry, t.j. necha kazdeho aktivneho robota
      * spravit tah a vrati true, ak je aspon jeden aktivny robot. */

@@ -15,6 +15,9 @@ public class Main extends Application {
     public FileCreator fileCreator;
     public MapConvertor mapConvertor;
     public MapEditor mapEditor;
+    public StartupMenu startup;
+    public Level level;
+    public Game game;
 
 
     @Override
@@ -26,17 +29,14 @@ public class Main extends Application {
 
         scene = new Scene(menu);
 
-        StartupMenu startup = new StartupMenu(this);
+        startup = new StartupMenu(this);
         startup.run();
 
         mapEditor = new MapEditor(this);
-    //    mapEditor.run();
 
         fileCreator = new FileCreator(this);
         mapConvertor = new MapConvertor(this);
-
-
-
+        level = new Level(this);
 
 
 

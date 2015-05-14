@@ -29,6 +29,11 @@ public class StartupMenu {
         width = 250;
     }
 
+    public final void show() {
+        stage.setAlwaysOnTop(true);
+        stage.show();
+    }
+
     public void run(){
 
         pane = new BorderPane();
@@ -46,20 +51,17 @@ public class StartupMenu {
         level.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //toto mozno nebude vhodne tu - pripadne presunut do root a zavolat
-                levelsMenu = new LevelsMenu(root);
-                levelsMenu.run();
                 stage.close();
+                root.level.chooseLevel();
             }
         });
-
         Button map = new Button("NEW WORLD");
         map.setPrefWidth(width);
         map.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                root.mapEditor.run();
                 stage.close();
+                root.mapEditor.run();
             }
         });
         Button load = new Button("LOAD SAVED");
