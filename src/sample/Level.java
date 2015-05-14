@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,7 +28,7 @@ public class Level {
         grid.setHgap(space);
         grid.setVgap(space);
         grid.setPadding(new Insets(space, space, space, space));
-        scene = new Scene(grid, space*2 + row*size, space*2 + col*size );
+        scene = new Scene(grid,  space*(1+col) + col*size, space*(1+row) + row*size);
         stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -36,15 +38,26 @@ public class Level {
    //     System.out.println(folder.getAbsolutePath() + " " + folder.exists() + "\n");
         for (File fileEntry : folder.listFiles()) {
             if (!fileEntry.isDirectory()) {
-             //   all.add(new Rectangle(size, size, Color.AQUA));
-                all.add(new Button());
+                Button b = new Button();
+                b.setId(fileEntry.getAbsolutePath());
+                b.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        Button b = event.getSource() instanceof Button ? ((Button) event.getSource()) : null;
+                        String levelPath = b.getId();
+                        root.game = new Game(root);
+
+                    }
+                });
+                all.add(b);
             }
         }
         for(Integer i = 0; i < all.size(); i++){
             int r = i/col;
             int c = i%col;
             Button p = all.get(i);
-
+            p.setPrefWidth(size);
+            p.setPrefHeight(size);
             grid.add(p, c, r);
             p.setText(Integer.toString(i + 1));
             p.setPrefSize(size, size);

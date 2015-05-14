@@ -17,6 +17,7 @@ public class Main extends Application {
     public MapEditor mapEditor;
     public StartupMenu startup;
     public Level level;
+    public Game game;
 
 
     @Override
