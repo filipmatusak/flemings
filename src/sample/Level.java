@@ -45,6 +45,9 @@ public class Level {
                     public void handle(ActionEvent event) {
                         Button b = event.getSource() instanceof Button ? ((Button) event.getSource()) : null;
                         String levelPath = b.getId();
+                        //TODO: nacitat subor do Map per World pre Game
+                        //TODO: vytvorit game a spustit ju
+
                         root.game = new Game(root);
 
                     }
