@@ -55,7 +55,9 @@ public class LevelMenu {
                             // (nesedia farby, rozlozenie) daj vediet
                             //TODO: vytvorit game a spustit ju,
 
-                            root.game = new Game(root);
+                            root.game = new Game(root,map);
+                            root.game.run();
+                            stage.close();
 
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
