@@ -10,6 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.logging.Level;
+
 public class StartupMenu {
     Main root;
     StartupMenu thiz;
@@ -17,6 +19,7 @@ public class StartupMenu {
     VBox vbox;
     Label label;
     Stage stage;
+    LevelsMenu levelsMenu;
     int width;
 
     public StartupMenu(Main root){
@@ -40,6 +43,16 @@ public class StartupMenu {
 
         Button level = new Button("CHOOSE LEVEL");
         level.setPrefWidth(width);
+        level.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //toto mozno nebude vhodne tu - pripadne presunut do root a zavolat
+                levelsMenu = new LevelsMenu(root);
+                levelsMenu.run();
+                stage.close();
+            }
+        });
+
         Button map = new Button("NEW WORLD");
         map.setPrefWidth(width);
         map.setOnAction(new EventHandler<ActionEvent>() {
