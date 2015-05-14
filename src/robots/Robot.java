@@ -43,6 +43,9 @@ public class Robot extends ImageView {
      * sa zmeni spravanie robota, maximalnu vysku, s ktorej moze spadnut a prezit
      * a meno robota.
      */
+    public Robot(){
+    }
+
     public Robot(int changeTime, int maxHeight, String id) {
         super();
 

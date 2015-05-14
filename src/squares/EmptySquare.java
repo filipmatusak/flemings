@@ -17,6 +17,7 @@ public class EmptySquare extends Square implements RobotHolder {
     Robot myRobot;
 
     public EmptySquare(){
+        super();
         this.setColor(Color.BROWN);
     }
     /** Z policka odisiel robot, uprav si podla toho stav a vykonaj

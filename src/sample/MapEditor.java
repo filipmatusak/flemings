@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -60,12 +62,6 @@ public class MapEditor {
         open();
         setClearMap();
 
-        Label l = new Label();
-
-      //  Image image = new Image(getClass().getResourceAsStream("../graphics/robots/eva.png"));
-//        Image image = new Image(getClass().getResourceAsStream("flemings/graphics/robots/eva.png"));
-      //  ImageView imageView = new ImageView(image);
-    //    l.setGraphic(imageView);
         drawingPane.getChildren().add(new Robot(10,10,""));
 
     }
@@ -276,9 +272,9 @@ public class MapEditor {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField heightField = new TextField();
-        heightField.setPromptText( + minH + " - " + maxH);
+        heightField.setPromptText(+minH + " - " + maxH);
         TextField widthField = new TextField();
-        widthField.setPromptText(minW + " - " + maxW );
+        widthField.setPromptText(minW + " - " + maxW);
 
         grid.add(new Label("Height:"), 0, 0);
         grid.add(heightField, 1, 0);
@@ -288,18 +284,23 @@ public class MapEditor {
         Node createButton = dialog.getDialogPane().lookupButton(createButtonType);
         createButton.setDisable(true);
 
-        heightField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (Objects.equals(heightField.getText(), "") || Objects.equals(widthField.getText(), "")) return;
-            int h = Integer.parseInt(heightField.getText());
-            int w = Integer.parseInt(widthField.getText());
-            createButton.setDisable(newValue.trim().isEmpty() || h < minH || h > maxH || w < minW || w > maxW);
-        });
-        widthField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (Objects.equals(heightField.getText(), "") || Objects.equals(widthField.getText(), "")) return;
-            int h = Integer.parseInt(heightField.getText());
-            int w = Integer.parseInt(widthField.getText());
-            createButton.setDisable(newValue.trim().isEmpty() || h < minH || h > maxH || w < minW || w > maxW);
-        });
+        class MyTextListener implements ChangeListener<String> {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (Objects.equals(heightField.getText(), "") || Objects.equals(widthField.getText(), "")) return;
+                Integer h, w;
+                try {
+                    h = Integer.parseInt(heightField.getText());
+                    w = Integer.parseInt(widthField.getText());
+                    createButton.setDisable(newValue.trim().isEmpty() || h < minH || h > maxH || w < minW || w > maxW);
+                } catch (Exception e){
+                    createButton.setDisable(true);
+                }
+            }
+        }
+
+        heightField.textProperty().addListener(new MyTextListener());
+        widthField.textProperty().addListener(new MyTextListener());
 
         dialog.getDialogPane().setContent(grid);
 
@@ -319,5 +320,9 @@ public class MapEditor {
             height = size.getKey();
             width = size.getValue();
         });
+
+
     }
+
+
 }

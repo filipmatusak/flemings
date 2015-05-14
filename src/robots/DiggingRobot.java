@@ -8,6 +8,10 @@ public class DiggingRobot extends Robot {
         super(changeTime, maxHeight, id);
     }
 
+    public DiggingRobot() {
+
+    }
+
     /** Spravi alternativny tah robota, t.j. skusi kopat.
      * Ak nejde, chce sa otocit.*/
     @Override

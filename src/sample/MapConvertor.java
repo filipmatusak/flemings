@@ -25,7 +25,12 @@ public class MapConvertor {
         for(int i = 0; i < r; i++){
             s = in.nextLine();
             for(int j = 0; j < c; j++){
-                map.map[i][j] = getSquare(s.charAt(j));
+                Square square = getSquare(s.charAt(j));
+                square.setSize(root.map.getSquareSize());
+                square.setY(root.map.getSquareSize()*i);
+                square.setX(root.map.getSquareSize()*j);
+           //     System.out.println("s> "+ square.getX() + " " + square.getColor().toString());
+                map.map[i][j] = square;
             }
         }
         return map;
@@ -75,7 +80,9 @@ public class MapConvertor {
     /**podla znakovej reprezentacie stvorca zisti typ stvorca*/
     Square getSquare(Character c){
         for(Square i: new AllSquares().getTypes()){
-            if(Objects.equals(i.toString(), c.toString())) return i;
+            if(Objects.equals(i.toString(), c.toString())){
+                return i;
+            }
         }
         return null;
     }
