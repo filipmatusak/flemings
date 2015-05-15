@@ -1,3 +1,31 @@
+15.5.
+- Map v Game sa uz nevykresluje ako ColoredRectangle, ale ako Squares
+- okrem prazdnych policok sa vykresluju vsade okraje
+- do Game som pridala cyklus z Robots (hlavna trieda v old), ktory v cykle vykonava tahy vsetkych robotov a pridava novych
+    - len na vyskusanie, malo by to byt inde
+    - teraz to vobec nefunguje, lebo na platne nic nie je, ale aspon na stdout to vypisuje priebeh hry (su tam pridani
+    ukazkovi dvaja roboti, to pojde vsetko prec)
+    - moze byt na to zvlast trieda alebo mozeme pouzit stare Robots
+    - treba pridat spravnu podmienku na ukoncenie cyklu
+        a) vyprsi maximalny cas
+        b) vsetci roboti skoncili alebo su mrtvi a uz sa nedaju ziadni pridat (to sa skontroluje tak, ze sa prejde cely
+        ArrayList prvkov ButtonRobot v Game a ak budu mat vsetky count nastaveny na 0, tak je zle)
+        c) splnili sme target - prezilo dost robotov - koniec levelu
+    - nefunguje spravne prekreslovanie - treba tam pridat nejaky wait, delay, sleep alebo to kontrolovat timerom?
+        - ak by to fungovalo, prejavilo by sa to tak, ze v okienku s casom by sa ten cas menil kazdu sekundu, teraz
+        je na zaciatku 0 a po skonceni cyklu (hry) 4, nic medzitym sa tam nedostane, takze by sa tam nedostala ani
+        prekreslena mapa
+    - okrem prekreslovania by ten cyklus mal cakat aj na stlacenie tlacidiel, ktore pridavaju robota
+- treba nastavit kazdy Square tak, ze ak ma robota, nech ho ukazuje
+- pri tvorbe levelu by sa mal stanovit
+    - maximalny cas
+    - target - pocet robotov, ktorych treba zachranit
+    - pocty a typy robotov, ktorych mozeme pouzit
+    - tie potom treba nastavit robotom ako limit (zatial je vsade 5)
+    >> moze sa to robit uz pri vytvarani mapy a ak nie, treba nastavit nieco defaultne
+
+starsie
+
 - pri pridavani robota ho trepa vlozit do TreeMap robots (v Robots) spolu s casom pridania
 - ak sa prida druhy robot v case, ked je este prvy na startovacom policku, druhy umiera
 - odstranit vysku robota - pri nacitavani a podmienkach (padanie)

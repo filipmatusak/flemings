@@ -6,6 +6,8 @@ import javafx.scene.shape.Rectangle;
 import robots.Robot;
 import old.World;
 
+import java.awt.*;
+
 /** Abstraktná trieda reprezentujuca jeden štvorček hracej plochy.
  * Poskytuje základné implementácie jednotlivých metód, v ktorých sa
  * štvorček nijako nemení a nemôže na neho prísť robot.  Vo
@@ -13,15 +15,22 @@ import old.World;
  * v komunikácii so susedmi sa vyrovnajú aj s ich následkami.
  */
 public abstract class Square extends Rectangle {
-    /** Susedny stvorcek */
+    /**
+     * Susedny stvorcek
+     */
     protected Square up, down, left, right;
-    /** Suradnice tohto stvorceka */
+    /**
+     * Suradnice tohto stvorceka
+     */
     protected int row, column;
-    /** Referencia na svet */
+    /**
+     * Referencia na svet
+     */
     protected World world;
 
     Color color;
     int size;
+
 
     public void setSize(int s){
         size = s;

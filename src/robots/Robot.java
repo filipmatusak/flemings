@@ -2,6 +2,7 @@ package robots;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
@@ -38,12 +39,20 @@ public class Robot extends ImageView {
     /** Aka je maximalna vyska padu, pri ktorej sa nezabije */
     protected int maxHeight;
     Image image = new Image(getClass().getResourceAsStream("../graphics/robots/eva.png"));
+    /** Klavesova skratka na pridanie robota */
+    KeyCode shortcut;
+    /** Slovne vyjadrenie typu robota*/
+    String type;
+    /** Maximalny pocet robotov v hre - treba nastavit pri map */
+    Integer limit;
 
     /** Konstruktor, ktory dostane pocet tahov, po ktorych
      * sa zmeni spravanie robota, maximalnu vysku, s ktorej moze spadnut a prezit
      * a meno robota.
      */
+
     public Robot(){
+        this(10,10,"");
     }
 
     public Robot(int changeTime, int maxHeight, String id) {
@@ -60,6 +69,13 @@ public class Robot extends ImageView {
         direction = Direction.RIGHT;
         time = 0;
         this.changeTime = changeTime;
+        this.shortcut = KeyCode.R;
+        this.type = "Robot";
+        this.limit = 5;
+    }
+
+    public Robot(String id){
+        this(10,10,id);
     }
 
     /** Spravi jeden tah robota a vsetky z
@@ -177,5 +193,22 @@ public class Robot extends ImageView {
 
     /** Spravi alternativny tah robota, t.j. nerobi nic. */
     protected void alternativeMove() {
+    }
+
+    public String getName(){
+        return this.id;
+    }
+
+    public KeyCode getShortcut(){
+        return shortcut;
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    /** Vrati maxaimalny pocet robotov tohto typu v hre */
+    public Integer getLimit(){
+        return limit;
     }
 }

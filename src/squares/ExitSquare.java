@@ -11,8 +11,10 @@ import old.RobotException;
 public class ExitSquare extends EmptySquare {
 
 
-    public ExitSquare(){
+    public ExitSquare() {
         this.setColor(Color.MEDIUMSEAGREEN);
+        this.setStroke(Color.BLACK);
+        this.setStrokeWidth(0.05);
     }
     @Override
     public boolean receiveRobot(Robot otherRobot) {

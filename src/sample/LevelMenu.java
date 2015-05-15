@@ -49,17 +49,12 @@ public class LevelMenu {
                         String levelPath = b.getId();
                         try {
                             Map map = root.mapConvertor.fileToMap(new File(levelPath));
-                            //Zuzana, v map mas mapu, mozes ju dat do konstruktora Game
-                            // a potom ju tam pouzit v konstruktore World
-                            // mapa by mala byt v poriadku, ale ak nie
-                            // (nesedia farby, rozlozenie) daj vediet
-                            //TODO: vytvorit game a spustit ju,
-
                             root.game = new Game(root,map);
-                            root.game.run();
                             stage.close();
-
+                            root.game.run();
                         } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }

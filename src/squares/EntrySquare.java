@@ -10,8 +10,10 @@ public class EntrySquare extends EmptySquare {
 
     /** Vrati jednoznakovu textovu reprezentaciu policka
      * a pripadneho robota na nom. */
-    public EntrySquare(){
+    public EntrySquare() {
         this.setColor(Color.SILVER);
+        this.setStroke(Color.BLACK);
+        this.setStrokeWidth(0.05);
     }
 
      @Override
