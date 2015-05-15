@@ -1,15 +1,23 @@
 package robots;
 
+import javafx.scene.input.KeyCode;
 import old.Direction;
 
 public class DiggingRobot extends Robot {
 
     public DiggingRobot(int changeTime, int maxHeight, String id) {
         super(changeTime, maxHeight, id);
+        this.shortcut = KeyCode.D;
+        this.type = "Digging";
+        this.limit = 5;
     }
 
     public DiggingRobot() {
+        this(10,10,"");
+    }
 
+    public DiggingRobot(String id){
+        this(10,10,id);
     }
 
     /** Spravi alternativny tah robota, t.j. skusi kopat.

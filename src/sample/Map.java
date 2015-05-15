@@ -13,8 +13,10 @@ public class Map {
     Main root;
     Square[][] map;
 
+    /**Rozmery mapy*/
     Integer height = 20;
     Integer width = 20;
+    /**Rozmery jedneho stvorceka na mape*/
     Integer squareSize = 20;
 
 

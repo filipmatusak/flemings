@@ -56,7 +56,7 @@ public class World {
         boolean wasMove = false;
         for (Robot robot : robots) {
             if (robot.isActive()) { // ak mame aktivneho robota
-                System.out.println("Move of robot " + robot.getId());
+                System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
                 printSituation();         // vypis celu plochu

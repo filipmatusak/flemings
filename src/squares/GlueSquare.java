@@ -17,6 +17,8 @@ public class GlueSquare extends EmptySquare implements RobotHolder {
      */
     public GlueSquare(){
         this.setColor(Color.GREENYELLOW);
+        this.setStroke(Color.BLACK);
+        this.setStrokeWidth(0.05);
     }
     @Override
     public boolean fallingRobot(Robot otherRobot, int height) {

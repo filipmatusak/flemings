@@ -9,6 +9,8 @@ public class SoilSquare extends Square{
 
     public SoilSquare(){
         this.setColor(Color.DARKGRAY);
+        this.setStroke(Color.BLACK);
+        this.setStrokeWidth(0.05);
     }
 
      @Override

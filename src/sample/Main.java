@@ -18,10 +18,12 @@ public class Main extends Application {
     public StartupMenu startup;
     public LevelMenu level;
     public Game game;
+    AllRobots robotTypes;
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        robotTypes = new AllRobots();
         mainStage = primaryStage;
         gamePane = new Pane();
         menu = new Pane();
