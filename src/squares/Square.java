@@ -74,6 +74,7 @@ public abstract class Square extends Rectangle {
      * move: ci sa ma robot pri tom hybat, nechceme sa hybat napriklad,
      * ked tu robot dopadne, alebo je prave vytvoreny*/
     public boolean receiveRobot(Robot otherRobot, Boolean move) {
+        otherRobot.endMoving();
         world.timeLine.endAct(otherRobot);
         return false;
     }
@@ -91,6 +92,7 @@ public abstract class Square extends Rectangle {
             otherRobot.fell(height-1);
         }
         //     world.timeLine.play();
+        otherRobot.endMoving();
         world.timeLine.endAct(otherRobot);
         return false;
     }

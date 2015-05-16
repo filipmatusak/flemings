@@ -73,12 +73,12 @@ public class GameTimeLine {
 
     public void addAct(Robot robot){
         movingRobots.add(robot.hashCode());
-        pause();
+     //   pause();
     }
 
     public void endAct(Robot robot){
         movingRobots.remove(robot.hashCode());
-        if(movingRobots.size()==0) play();
+    //    if(movingRobots.size()==0) play();
     }
 
 

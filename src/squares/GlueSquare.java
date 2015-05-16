@@ -42,6 +42,7 @@ public class GlueSquare extends EmptySquare {
             throw new RobotException("Cannot move null robot right");
         }
         //     world.timeLine.play();
+        myRobot.endMoving();
         world.timeLine.endAct(myRobot);
         return false;
     }
@@ -72,6 +73,7 @@ public class GlueSquare extends EmptySquare {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
             //     world.timeLine.play();
+            otherRobot.endMoving();
             world.timeLine.endAct(otherRobot);
             return false;
         } else {

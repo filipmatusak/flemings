@@ -63,6 +63,7 @@ public class EmptySquare extends RobotHolder {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
        //     world.timeLine.play();
+            otherRobot.endMoving();
             world.timeLine.endAct(otherRobot);
             return false;
         } else {
@@ -93,6 +94,7 @@ public class EmptySquare extends RobotHolder {
     @Override
     public boolean actionMove(Direction direction) {
         if (myRobot == null) {
+       //     return false;
             throw new RobotException("Cannot move null robot right");
         }
 
@@ -182,7 +184,10 @@ public class EmptySquare extends RobotHolder {
             @Override
             public void handle(ActionEvent event) {
           //      otherRobot.moveTo(thiz);
-                if(!down.fallingRobot(otherRobot, 1)) thiz.world.timeLine.endAct(otherRobot);
+                if(!down.fallingRobot(otherRobot, 1)){
+                    otherRobot.endMoving();
+                    thiz.world.timeLine.endAct(otherRobot);
+                }
             }
         });
     }
@@ -191,7 +196,7 @@ public class EmptySquare extends RobotHolder {
      * animacia padania
      */
     public void animationFalling(Robot otherRobot, int height){
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(50.0 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(100.0 / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setY(otherRobot.getY()+1);
@@ -207,6 +212,7 @@ public class EmptySquare extends RobotHolder {
            //     System.out.println("down");
                 if(!down.fallingRobot(otherRobot, height + 1)) {
                     //     world.timeLine.play();
+                    otherRobot.endMoving();
                     world.timeLine.endAct(otherRobot);
                 }
             }

@@ -21,7 +21,7 @@ public class Robot extends ImageView {
     /** Mozne stavy robota */
     protected enum Status {
 
-        ACTIVE, FINISHED, KILLED
+        ACTIVE, FINISHED, KILLED, MOVING
     }
 
     /** Stvorcek, na ktorom robot prave je, alebo null, ak je mimo plochy */
@@ -30,6 +30,7 @@ public class Robot extends ImageView {
     protected String id;
     /** Status robota (aktivny, mrtvy, uspesny) */
     protected Status status;
+    protected Status oldStatus;
     /** Natocenie robota (dolava, doprava) */
     protected Direction direction;
     /** Kolko robot spravil tahov */
@@ -75,6 +76,7 @@ public class Robot extends ImageView {
         this.id = id;
         this.maxHeight = maxHeight;
         status = Status.ACTIVE;
+        oldStatus = status;
         direction = Direction.RIGHT;
         time = 0;
         this.changeTime = changeTime;
@@ -91,7 +93,7 @@ public class Robot extends ImageView {
      * toho vyplyvajuce dosledky. Tuto metodu spravidla vola svet. */
     public void move() {
         // skontrolujem ze robot je aktivny
-        if (status != Status.ACTIVE) {
+        if (status != Status.ACTIVE && status != Status.MOVING) {
             throw new RobotException("Inactive robot cannot move");
         }
         // zvysime pocitadlo tahov
@@ -157,6 +159,7 @@ public class Robot extends ImageView {
         if (mySquare != null) {
             mySquare.deregisterRobot();
         }
+        oldStatus = Status.KILLED;
         status = Status.KILLED;
     }
 
@@ -169,12 +172,17 @@ public class Robot extends ImageView {
             mySquare.deregisterRobot();
         }
         System.out.println("Robot " + id + " finished");
+        oldStatus = Status.FINISHED;
         status = Status.FINISHED;
     }
 
     /** Vrati, ci je robot este aktivny na ploche */
     public boolean isActive() {
         return status == Status.ACTIVE;
+    }
+
+    public boolean isMoving(){
+        return status == Status.MOVING;
     }
 
     /** Vrati, ci je robot mrtvy */
@@ -222,4 +230,10 @@ public class Robot extends ImageView {
     }
 
     public Direction getDirection(){ return direction;}
+
+    public void setMoving(){
+        oldStatus = status;
+        status = Status.MOVING;}
+    public void endMoving(){
+        status = oldStatus; }
 }

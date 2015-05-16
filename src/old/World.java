@@ -64,13 +64,15 @@ public class World {
         //    root.game.timeLine.pause();
             if (robot.isActive()) { // ak mame aktivneho robota
                 root.game.timeLine.addAct(robot);
+                robot.setMoving();
                 System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
                 printSituation();         // vypis celu plochu
-            } else {
+            } else if(robot.isMoving()) {
+            } else  {
                 pane.getChildren().remove(robot);
-           //     root.game.timeLine.play();
+                //     root.game.timeLine.play();
             }
 
         }
