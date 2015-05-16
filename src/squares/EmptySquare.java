@@ -62,7 +62,8 @@ public class EmptySquare extends RobotHolder {
     public boolean receiveRobot(Robot otherRobot, Boolean move) {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
-            world.timeLine.play();
+       //     world.timeLine.play();
+            world.timeLine.endAct(otherRobot);
             return false;
         } else {
             otherRobot.moveTo(this);
@@ -141,7 +142,7 @@ public class EmptySquare extends RobotHolder {
         else a = this.right;
         b = new EmptySquare();
         if(!a.toString().equals("S")) return false;
-        this.world.newSquare( b, a.row, a.column);
+        this.world.newSquare(b, a.row, a.column);
         b.up.emptiedBelow();
         return true;
     }
@@ -181,7 +182,7 @@ public class EmptySquare extends RobotHolder {
             @Override
             public void handle(ActionEvent event) {
           //      otherRobot.moveTo(thiz);
-                if(!down.fallingRobot(otherRobot, 1)) thiz.world.timeLine.play();
+                if(!down.fallingRobot(otherRobot, 1)) thiz.world.timeLine.endAct(otherRobot);
             }
         });
     }
@@ -190,7 +191,7 @@ public class EmptySquare extends RobotHolder {
      * animacia padania
      */
     public void animationFalling(Robot otherRobot, int height){
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(100.0 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(50.0 / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setY(otherRobot.getY()+1);
@@ -203,7 +204,11 @@ public class EmptySquare extends RobotHolder {
             public void handle(ActionEvent event) {
                 otherRobot.moveTo(thiz);
                 // skusime, ci moze padnut este nizsie (zvysime height)
-                if(!down.fallingRobot(otherRobot, height + 1)) thiz.world.timeLine.play();
+           //     System.out.println("down");
+                if(!down.fallingRobot(otherRobot, height + 1)) {
+                    //     world.timeLine.play();
+                    world.timeLine.endAct(otherRobot);
+                }
             }
         });
     }

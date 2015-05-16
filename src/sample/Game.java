@@ -88,7 +88,7 @@ public class Game {
         this.init();
         System.out.println("Initial configuration");
         world.printSituation();
-        robots.add(new Robot("eva"));
+      //  robots.add(new Robot("eva"));
      //   robots.add(new Robot("walle"));
 
         timeLine.start();

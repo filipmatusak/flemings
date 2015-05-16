@@ -41,6 +41,8 @@ public class GlueSquare extends EmptySquare {
         if (myRobot == null) {
             throw new RobotException("Cannot move null robot right");
         }
+        //     world.timeLine.play();
+        world.timeLine.endAct(myRobot);
         return false;
     }
 
@@ -64,14 +66,17 @@ public class GlueSquare extends EmptySquare {
 
     /** Na toto policko sa pokusa vojst robot. Ak nemame robota,
     * dovolime mu to */
+
     @Override
     public boolean receiveRobot(Robot otherRobot, Boolean move) {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
+            //     world.timeLine.play();
+            world.timeLine.endAct(otherRobot);
             return false;
         } else {
-            // ak nemame robota, tak ho posunime na aktualne policko,
             otherRobot.moveTo(this);
+            if(move) animationMove(otherRobot);
             return true;
         }
     }

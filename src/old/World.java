@@ -61,15 +61,16 @@ public class World {
         for (Robot robot : robots) {
             // zastavime casovac kym sa nevykona tah robota, vsetky akcie,
             // ktore hybu robotmi si ho musia opat spustit
-            root.game.timeLine.pause();
+        //    root.game.timeLine.pause();
             if (robot.isActive()) { // ak mame aktivneho robota
+                root.game.timeLine.addAct(robot);
                 System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
                 printSituation();         // vypis celu plochu
             } else {
                 pane.getChildren().remove(robot);
-                root.game.timeLine.play();
+           //     root.game.timeLine.play();
             }
 
         }

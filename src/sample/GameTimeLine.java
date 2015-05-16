@@ -5,6 +5,9 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
+import robots.Robot;
+
+import java.util.TreeSet;
 
 /**
  * Casovas, ktorym spusta nove kolo hry
@@ -14,6 +17,8 @@ public class GameTimeLine {
     Timeline timeline;
     Double timePerior;
     Duration duration;
+    Integer actions;
+    TreeSet<Integer> movingRobots;
 
     public GameTimeLine(Main root){
         this.root = root;
@@ -21,6 +26,8 @@ public class GameTimeLine {
         duration = Duration.millis(timePerior);
         timeline = new Timeline(new KeyFrame(duration, new Action()));
         timeline.setCycleCount(Timeline.INDEFINITE);
+        actions = 0;
+        movingRobots = new TreeSet<>();
     }
 
     /**
@@ -29,6 +36,7 @@ public class GameTimeLine {
     class Action implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
+            System.out.println("actions: " + actions);
             root.game.move();
         }
     }
@@ -62,6 +70,16 @@ public class GameTimeLine {
     }
     public void pause(){ timeline.stop();}
     public void play(){ timeline.play();}
+
+    public void addAct(Robot robot){
+        movingRobots.add(robot.hashCode());
+        pause();
+    }
+
+    public void endAct(Robot robot){
+        movingRobots.remove(robot.hashCode());
+        if(movingRobots.size()==0) play();
+    }
 
 
 }
