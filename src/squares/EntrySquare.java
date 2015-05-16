@@ -1,7 +1,6 @@
 package squares;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /** Tato trieda reprezentuje vstupne policko, co je specialny typ
  * prazdneho policka. Od bezneho prazdneho policka sa lisi len tym,
@@ -25,11 +24,4 @@ public class EntrySquare extends EmptySquare {
         }
     }
 
-    public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size,color);
-        r.setY(column * size);
-        r.setX(row * size);
-        System.out.println(row + " " + column);
-        return r;
-    }
 }

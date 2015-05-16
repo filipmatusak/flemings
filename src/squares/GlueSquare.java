@@ -1,7 +1,6 @@
 package squares;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import old.Direction;
 import old.RobotException;
 import robots.Robot;
@@ -66,7 +65,7 @@ public class GlueSquare extends EmptySquare {
     /** Na toto policko sa pokusa vojst robot. Ak nemame robota,
     * dovolime mu to */
     @Override
-    public boolean receiveRobot(Robot otherRobot) {
+    public boolean receiveRobot(Robot otherRobot, Boolean move) {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
             return false;
@@ -77,12 +76,5 @@ public class GlueSquare extends EmptySquare {
         }
     }
 
-    public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size,color);
-        r.setY(column * size);
-        r.setX(row * size);
-        System.out.println(row + " " + column);
-        return r;
-    }
 
 }

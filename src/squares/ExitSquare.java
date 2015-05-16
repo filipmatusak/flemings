@@ -1,9 +1,8 @@
 package squares;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import robots.Robot;
 import old.RobotException;
+import robots.Robot;
 
 /** Tato trieda reprezentuje koncove policko, co je specialny typ
  * prazdneho policka, ktore ale zachyti vsetkych prichadzajucich a padajucich
@@ -17,12 +16,14 @@ public class ExitSquare extends EmptySquare {
         this.setStrokeWidth(0.05);
     }
     @Override
-    public boolean receiveRobot(Robot otherRobot) {
+    public boolean receiveRobot(Robot otherRobot, Boolean move) {
         if (myRobot != null) {
             throw new RobotException("There should not be a robot in exit");
         }
+        animationMove(otherRobot);
         otherRobot.moveTo(this);
         otherRobot.finished();
+
         return true;
     }
 
@@ -45,13 +46,5 @@ public class ExitSquare extends EmptySquare {
         } else {
             return "*";
         }
-    }
-
-    public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size,color);
-        r.setY(column * size);
-        r.setX(row * size);
-        System.out.println(row + " " + column);
-        return r;
     }
 }

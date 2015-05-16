@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public Pane gamePane;
     public Scene scene;
     public Map map;
     public Pane menu;
@@ -25,7 +24,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         robotTypes = new AllRobots();
         mainStage = primaryStage;
-        gamePane = new Pane();
         menu = new Pane();
         map = new Map(this, 30, 60);
 

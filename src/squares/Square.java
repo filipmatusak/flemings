@@ -3,10 +3,8 @@ package squares;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import robots.Robot;
 import old.World;
-
-import java.awt.*;
+import robots.Robot;
 
 /** Abstraktná trieda reprezentujuca jeden štvorček hracej plochy.
  * Poskytuje základné implementácie jednotlivých metód, v ktorých sa
@@ -72,8 +70,11 @@ public abstract class Square extends Rectangle {
      * robota a vyrovnat sa so vsetkymi nasledkami tejto akcie. Po
      * skonceni metody uz moze byt robot na inom policku (napr
      * dosledkom padu), alebo aj mrtvy. Tuto metodu spravidla vola ine
-     * policko, pripadne svet. */
-    public boolean receiveRobot(Robot otherRobot) {
+     * policko, pripadne svet.
+     * move: ci sa ma robot pri tom hybat, nechceme sa hybat napriklad,
+     * ked tu robot dopadne, alebo je prave vytvoreny*/
+    public boolean receiveRobot(Robot otherRobot, Boolean move) {
+        world.timeLine.play();
         return false;
     }
 
@@ -89,6 +90,7 @@ public abstract class Square extends Rectangle {
         if(height>1) {
             otherRobot.fell(height-1);
         }
+        world.timeLine.play();
         return false;
     }
 
@@ -109,7 +111,6 @@ public abstract class Square extends Rectangle {
     /** Akcia vybuchnutia policka
      */
     public abstract void exploding();
-
 
     public Paint getColor() {
         return color;

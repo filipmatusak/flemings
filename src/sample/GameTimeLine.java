@@ -6,6 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 
+/**
+ * Casovas, ktorym spusta nove kolo hry
+ */
 public class GameTimeLine {
     Main root;
     Timeline timeline;
@@ -15,19 +18,17 @@ public class GameTimeLine {
     public GameTimeLine(Main root){
         this.root = root;
         timePerior = 1000.0;
-
         duration = Duration.millis(timePerior);
         timeline = new Timeline(new KeyFrame(duration, new Action()));
-
         timeline.setCycleCount(Timeline.INDEFINITE);
-
-
     }
 
+    /**
+     * akcia vyvolana kazdu periodu
+     */
     class Action implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            System.out.println("mal by ist, cas: " + duration);
             root.game.move();
         }
     }
@@ -40,8 +41,11 @@ public class GameTimeLine {
         timeline.stop();
     }
 
-    void changeTimePeriod(Double d){
-        timePerior += d;
+    /**
+     * zmena periody o deltu v milisekundach
+     */
+    void changeTimePeriod(Double delta){
+        timePerior += delta;
         timePerior = Double.max(timePerior, 1);
         duration = Duration.millis(timePerior);
         timeline.stop();
@@ -56,6 +60,8 @@ public class GameTimeLine {
     public void slower(){
         changeTimePeriod(10.0);
     }
+    public void pause(){ timeline.stop();}
+    public void play(){ timeline.play();}
 
 
 }

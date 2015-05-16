@@ -2,6 +2,7 @@ package old;
 
 import javafx.scene.layout.Pane;
 import robots.Robot;
+import sample.GameTimeLine;
 import sample.Main;
 import sample.Map;
 import squares.Square;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  */
 public class World {
 
-    Main root;
+    public Main root;
     /** 2D pole stvorcekov */
     public Square[][] squares;
     /** pocet riadkov a stlpcov v poli stvrocekov */
@@ -21,7 +22,8 @@ public class World {
     protected int entryRow, entryCol;
     /** zoznam robotov, ktore uz vosli do sveta
      * (niektori z nich mozu byt mrtvi, alebo ukonceni). */
-    protected ArrayList<Robot> robots;
+    public ArrayList<Robot> robots;
+    public GameTimeLine timeLine;
     Pane pane;
     int sizeOfSquare;
     Map map;
@@ -57,6 +59,9 @@ public class World {
     public boolean move() {
         boolean wasMove = false;
         for (Robot robot : robots) {
+            // zastavime casovac kym sa nevykona tah robota, vsetky akcie,
+            // ktore hybu robotmi si ho musia opat spustit
+            root.game.timeLine.pause();
             if (robot.isActive()) { // ak mame aktivneho robota
                 System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
@@ -64,7 +69,9 @@ public class World {
                 printSituation();         // vypis celu plochu
             } else {
                 pane.getChildren().remove(robot);
+                root.game.timeLine.play();
             }
+
         }
         return wasMove;
     }
@@ -73,14 +80,14 @@ public class World {
     public void addRobot(Robot newRobot) {
         robots.add(newRobot);  // pridame ho do pola robotov
 
-     //   newRobot.setY(entryRow*map.getSquareSize());
-      //  newRobot.setX(entryCol*map.getSquareSize());
+        newRobot.setY(entryRow * map.getSquareSize());
+        newRobot.setX(entryCol * map.getSquareSize());
 
         pane.getChildren().add(newRobot);
 
         System.out.println("Adding robot " + newRobot.getId());
         // pridame ho na vstupne policko, ak tam je volno
-        boolean received = squares[entryRow][entryCol].receiveRobot(newRobot);
+        boolean received = squares[entryRow][entryCol].receiveRobot(newRobot, false);
         // ak nebolo volno, robot umiera
         if (!received) {
             newRobot.killed();
@@ -164,4 +171,6 @@ public class World {
             squares[row][col + 1].registerLeft(square);
         }
     }
+
+    public void setTimeLine(GameTimeLine t){ timeLine = t;}
 }

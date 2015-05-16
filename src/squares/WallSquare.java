@@ -33,4 +33,5 @@ public class WallSquare extends Square {
         System.out.println(row + " " + column);
         return r;
     }
+
 }

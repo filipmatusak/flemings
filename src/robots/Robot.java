@@ -65,6 +65,7 @@ public class Robot extends ImageView {
         super();
         //TODO dat prec casy???
         changeTime = 1000000;
+        maxHeight = 10000;
 
         super.setImage(image);
         this.setFitWidth(new Map(null, 0, 0).getSquareSize());
@@ -129,11 +130,8 @@ public class Robot extends ImageView {
             mySquare.deregisterRobot();
         }
         // zaregistrujme nove policko
+     //   this.setPosition(newSquare.getX(), newSquare.getY());
         mySquare = newSquare;
-
-        //iba surovo
-        this.setPosition(newSquare.getX(), newSquare.getY());
-
         mySquare.registerRobot(this);
     }
 
@@ -204,8 +202,7 @@ public class Robot extends ImageView {
     }
 
     /** Spravi alternativny tah robota, t.j. nerobi nic. */
-    protected void alternativeMove() {
-    }
+    protected void alternativeMove() {}
 
     public String getName(){
         return this.id;
@@ -223,4 +220,6 @@ public class Robot extends ImageView {
     public Integer getLimit(){
         return limit;
     }
+
+    public Direction getDirection(){ return direction;}
 }

@@ -1,7 +1,6 @@
 package squares;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 public class SoilSquare extends Square{
     /** Vrati jednoznakovu textovu reprezentaciu policka
@@ -29,11 +28,4 @@ public class SoilSquare extends Square{
         b.up.emptiedBelow();
     }
 
-    public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size,color);
-        r.setY(column * size);
-        r.setX(row * size);
-        System.out.println(row + " " + column);
-        return r;
-    }
 }

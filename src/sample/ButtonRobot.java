@@ -18,11 +18,12 @@ public class ButtonRobot extends HBox {
     String style;
     HBox thiz;
 
-    ButtonRobot(Robot robot, Main root){
+    ButtonRobot(Robot robot, Main root, Integer limit){
         this.root = root;
         this.robot = robot;
         this.type = new Label (robot.getType());
-        this.count = new Label (robot.getLimit().toString());
+      //  this.count = new Label (robot.getLimit().toString());
+        this.count = new Label(limit.toString());
         this.setPrefHeight(30);
         this.setPrefWidth(100);
         this.setStyle("-fx-padding: 5; -fx-background-color: #FFC;");

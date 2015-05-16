@@ -3,7 +3,6 @@ package sample;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -12,7 +11,6 @@ import robots.Robot;
 import squares.Square;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -25,19 +23,19 @@ public class Game {
     BorderPane pane;
     Pane gamePane;
     VBox infoPane;
-    int maxMoves; //maximalne trvanie hry, malo by byt urcene levelom
-    //TreeMap<Integer, Robot> robots;
+    Integer maxMoves; //maximalne trvanie hry, malo by byt urcene levelom
     Queue<Robot> robots;
+    ArrayList<Integer> readyRobots;
     Integer time;
     Label currentTime;
-    GameTimeLine timeLine;
+    ArrayList<ButtonRobot> robotsMenu;
+    public GameTimeLine timeLine;
 
 
     public Game(Main root, Map map){
         this.root = root;
         this.map = map;
         this.maxMoves = 100; //docasne
-      //  this.robots = new TreeMap<>();
         this.robots = new LinkedList<>();
         this.time = 0;
         this.pane = new BorderPane();
@@ -46,31 +44,36 @@ public class Game {
         this.currentTime = new Label();
         this.stage = new Stage();
         this.scene = new Scene(pane);
+        this.timeLine = new GameTimeLine(root);
         this.world = new World(map,map.getEntryX(), map.getEntryY(),gamePane,map.getSquareSize(),root);
+        world.setTimeLine(timeLine);
 
-        timeLine = new GameTimeLine(root);
+        //docasne, potom by ich mal dostat ako parameter
+        Integer numberOfRobotTypes = new AllRobots().getTypes().size();
+        readyRobots = new ArrayList<>();
+        for(int i = 0; i < numberOfRobotTypes; i++) readyRobots.add(5);
 
-       /* gamePane.setOnScroll(new EventHandler<ScrollEvent>() {
+        /*
+        Timeline tl = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ScrollEvent event) {
-                if(event.) timeLine.slower();
-                else timeLine.faster();
+            public void handle(ActionEvent event) {
+                currentTime.setText("Current time: " + time.toString());
             }
-        });*/
+        }));
+        tl.setCycleCount(Timeline.INDEFINITE);
+        tl.play();*/
+
     }
 
     public void move(){
-        //     System.out.println(time + ":");
-        Square[][] oldMap = world.squares.clone();
+        System.out.println(time + ":");
         boolean wasMove = world.move(); // sprav tah kazdym robotom
-    /*    if (robots.containsKey(time)) {
-            world.addRobot(robots.get(time));
-            robots.remove(time);  */
         if(!robots.isEmpty()){
             world.addRobot(robots.remove());
         } else {
             // ak sa uz minuli novi roboti a nikto nie je aktivny, skoncime
-            if (robots.size() == 0 && !wasMove) {
+            if (robots.size() == 0 && !wasMove && !existReadyRobots()) {
+                System.out.println("Nothing to do");
                 timeLine.stop();
                 return;
             }
@@ -85,36 +88,10 @@ public class Game {
         this.init();
         System.out.println("Initial configuration");
         world.printSituation();
-     //   robots.put(1, new Robot("eva"));
-     //   robots.put(3, new DiggingRobot("walle"));
         robots.add(new Robot("eva"));
-        robots.add(new Robot("walle"));
+     //   robots.add(new Robot("walle"));
 
         timeLine.start();
-
-        /**
-         * Samotna hra - v cykle vykonava akcie robotov a pridava novych. Namiesto podmienky time < 5 musi byt ina,
-         * asi cas + kym je nazive nejaky robot + kym je aktivny nejaky robot alebo neaktivny a je co pridavat
-         * Teraz to nefunguje, preto je podmienka 0<0, vid NOTES
-         *//*
-        while (this.time < 0) {
-                //     System.out.println(time + ":");
-                boolean wasMove = world.move(); // sprav tah kazdym robotom
-                if (robots.containsKey(time)) { // pridaj noveho robota
-                    world.addRobot(robots.get(time));
-                    robots.remove(time);        // zmaz pridaneho robota z mapy
-                } else {
-                    // ak sa uz minuli novi roboti a nikto nie je aktivny, skoncime
-                    if (robots.size() == 0 && !wasMove) {
-                        break;
-                    }
-                }
-                this.redraw();
-                //toto by malo pockat a prekreslit situaciu, ale nefunguje
-                sleep(1000);
-                this.time++;
-            }
-            world.printStats(); // vypiseme celkove statistiky*/
         }
 
 
@@ -135,10 +112,10 @@ public class Game {
      */
     public void init(){
         this.redraw();
-        ArrayList<HBox> robotsMenu = new ArrayList<>();
-        for (Iterator it = root.robotTypes.getTypes().iterator(); it.hasNext(); ){
-            Robot tmp = (Robot) it.next();
-            HBox hb = new ButtonRobot(tmp,root);
+        robotsMenu = new ArrayList<>();
+        Integer i = 0;
+        for (Robot tmp : root.robotTypes.getTypes()) {
+            ButtonRobot hb = new ButtonRobot(tmp, root, readyRobots.get(i++));
             robotsMenu.add(hb);
         }
         infoPane.getChildren().addAll(robotsMenu);
@@ -148,6 +125,14 @@ public class Game {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    /**
+     * ci sa da este vyrobyt nejaky robot
+     */
+    boolean existReadyRobots(){
+        for(ButtonRobot i: robotsMenu) if(i.getCount()>0) return true;
+        return false;
     }
 
 

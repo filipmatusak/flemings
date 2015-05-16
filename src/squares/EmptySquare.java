@@ -1,11 +1,15 @@
 package squares;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import old.Direction;
-import robots.Robot;
 import old.RobotException;
 import old.RobotHolder;
+import robots.Robot;
 
 /** Tato trieda reprezentuje prazdne policko, na ktorom moze
  * a nemusi prave byt nejaky robot. Musi sa vyrovnat s tahmi tohto robota
@@ -15,12 +19,15 @@ public class EmptySquare extends RobotHolder {
 
     /** Robot pritomny na policku, alebo null, ak tam ziaden nie je. */
     Robot myRobot;
+    RobotHolder thiz;
+    Boolean moveFinished;
 
     public EmptySquare(){
         super();
         this.setColor(Color.BROWN);
         this.setStroke(Color.BLACK);
         this.setStrokeWidth(0.05);
+        thiz = this;
     }
     /** Z policka odisiel robot, uprav si podla toho stav a vykonaj
      * dalsie nasledky tejto zmeny, napr. padajuci roboti z horneho
@@ -29,7 +36,8 @@ public class EmptySquare extends RobotHolder {
     public void deregisterRobot() {
         // ak nemame robota, hodime vynimku, ako v nadtriede Square */
         if (myRobot == null) {
-            throw new RobotException("No robot to deregister");
+            return;
+          //  throw new RobotException("No robot to deregister");
         }
         // zrusime si robota
         myRobot = null;
@@ -51,19 +59,14 @@ public class EmptySquare extends RobotHolder {
     }
 
     @Override
-    public boolean receiveRobot(Robot otherRobot) {
+    public boolean receiveRobot(Robot otherRobot, Boolean move) {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
+            world.timeLine.play();
             return false;
         } else {
-            // ak nemame robota, tak ho posunime na aktualne policko,
-            // skusime ci padne nizsie a vratime true.
-
-            //iba surovo
-         //   otherRobot.setPosition(this.getX(), this.getY());
-
             otherRobot.moveTo(this);
-            down.fallingRobot(otherRobot, 1);
+            if(move) animationMove(otherRobot);
             return true;
         }
     }
@@ -71,19 +74,18 @@ public class EmptySquare extends RobotHolder {
     @Override
     public boolean fallingRobot(Robot otherRobot, int height) {
         // ak mame na policku robota
-        if (myRobot != null) {
+        if(myRobot == null || myRobot==otherRobot){
+            // toto policko je teraz prazdne, prijmeme noveho robota
+         //   System.out.println("down");
+            animationFalling(otherRobot, height);
+            return true;
+        }
+        else {
             if (height > 1) {  // ukoncime pad ineho robota
                 otherRobot.fell(height - 1);
             }
-            
             myRobot.killed();
             return false;
-        } else {
-            // toto policko je teraz prazdne, prijmeme noveho robota
-            otherRobot.moveTo(this);
-            // skusime, ci moze padnut este nizsie (zvysime height)
-            boolean success = down.fallingRobot(otherRobot, height + 1);
-            return true;
         }
     }
 
@@ -93,11 +95,10 @@ public class EmptySquare extends RobotHolder {
             throw new RobotException("Cannot move null robot right");
         }
 
-        //najprv iba surovo
         if (direction == Direction.RIGHT) {
-            return right.receiveRobot(myRobot);
+            return right.receiveRobot(myRobot, true);
         } else {
-            return left.receiveRobot(myRobot);
+            return left.receiveRobot(myRobot, true);
         }
     }
 
@@ -160,11 +161,50 @@ public class EmptySquare extends RobotHolder {
         return true;
     }
 
-    public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size, getColor());
-        r.setY(column * size);
-        r.setX(row * size);
-        System.out.println(row + " " + column);
-        return r;
+    /**
+     * animacia pohybu
+     * */
+    public void animationMove(Robot otherRobot){
+        //ktorym smerom sa ideme hybat
+        final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
+        //postupny pohyb robota;
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(100.0 / this.size), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                otherRobot.setX(otherRobot.getX()+x);
+            }
+        }));
+        tl.setCycleCount(this.size);
+        tl.play();
+        //na konci robota skusi nechat spadnut, ak nejde, uvolni tah
+        tl.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+          //      otherRobot.moveTo(thiz);
+                if(!down.fallingRobot(otherRobot, 1)) thiz.world.timeLine.play();
+            }
+        });
+    }
+
+    /**
+     * animacia padania
+     */
+    public void animationFalling(Robot otherRobot, int height){
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(100.0 / this.size), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                otherRobot.setY(otherRobot.getY()+1);
+            }
+        }));
+        tl.setCycleCount(this.size);
+        tl.play();
+        tl.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                otherRobot.moveTo(thiz);
+                // skusime, ci moze padnut este nizsie (zvysime height)
+                if(!down.fallingRobot(otherRobot, height + 1)) thiz.world.timeLine.play();
+            }
+        });
     }
 }
