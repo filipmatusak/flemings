@@ -19,7 +19,7 @@ public class GlueSquare extends EmptySquare {
         this.setStrokeWidth(0.05);
     }
     @Override
-    public boolean fallingRobot(Robot otherRobot, int height) {
+    public boolean fallingRobot(Robot otherRobot, int height, Integer downMax) {
         // ak mame na policku robota
         if (myRobot != null) {
             if (height > 1) {  // ukoncime pad ineho robota
@@ -30,6 +30,7 @@ public class GlueSquare extends EmptySquare {
         } else {
             // toto policko je teraz prazdne, prijmeme noveho robota
             otherRobot.moveTo(this);
+            animationFalling(otherRobot, 1, 1);
             otherRobot.fell(height);
             return true;
         }

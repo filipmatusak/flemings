@@ -87,7 +87,7 @@ public abstract class Square extends Rectangle {
      * byt robot na inom policku alebo aj mrtvy. Tuto metodu spravidla
      * vola ine policko (horny sused).  V tejto triede vzdy vracia
      * false. */
-    public boolean fallingRobot(Robot otherRobot, int height) {
+    public boolean fallingRobot(Robot otherRobot, int height, Integer downMax) {
         if(height>1) {
             otherRobot.fell(height-1);
         }

@@ -28,7 +28,7 @@ public class ExitSquare extends EmptySquare {
     }
 
     @Override
-    public boolean fallingRobot(Robot otherRobot, int height) {
+    public boolean fallingRobot(Robot otherRobot, int height, Integer downMax) {
         if (myRobot != null) {
             throw new RobotException("There should not be a robot in exit");
         }

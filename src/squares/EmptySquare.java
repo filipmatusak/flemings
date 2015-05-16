@@ -74,12 +74,13 @@ public class EmptySquare extends RobotHolder {
     }
 
     @Override
-    public boolean fallingRobot(Robot otherRobot, int height) {
+    public boolean fallingRobot(Robot otherRobot, int height, Integer downMax) {
         // ak mame na policku robota
+        if(downMax == 0) return false;
         if(myRobot == null || myRobot==otherRobot){
             // toto policko je teraz prazdne, prijmeme noveho robota
          //   System.out.println("down");
-            animationFalling(otherRobot, height);
+            animationFalling(otherRobot, height, downMax);
             return true;
         }
         else {
@@ -108,7 +109,7 @@ public class EmptySquare extends RobotHolder {
     @Override
     protected void emptiedBelow() {
         if (myRobot != null) {
-            down.fallingRobot(myRobot, 1);
+            down.fallingRobot(myRobot, 1, Integer.MAX_VALUE);
         }
     }
 
@@ -184,7 +185,7 @@ public class EmptySquare extends RobotHolder {
             @Override
             public void handle(ActionEvent event) {
           //      otherRobot.moveTo(thiz);
-                if(!down.fallingRobot(otherRobot, 1)){
+                if(!down.fallingRobot(otherRobot, 1, Integer.MAX_VALUE)){
                     otherRobot.endMoving();
                     thiz.world.timeLine.endAct(otherRobot);
                 }
@@ -195,7 +196,7 @@ public class EmptySquare extends RobotHolder {
     /**
      * animacia padania
      */
-    public void animationFalling(Robot otherRobot, int height){
+    public void animationFalling(Robot otherRobot, int height, Integer downMax){
         Timeline tl = new Timeline(new KeyFrame(Duration.millis(100.0 / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -210,7 +211,7 @@ public class EmptySquare extends RobotHolder {
                 otherRobot.moveTo(thiz);
                 // skusime, ci moze padnut este nizsie (zvysime height)
            //     System.out.println("down");
-                if(!down.fallingRobot(otherRobot, height + 1)) {
+                if(!down.fallingRobot(otherRobot, height + 1, downMax -1)) {
                     //     world.timeLine.play();
                     otherRobot.endMoving();
                     world.timeLine.endAct(otherRobot);
