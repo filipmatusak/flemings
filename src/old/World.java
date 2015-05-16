@@ -24,6 +24,7 @@ public class World {
     protected ArrayList<Robot> robots;
     Pane pane;
     int sizeOfSquare;
+    Map map;
 
     /** Konstruktor, ktory dostane pole stvorcekov
      * a inicializuje hernu situaciu s 0 robotmi.
@@ -31,6 +32,7 @@ public class World {
     public World(Map map, int entryRow, int entryCol, Pane pane_, int s, Main root) {
         this.root = root;
         sizeOfSquare = s;
+        this.map = map;
         pane = pane_;
         robots = new ArrayList<>(); // vytvorime prazdne pole robotov
         this.squares = map.getMap();            // ulozime si pole stvrcekov
@@ -68,6 +70,11 @@ public class World {
     /** Do hry prida noveho robota. */
     public void addRobot(Robot newRobot) {
         robots.add(newRobot);  // pridame ho do pola robotov
+
+        newRobot.setY(entryRow*map.getSquareSize());
+        newRobot.setX(entryCol*map.getSquareSize());
+
+        pane.getChildren().add(newRobot);
 
         System.out.println("Adding robot " + newRobot.getId());
         // pridame ho na vstupne policko, ak tam je volno

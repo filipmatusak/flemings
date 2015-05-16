@@ -55,8 +55,16 @@ public class Robot extends ImageView {
         this(10,10,"");
     }
 
+    public void setPosition(Double x, Double y){
+        this.setX(x);
+        this.setY(y);
+    }
+
     public Robot(int changeTime, int maxHeight, String id) {
+
         super();
+        //TODO dat prec casy???
+        changeTime = 1000000;
 
         super.setImage(image);
         this.setFitWidth(new Map(null, 0, 0).getSquareSize());
@@ -122,6 +130,10 @@ public class Robot extends ImageView {
         }
         // zaregistrujme nove policko
         mySquare = newSquare;
+
+        //iba surovo
+      //  this.setPosition(newSquare.getX(), newSquare.getY());
+
         mySquare.registerRobot(this);
     }
 

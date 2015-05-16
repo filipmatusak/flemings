@@ -34,7 +34,7 @@ public class Map {
      * Vrati X-ovu suradnicu vstupneho policka v mape
      * @return
      */
-    public int getEntryX(){
+    public Integer getEntryX(){
         for (int i=0; i<height; i++){
             for (int j=0; j<width; j++){
                 if(map[i][j] instanceof EntrySquare){
@@ -49,7 +49,7 @@ public class Map {
      * Vrati Y-ovu suradnicu vstupneho policka v mape
      * @return
      */
-    public int getEntryY(){
+    public Integer getEntryY(){
         for (int i=0; i<height; i++){
             for (int j=0; j<width; j++){
                 if(map[i][j] instanceof EntrySquare){

@@ -8,15 +8,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import old.World;
-import robots.DiggingRobot;
 import robots.Robot;
 import squares.Square;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.TreeMap;
-
-import static java.lang.Thread.sleep;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Game {
     Main root;
@@ -28,16 +26,19 @@ public class Game {
     Pane gamePane;
     VBox infoPane;
     int maxMoves; //maximalne trvanie hry, malo by byt urcene levelom
-    TreeMap<Integer, Robot> robots;
+    //TreeMap<Integer, Robot> robots;
+    Queue<Robot> robots;
     Integer time;
     Label currentTime;
-    Double timePerior;
+    GameTimeLine timeLine;
+
 
     public Game(Main root, Map map){
         this.root = root;
         this.map = map;
         this.maxMoves = 100; //docasne
-        this.robots = new TreeMap<>();
+      //  this.robots = new TreeMap<>();
+        this.robots = new LinkedList<>();
         this.time = 0;
         this.pane = new BorderPane();
         this.gamePane = new Pane();
@@ -46,22 +47,55 @@ public class Game {
         this.stage = new Stage();
         this.scene = new Scene(pane);
         this.world = new World(map,map.getEntryX(), map.getEntryY(),gamePane,map.getSquareSize(),root);
+
+        timeLine = new GameTimeLine(root);
+
+       /* gamePane.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override
+            public void handle(ScrollEvent event) {
+                if(event.) timeLine.slower();
+                else timeLine.faster();
+            }
+        });*/
+    }
+
+    public void move(){
+        //     System.out.println(time + ":");
+        boolean wasMove = world.move(); // sprav tah kazdym robotom
+    /*    if (robots.containsKey(time)) {
+            world.addRobot(robots.get(time));
+            robots.remove(time);  */
+        if(!robots.isEmpty()){
+            world.addRobot(robots.remove());
+        } else {
+            // ak sa uz minuli novi roboti a nikto nie je aktivny, skoncime
+            if (robots.size() == 0 && !wasMove) {
+                timeLine.stop();
+                return;
+            }
+        }
+      //  this.redraw();
+        this.time++;
+
+        world.printStats(); // vypiseme celkove statistiky*/
     }
 
     public void run() throws InterruptedException {
         this.init();
         System.out.println("Initial configuration");
         world.printSituation();
-        robots.put(1, new Robot("eva"));
-        robots.put(3, new DiggingRobot("walle"));
+     //   robots.put(1, new Robot("eva"));
+     //   robots.put(3, new DiggingRobot("walle"));
+        robots.add(new Robot("eva"));
+        robots.add(new Robot("walle"));
 
-
+        timeLine.start();
 
         /**
          * Samotna hra - v cykle vykonava akcie robotov a pridava novych. Namiesto podmienky time < 5 musi byt ina,
          * asi cas + kym je nazive nejaky robot + kym je aktivny nejaky robot alebo neaktivny a je co pridavat
          * Teraz to nefunguje, preto je podmienka 0<0, vid NOTES
-         */
+         *//*
         while (this.time < 0) {
                 //     System.out.println(time + ":");
                 boolean wasMove = world.move(); // sprav tah kazdym robotom
@@ -79,8 +113,9 @@ public class Game {
                 sleep(1000);
                 this.time++;
             }
-            world.printStats(); // vypiseme celkove statistiky
+            world.printStats(); // vypiseme celkove statistiky*/
         }
+
 
     /**
      * NEFUNKCNE - funguje len prvy raz

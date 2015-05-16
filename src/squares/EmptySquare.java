@@ -58,6 +58,10 @@ public class EmptySquare extends Square implements RobotHolder {
         } else {
             // ak nemame robota, tak ho posunime na aktualne policko,
             // skusime ci padne nizsie a vratime true.
+
+            //iba surovo
+            otherRobot.setPosition(this.getX(), this.getY());
+
             otherRobot.moveTo(this);
             down.fallingRobot(otherRobot, 1);
             return true;
@@ -87,6 +91,8 @@ public class EmptySquare extends Square implements RobotHolder {
         if (myRobot == null) {
             throw new RobotException("Cannot move null robot right");
         }
+
+        //najprv iba surovo
         if (direction == Direction.RIGHT) {
             return right.receiveRobot(myRobot);
         } else {

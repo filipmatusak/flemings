@@ -5,8 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import robots.Robot;
 
 /**
@@ -51,6 +49,11 @@ public class ButtonRobot extends HBox {
             public void handle(MouseEvent event) {
                 if (getCount() > 0){
                     /** TODO:Pridat robota do hry */
+                    try {
+                        root.game.robots.add(robot.getClass().newInstance());
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                     setCount(getCount() - 1);
                 }
             }
