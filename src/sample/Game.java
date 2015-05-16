@@ -61,6 +61,7 @@ public class Game {
 
     public void move(){
         //     System.out.println(time + ":");
+        Square[][] oldMap = world.squares.clone();
         boolean wasMove = world.move(); // sprav tah kazdym robotom
     /*    if (robots.containsKey(time)) {
             world.addRobot(robots.get(time));

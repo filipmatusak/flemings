@@ -28,8 +28,8 @@ public abstract class Square extends Rectangle {
      */
     protected World world;
 
-    Color color;
-    int size;
+    public Color color;
+    public int size;
 
 
     public void setSize(int s){

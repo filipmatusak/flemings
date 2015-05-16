@@ -3,11 +3,10 @@ package squares;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import old.Direction;
-import robots.Robot;
 import old.RobotException;
-import old.RobotHolder;
+import robots.Robot;
 
-public class GlueSquare extends EmptySquare implements RobotHolder {
+public class GlueSquare extends EmptySquare {
 
     /** Na toto policko zhora pada robot, pricom zatial ide o pad z
      * vysky height. Ak uz mame robota, posleme mu, ze ho zabil pad

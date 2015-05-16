@@ -14,7 +14,7 @@ public class World {
 
     Main root;
     /** 2D pole stvorcekov */
-    protected Square[][] squares;
+    public Square[][] squares;
     /** pocet riadkov a stlpcov v poli stvrocekov */
     protected int nRows, nCols;
     /** poloha vstupneho stvorceka */
@@ -62,6 +62,8 @@ public class World {
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
                 printSituation();         // vypis celu plochu
+            } else {
+                pane.getChildren().remove(robot);
             }
         }
         return wasMove;
@@ -71,8 +73,8 @@ public class World {
     public void addRobot(Robot newRobot) {
         robots.add(newRobot);  // pridame ho do pola robotov
 
-        newRobot.setY(entryRow*map.getSquareSize());
-        newRobot.setX(entryCol*map.getSquareSize());
+     //   newRobot.setY(entryRow*map.getSquareSize());
+      //  newRobot.setX(entryCol*map.getSquareSize());
 
         pane.getChildren().add(newRobot);
 

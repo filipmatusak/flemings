@@ -132,7 +132,7 @@ public class Robot extends ImageView {
         mySquare = newSquare;
 
         //iba surovo
-      //  this.setPosition(newSquare.getX(), newSquare.getY());
+        this.setPosition(newSquare.getX(), newSquare.getY());
 
         mySquare.registerRobot(this);
     }

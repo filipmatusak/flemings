@@ -11,7 +11,7 @@ import old.RobotHolder;
  * a nemusi prave byt nejaky robot. Musi sa vyrovnat s tahmi tohto robota
  * a ich dosledkami, ako napr. padanie robotov.
  */
-public class EmptySquare extends Square implements RobotHolder {
+public class EmptySquare extends RobotHolder {
 
     /** Robot pritomny na policku, alebo null, ak tam ziaden nie je. */
     Robot myRobot;
@@ -60,7 +60,7 @@ public class EmptySquare extends Square implements RobotHolder {
             // skusime ci padne nizsie a vratime true.
 
             //iba surovo
-            otherRobot.setPosition(this.getX(), this.getY());
+         //   otherRobot.setPosition(this.getX(), this.getY());
 
             otherRobot.moveTo(this);
             down.fallingRobot(otherRobot, 1);
@@ -75,6 +75,7 @@ public class EmptySquare extends Square implements RobotHolder {
             if (height > 1) {  // ukoncime pad ineho robota
                 otherRobot.fell(height - 1);
             }
+            
             myRobot.killed();
             return false;
         } else {
