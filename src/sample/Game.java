@@ -1,11 +1,11 @@
 package sample;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import old.World;
 import robots.DiggingRobot;
@@ -31,6 +31,7 @@ public class Game {
     TreeMap<Integer, Robot> robots;
     Integer time;
     Label currentTime;
+    Double timePerior;
 
     public Game(Main root, Map map){
         this.root = root;
@@ -53,6 +54,8 @@ public class Game {
         world.printSituation();
         robots.put(1, new Robot("eva"));
         robots.put(3, new DiggingRobot("walle"));
+
+
 
         /**
          * Samotna hra - v cykle vykonava akcie robotov a pridava novych. Namiesto podmienky time < 5 musi byt ina,

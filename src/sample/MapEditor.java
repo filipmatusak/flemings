@@ -15,7 +15,6 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
-import robots.Robot;
 import squares.EmptySquare;
 import squares.EntrySquare;
 import squares.ExitSquare;
@@ -61,8 +60,6 @@ public class MapEditor {
 
         open();
         setClearMap();
-
-        drawingPane.getChildren().add(new Robot(10,10,""));
 
     }
 
