@@ -5,6 +5,7 @@ import robots.Robot;
 import sample.GameTimeLine;
 import sample.Main;
 import sample.Map;
+import squares.EntrySquare;
 import squares.Square;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class World {
      * (niektori z nich mozu byt mrtvi, alebo ukonceni). */
     public ArrayList<Robot> robots;
     public GameTimeLine timeLine;
+    protected EntrySquare entrySquare;
     Pane pane;
     int sizeOfSquare;
     Map map;
@@ -40,6 +42,7 @@ public class World {
         this.squares = map.getMap();            // ulozime si pole stvrcekov
         nRows = squares.length;          // zistime rozmery pola
         nCols = squares[0].length;
+        entrySquare = (EntrySquare)squares[entryRow][entryCol];
         this.entryRow = entryRow;          // ulozime vstupny stvorcek
         this.entryCol = entryCol;
         registerSquares();        // kazdemu stvorceku oznamime svet a susedov
@@ -184,4 +187,6 @@ public class World {
     }
 
     public void setTimeLine(GameTimeLine t){ timeLine = t;}
+
+    public boolean canAddRobot(){return !entrySquare.hasRobot();}
 }

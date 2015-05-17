@@ -71,7 +71,7 @@ public class Game {
         System.out.println(time + ":");
         boolean wasMove = world.move(); // sprav tah kazdym robotom
         if(!robots.isEmpty()){
-            world.addRobot(robots.remove());
+            if(world.canAddRobot()) world.addRobot(robots.remove());
         } else {
             // ak sa uz minuli novi roboti a nikto nie je aktivny, skoncime
             if (robots.size() == 0 && !wasMove && !existReadyRobots()) {

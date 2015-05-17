@@ -29,6 +29,8 @@ public class EmptySquare extends RobotHolder {
         this.setStrokeWidth(0.05);
         thiz = this;
     }
+
+    public boolean hasRobot(){return myRobot != null;}
     /** Z policka odisiel robot, uprav si podla toho stav a vykonaj
      * dalsie nasledky tejto zmeny, napr. padajuci roboti z horneho
      * suseda.  Tuto metodu spravidla vola robot. */
@@ -80,6 +82,7 @@ public class EmptySquare extends RobotHolder {
         if(myRobot == null || myRobot==otherRobot){
             // toto policko je teraz prazdne, prijmeme noveho robota
          //   System.out.println("down");
+            otherRobot.moveTo(thiz);
             animationFalling(otherRobot, height, downMax);
             return true;
         }
@@ -146,7 +149,7 @@ public class EmptySquare extends RobotHolder {
         else a = this.right;
         b = new EmptySquare();
         b.setSize(size);
-        b.setY(size*a.row);
+        b.setY(size * a.row);
         b.setX(size*a.column);
         if(!a.toString().equals("S")) return false;
         this.world.newSquare(b, a.row, a.column);
@@ -176,7 +179,7 @@ public class EmptySquare extends RobotHolder {
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
         //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(100.0 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(500.0 / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setX(otherRobot.getX()+x);
@@ -212,7 +215,6 @@ public class EmptySquare extends RobotHolder {
         tl.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                otherRobot.moveTo(thiz);
                 // skusime, ci moze padnut este nizsie (zvysime height)
            //     System.out.println("down");
                 if(!down.fallingRobot(otherRobot, height + 1, downMax -1)) {

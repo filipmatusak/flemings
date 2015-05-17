@@ -13,6 +13,7 @@ import robots.Robot;
  * v komunikácii so susedmi sa vyrovnajú aj s ich následkami.
  */
 public abstract class Square extends Rectangle {
+
     /**
      * Susedny stvorcek
      */
