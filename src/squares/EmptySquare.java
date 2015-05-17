@@ -10,6 +10,7 @@ import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
 import robots.Robot;
+import sample.GameTimeLine;
 
 /** Tato trieda reprezentuje prazdne policko, na ktorom moze
  * a nemusi prave byt nejaky robot. Musi sa vyrovnat s tahmi tohto robota
@@ -148,9 +149,6 @@ public class EmptySquare extends RobotHolder {
         if(direction == Direction.LEFT) a = this.left;
         else a = this.right;
         b = new EmptySquare();
-        b.setSize(size);
-        b.setY(size * a.row);
-        b.setX(size*a.column);
         if(!a.toString().equals("S")) return false;
         this.world.newSquare(b, a.row, a.column);
         b.up.emptiedBelow();
@@ -179,7 +177,7 @@ public class EmptySquare extends RobotHolder {
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
         //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(500.0 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/2 / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setX(otherRobot.getX()+x);
@@ -204,7 +202,7 @@ public class EmptySquare extends RobotHolder {
      * animacia padania
      */
     public void animationFalling(Robot otherRobot, int height, Integer downMax){
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(100.0 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/10 / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setY(otherRobot.getY()+1);

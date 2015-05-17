@@ -166,6 +166,9 @@ public class World {
         pane.getChildren().remove(squares[row][col]);
         pane.getChildren().add(square);
         square.toBack();
+        square.setSize(sizeOfSquare);
+        square.setY(sizeOfSquare * row);
+        square.setX(sizeOfSquare*col);
         squares[row][col] = square;
         square.registerWorld(this, row, col);
         if (row > 0) {

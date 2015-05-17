@@ -15,15 +15,16 @@ import java.util.TreeSet;
 public class GameTimeLine {
     Main root;
     Timeline timeline;
-    Double timePerior;
+    static Double timePeriod;
     Duration duration;
     Integer actions;
     TreeSet<Integer> movingRobots;
 
+
     public GameTimeLine(Main root){
         this.root = root;
-        timePerior = 1000.0;
-        duration = Duration.millis(timePerior);
+        timePeriod = 500.0;
+        duration = Duration.millis(timePeriod);
         timeline = new Timeline(new KeyFrame(duration, new Action()));
         timeline.setCycleCount(Timeline.INDEFINITE);
         actions = 0;
@@ -53,9 +54,9 @@ public class GameTimeLine {
      * zmena periody o deltu v milisekundach
      */
     void changeTimePeriod(Double delta){
-        timePerior += delta;
-        timePerior = Double.max(timePerior, 1);
-        duration = Duration.millis(timePerior);
+        timePeriod += delta;
+        timePeriod = Double.max(timePeriod, 1);
+        duration = Duration.millis(timePeriod);
         timeline.stop();
         timeline = new Timeline(new KeyFrame(duration, new Action()));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -80,6 +81,8 @@ public class GameTimeLine {
         movingRobots.remove(robot.hashCode());
    //     if(movingRobots.size()==0) play();
     }
+
+    public static Double getPeriod(){ return timePeriod; }
 
 
 }
