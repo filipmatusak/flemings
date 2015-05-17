@@ -1,9 +1,15 @@
 package squares;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import old.Direction;
 import old.RobotException;
 import robots.Robot;
+import sample.GameTimeLine;
 
 public class GlueSquare extends EmptySquare {
 
@@ -18,6 +24,7 @@ public class GlueSquare extends EmptySquare {
         this.setStroke(Color.BLACK);
         this.setStrokeWidth(0.05);
     }
+
     @Override
     public boolean fallingRobot(Robot otherRobot, int height, Integer downMax) {
         // ak mame na policku robota
@@ -30,7 +37,7 @@ public class GlueSquare extends EmptySquare {
         } else {
             // toto policko je teraz prazdne, prijmeme noveho robota
             otherRobot.moveTo(this);
-            animationFalling(otherRobot, 1, 1);
+            animationFalling(otherRobot, 1, 0);
             otherRobot.fell(height);
             return true;
         }
@@ -82,6 +89,33 @@ public class GlueSquare extends EmptySquare {
             if(move) animationMove(otherRobot);
             return true;
         }
+    }
+
+    /**
+     * animacia pohybu
+     * */
+    public void animationMove(Robot otherRobot){
+        //ktorym smerom sa ideme hybat
+        final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
+        //postupny pohyb robota;
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod() / this.size), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                otherRobot.setX(otherRobot.getX()+x);
+            }
+        }));
+        tl.setCycleCount(this.size);
+        tl.play();
+        //na konci robota skusi nechat spadnut, ak nejde, uvolni tah
+        tl.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //      otherRobot.moveTo(thiz);
+                    otherRobot.endMoving();
+                    thiz.world.timeLine.endAct(otherRobot);
+
+            }
+        });
     }
 
 

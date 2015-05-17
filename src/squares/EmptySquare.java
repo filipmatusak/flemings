@@ -136,6 +136,8 @@ public class EmptySquare extends RobotHolder {
     @Override
     public void exploding() {
         if(myRobot != null) myRobot.killed();
+        Square b = new EmptySquare();
+        this.world.newSquare(b, row, column);
     }
 
     /** Aktualny robot z tohto policka chce kopat.  Bud mu akciu
@@ -177,7 +179,7 @@ public class EmptySquare extends RobotHolder {
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
         //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/2 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod() / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setX(otherRobot.getX()+x);
@@ -215,7 +217,7 @@ public class EmptySquare extends RobotHolder {
             public void handle(ActionEvent event) {
                 // skusime, ci moze padnut este nizsie (zvysime height)
            //     System.out.println("down");
-                if(!down.fallingRobot(otherRobot, height + 1, downMax -1)) {
+                if( downMax > 0 && !down.fallingRobot(otherRobot, height + 1, downMax -1)) {
                     //     world.timeLine.play();
                     otherRobot.endMoving();
                     world.timeLine.endAct(otherRobot);
