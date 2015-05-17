@@ -54,6 +54,10 @@ public class World {
         }
     }
 
+    public Square[][] getSquare() {
+        return squares;
+    }
+
     /** Vykona jeden tah hry, t.j. necha kazdeho aktivneho robota
      * spravit tah a vrati true, ak je aspon jeden aktivny robot. */
     public boolean move() {
@@ -72,6 +76,7 @@ public class World {
             } else if(robot.isMoving()) {
             } else  {
                 pane.getChildren().remove(robot);
+                robot.endMoving();
                 //     root.game.timeLine.play();
             }
 

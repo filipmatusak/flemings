@@ -29,6 +29,20 @@ public class DiggingRobot extends Robot {
         else normalMove();
     }
 
+    @Override
+    protected void normalMove() {
+        if(this.mySquare.actionDigging(this.direction)) {
+           // endMoving();
+        }
+        else{
+            boolean success = mySquare.actionMove(direction);
+            if (!success) {
+                direction = direction.otherDirection();
+            }
+        }
+     //   endMoving();
+    }
+
     /** Vytvori jednoznakovu textovu reprezentaciu robota podla stavu */
     @Override
     public String toString() {

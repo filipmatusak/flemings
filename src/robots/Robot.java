@@ -210,7 +210,7 @@ public class Robot extends ImageView {
     }
 
     /** Spravi alternativny tah robota, t.j. nerobi nic. */
-    protected void alternativeMove() {}
+    protected void alternativeMove() {endMoving();}
 
     public String getName(){
         return this.id;
