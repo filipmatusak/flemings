@@ -160,6 +160,9 @@ public class World {
      * stat robot.
      */
     public void newSquare(Square square, int row, int col) {
+        pane.getChildren().remove(squares[row][col]);
+        pane.getChildren().add(square);
+        square.toBack();
         squares[row][col] = square;
         square.registerWorld(this, row, col);
         if (row > 0) {

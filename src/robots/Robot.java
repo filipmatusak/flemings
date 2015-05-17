@@ -161,6 +161,7 @@ public class Robot extends ImageView {
         }
         oldStatus = Status.KILLED;
         status = Status.KILLED;
+        endMoving();
     }
 
     /** Oznami robotovi, ze dosiahol koncove policko.

@@ -87,6 +87,7 @@ public class EmptySquare extends RobotHolder {
             if (height > 1) {  // ukoncime pad ineho robota
                 otherRobot.fell(height - 1);
             }
+            otherRobot.endMoving();
             myRobot.killed();
             return false;
         }
@@ -144,6 +145,9 @@ public class EmptySquare extends RobotHolder {
         if(direction == Direction.LEFT) a = this.left;
         else a = this.right;
         b = new EmptySquare();
+        b.setSize(size);
+        b.setY(size*a.row);
+        b.setX(size*a.column);
         if(!a.toString().equals("S")) return false;
         this.world.newSquare(b, a.row, a.column);
         b.up.emptiedBelow();

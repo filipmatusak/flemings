@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -13,6 +14,7 @@ import squares.Square;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.function.Predicate;
 
 public class Game {
     Main root;
@@ -100,11 +102,32 @@ public class Game {
      * Prekresli mapu a updatuje cas
      */
     public void redraw(){
-        gamePane.getChildren().clear();
-        for (Square[] aMap : map.getMap()) gamePane.getChildren().addAll(aMap);
+    //    gamePane.getChildren().clear();
+        gamePane.getChildren().removeAll(gamePane.getChildren().filtered(new Predicate<Node>() {
+            @Override
+            public boolean test(Node node) {
+                return node instanceof Square;
+            }
+        }));
+
+     //   System.out.println(); for(Node x: gamePane.getChildren()) System.out.print("* "); System.out.println();
+
+        for (Square[] aMap : world.getSquare()){
+            for(Square x: aMap){
+                try{
+                    x.toBack();
+                    gamePane.getChildren().add(x);
+                } catch (Exception e){
+
+                }
+            }
+
+        }
+        for(Robot robot: world.robots) robot.toFront();
         currentTime.setText("Current time: " + this.time.toString());
         infoPane.getChildren().remove(currentTime);
         infoPane.getChildren().add(currentTime);
+    //    gamePane.getChildren().addAll(world.robots);
     }
 
     /**

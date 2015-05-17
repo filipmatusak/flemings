@@ -32,7 +32,7 @@ public class DiggingRobot extends Robot {
     @Override
     protected void normalMove() {
         if(this.mySquare.actionDigging(this.direction)) {
-           // endMoving();
+            endMoving();
         }
         else{
             boolean success = mySquare.actionMove(direction);
