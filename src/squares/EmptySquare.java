@@ -91,6 +91,7 @@ public class EmptySquare extends RobotHolder {
             if (height > 1) {  // ukoncime pad ineho robota
                 otherRobot.fell(height - 1);
             }
+        //    otherRobot.moveTo(thiz);
             otherRobot.endMoving();
             myRobot.killed();
             return false;

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -24,6 +25,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         robotTypes = new AllRobots();
         mainStage = primaryStage;
+        mainStage.initStyle(StageStyle.UTILITY);
         menu = new Pane();
         map = new Map(this, 30, 60);
 

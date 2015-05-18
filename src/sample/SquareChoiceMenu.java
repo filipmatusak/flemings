@@ -6,6 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import squares.Square;
@@ -33,6 +34,7 @@ public class SquareChoiceMenu {
         this.mapEditor = mapEditor;
         stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
+        stage.initModality(Modality.APPLICATION_MODAL);
         pane = new Pane();
         allTypes = new AllSquares().getTypes();
         row = (allTypes.size()+1)/col;
@@ -43,6 +45,7 @@ public class SquareChoiceMenu {
 
         scene.setOnMouseExited(event -> {
             if(isIn){
+                System.out.println("mimo okna");
                 close();
             }
         });
