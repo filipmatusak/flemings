@@ -77,6 +77,7 @@ public class World {
                 wasMove = true;  // nasli sme aktivneho
                 printSituation();         // vypis celu plochu
             } else if(robot.isMoving()) {
+                wasMove = true;
             } else  {
                 pane.getChildren().remove(robot);
                 robot.endMoving();

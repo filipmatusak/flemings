@@ -180,7 +180,7 @@ public class EmptySquare extends RobotHolder {
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
         //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod() / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/3 / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setX(otherRobot.getX()+x);
@@ -205,7 +205,7 @@ public class EmptySquare extends RobotHolder {
      * animacia padania
      */
     public void animationFalling(Robot otherRobot, int height, Integer downMax){
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/10 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/40 / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setY(otherRobot.getY()+1);

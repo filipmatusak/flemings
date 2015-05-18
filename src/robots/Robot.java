@@ -132,7 +132,7 @@ public class Robot extends ImageView {
             mySquare.deregisterRobot();
         }
         // zaregistrujme nove policko
-     //   this.setPosition(newSquare.getX(), newSquare.getY());
+      //  this.setPosition(newSquare.getX(), newSquare.getY());
         mySquare = newSquare;
         mySquare.registerRobot(this);
     }

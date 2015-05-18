@@ -23,7 +23,7 @@ public class GameTimeLine {
 
     public GameTimeLine(Main root){
         this.root = root;
-        timePeriod = 300.0;
+        timePeriod = 1000.0;
         duration = Duration.millis(timePeriod);
         timeline = new Timeline(new KeyFrame(duration, new Action()));
         timeline.setCycleCount(Timeline.INDEFINITE);
