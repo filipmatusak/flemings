@@ -136,6 +136,28 @@ public class World {
         System.out.println("The number of robots finished: " + numFinished);
     }
 
+    /** Metoda vrati pocet uspesnych robotov */
+    public int getNumFinished(){
+        int numFinished = 0;
+        for (Robot robot : robots) { // spocitaj uspesnych
+            if (robot.isFinished()) {
+                numFinished++;
+            }
+        }
+        return numFinished;
+    }
+
+    /** Metoda vrati pocet zabitych robotov */
+    public int getNumKilled(){
+        int numKilled = 0;
+        for (Robot robot : robots) { // spocitaj uspesnych
+            if (robot.isKilled()) {
+                numKilled++;
+            }
+        }
+        return numKilled;
+    }
+
     /** Pomocna metoda pre konstruktor, kazdemu stvorceku oznami
      * svet a suradnice */
     private void registerSquares() {

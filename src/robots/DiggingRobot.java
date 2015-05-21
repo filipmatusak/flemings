@@ -1,9 +1,12 @@
 package robots;
 
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import old.Direction;
 
 public class DiggingRobot extends Robot {
+    Image image = new Image(getClass().getResourceAsStream("../graphics/robots/walle.png"));
+
 
     public DiggingRobot(int changeTime, int maxHeight, String id) {
         super(changeTime, maxHeight, id);

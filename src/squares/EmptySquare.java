@@ -25,7 +25,8 @@ public class EmptySquare extends RobotHolder {
 
     public EmptySquare(){
         super();
-        this.setColor(Color.BROWN);
+        this.setColor(Color.BEIGE);
+        //this.setColor(Color.BROWN);
         this.setStroke(Color.BLACK);
         this.setStrokeWidth(0.05);
         thiz = this;

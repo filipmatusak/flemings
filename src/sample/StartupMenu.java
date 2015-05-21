@@ -12,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.logging.Level;
 
 public class StartupMenu {
@@ -72,6 +74,22 @@ public class StartupMenu {
         Button load = new Button("LOAD SAVED");
         load.setPrefWidth(width);
         setButtonStyle(load);
+        load.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                File file = root.fileCreator.openFile(stage, false);
+                try {
+                    Map map = root.mapConvertor.fileToMap(file);
+                    root.game = new Game(root, map);
+                    stage.close();
+                    root.game.run();
+                } catch (Exception e){
+                    ExceptionPrinter.print("Illegal Operation!");
+                }
+            }
+        });
+
+
         Button exit = new Button("QUIT GAME");
         exit.setPrefWidth(width);
         setButtonStyle(exit);
