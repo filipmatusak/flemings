@@ -77,4 +77,16 @@ public class Map {
         }
         return mapView;
     }
+
+    @Override
+    public Map clone(){
+        Map clone = new Map(this.root, this.height, this.width);
+        clone.map = new Square[height][width];
+        for (int i=0; i<height; i++){
+            for (int j=0; j<width; j++){
+                clone.map[i][j] = this.map[i][j];
+            }
+        }
+        return clone;
+    }
 }
