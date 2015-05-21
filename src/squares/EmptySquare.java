@@ -21,7 +21,9 @@ public class EmptySquare extends RobotHolder {
     /** Robot pritomny na policku, alebo null, ak tam ziaden nie je. */
     Robot myRobot;
     RobotHolder thiz;
-    Boolean moveFinished;
+    //upravuju rychlost animacii
+    final Double fallingConst = 40.0;
+    final Double movingConst = 3.0;
 
     public EmptySquare(){
         super();
@@ -67,7 +69,6 @@ public class EmptySquare extends RobotHolder {
         if (myRobot != null) {
        //     world.timeLine.play();
             otherRobot.endMoving();
-            world.timeLine.endAct(otherRobot);
             return false;
         } else {
             otherRobot.moveTo(this);
@@ -177,10 +178,11 @@ public class EmptySquare extends RobotHolder {
      * animacia pohybu
      * */
     public void animationMove(Robot otherRobot){
+
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
         //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/3 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/movingConst / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setX(otherRobot.getX()+x);
@@ -195,7 +197,7 @@ public class EmptySquare extends RobotHolder {
           //      otherRobot.moveTo(thiz);
                 if(!down.fallingRobot(otherRobot, 1, Integer.MAX_VALUE)){
                     otherRobot.endMoving();
-                    thiz.world.timeLine.endAct(otherRobot);
+
                 }
             }
         });
@@ -205,7 +207,7 @@ public class EmptySquare extends RobotHolder {
      * animacia padania
      */
     public void animationFalling(Robot otherRobot, int height, Integer downMax){
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/40 / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/fallingConst / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setY(otherRobot.getY()+1);
@@ -221,7 +223,6 @@ public class EmptySquare extends RobotHolder {
                 if( downMax > 0 && !down.fallingRobot(otherRobot, height + 1, downMax -1)) {
                     //     world.timeLine.play();
                     otherRobot.endMoving();
-                    world.timeLine.endAct(otherRobot);
                 }
             }
         });

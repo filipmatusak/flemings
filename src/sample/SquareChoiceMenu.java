@@ -45,7 +45,6 @@ public class SquareChoiceMenu {
 
         scene.setOnMouseExited(event -> {
             if(isIn){
-                System.out.println("mimo okna");
                 close();
             }
         });

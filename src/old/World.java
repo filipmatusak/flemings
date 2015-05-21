@@ -70,7 +70,6 @@ public class World {
             // ktore hybu robotmi si ho musia opat spustit
         //    root.game.timeLine.pause();
             if (robot.isActive()) { // ak mame aktivneho robota
-                root.game.timeLine.addAct(robot);
                 robot.setMoving();
                 System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah

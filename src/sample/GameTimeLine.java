@@ -5,7 +5,6 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
-import robots.Robot;
 
 import java.util.TreeSet;
 
@@ -71,16 +70,6 @@ public class GameTimeLine {
     }
     public void pause(){ timeline.stop();}
     public void play(){ timeline.play();}
-
-    public void addAct(Robot robot){
-        movingRobots.add(robot.hashCode());
-   //     pause();
-    }
-
-    public void endAct(Robot robot){
-        movingRobots.remove(robot.hashCode());
-   //     if(movingRobots.size()==0) play();
-    }
 
     public static Double getPeriod(){ return timePeriod; }
 

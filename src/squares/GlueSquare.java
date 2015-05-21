@@ -19,6 +19,11 @@ public class GlueSquare extends EmptySquare {
      * policko.  Z tejto funkcie vsak vratime false, lebo sa nepadalo
      * rovno dalej.  Ked je policko prazdne, prilepime noveho robota.
      */
+
+    //upravuju rychlost animacii
+    final Double fallingConst = 1.0;
+    final Double movingConst = 1.0;
+
     public GlueSquare(){
         this.setColor(Color.GREENYELLOW);
         this.setStroke(Color.BLACK);
@@ -49,9 +54,7 @@ public class GlueSquare extends EmptySquare {
         if (myRobot == null) {
             throw new RobotException("Cannot move null robot right");
         }
-        //     world.timeLine.play();
         myRobot.endMoving();
-        world.timeLine.endAct(myRobot);
         return false;
     }
 
@@ -80,9 +83,7 @@ public class GlueSquare extends EmptySquare {
     public boolean receiveRobot(Robot otherRobot, Boolean move) {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
-            //     world.timeLine.play();
             otherRobot.endMoving();
-            world.timeLine.endAct(otherRobot);
             return false;
         } else {
             otherRobot.moveTo(this);
@@ -98,7 +99,7 @@ public class GlueSquare extends EmptySquare {
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
         //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod() / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/movingConst / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setX(otherRobot.getX()+x);
@@ -112,11 +113,33 @@ public class GlueSquare extends EmptySquare {
             public void handle(ActionEvent event) {
                 //      otherRobot.moveTo(thiz);
                     otherRobot.endMoving();
-                    thiz.world.timeLine.endAct(otherRobot);
 
             }
         });
     }
 
-
+    /**
+     * animacia padania
+     */
+    public void animationFalling(Robot otherRobot, int height, Integer downMax){
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/ fallingConst/ this.size), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                otherRobot.setY(otherRobot.getY() + 1);
+            }
+        }));
+        tl.setCycleCount(this.size);
+        tl.play();
+        tl.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // skusime, ci moze padnut este nizsie (zvysime height)
+                //     System.out.println("down");
+                if( downMax > 0 && !down.fallingRobot(otherRobot, height + 1, downMax -1)) {
+                    //     world.timeLine.play();
+                    otherRobot.endMoving();
+                }
+            }
+        });
+    }
 }
