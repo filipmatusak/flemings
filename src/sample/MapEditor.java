@@ -73,7 +73,7 @@ public class MapEditor {
         selectedColor = null;
 
         scene = new Scene(pane);
-        stage.setHeight(height*m.squareSize + 30);
+        stage.setHeight(height*m.squareSize + 50);
         stage.setWidth(width*m.squareSize);
         stage.setResizable(false);
 
@@ -82,15 +82,14 @@ public class MapEditor {
 
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Menu");
+        MenuItem menuPlay = new MenuItem("Play");
         MenuItem menuSave = new MenuItem("Save");
         MenuItem menuClear = new MenuItem("Clear");
         MenuItem menuOpen = new MenuItem("Open");
         MenuItem menuExit = new MenuItem("Exit");
-        menu.getItems().add(menuOpen);
-        menu.getItems().add(menuSave);
-        menu.getItems().add(menuClear);
-        menu.getItems().add(menuExit);
+        menu.getItems().addAll(menuPlay, menuOpen, menuSave, menuClear, menuExit);
         menuBar.getMenus().add(menu);
+        menuPlay.setOnAction(event1 -> playThis());
         menuClear.setOnAction(event -> setClearMap());
         menuSave.setOnAction(event -> saveMap());
         menuOpen.setOnAction(event -> openMap());
@@ -133,6 +132,15 @@ public class MapEditor {
         }
         catch (FileNotFoundException e) {
           //  e.printStackTrace();
+        }
+    }
+
+    void playThis(){
+        stage.close();
+        try {
+            root.game.run();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

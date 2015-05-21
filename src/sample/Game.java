@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -7,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import old.World;
 import robots.Robot;
 import squares.Square;
@@ -31,6 +33,9 @@ public class Game {
     Integer time;
     Label currentTime;
     ArrayList<ButtonRobot> robotsMenu;
+    /** ciel hry - pocet robotov, ktorych treba zachranit */
+    int target;
+
     public GameTimeLine timeLine;
 
 
@@ -45,6 +50,14 @@ public class Game {
         this.infoPane = new VBox();
         this.currentTime = new Label();
         this.stage = new Stage();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>(
+        ) {
+            @Override
+            public void handle(WindowEvent event) {
+                timeLine.stop();
+                root.startup.run();
+            }
+        });
         this.scene = new Scene(pane);
         this.timeLine = new GameTimeLine(root);
         this.world = new World(map,map.getEntryX(), map.getEntryY(),gamePane,map.getSquareSize(),root);
@@ -77,6 +90,8 @@ public class Game {
             if (robots.size() == 0 && !wasMove && !existReadyRobots()) {
                 System.out.println("Nothing to do");
                 timeLine.stop();
+                stage.close();
+                finishedDialog();
                 return;
             }
         }
@@ -151,12 +166,25 @@ public class Game {
     }
 
     /**
-     * ci sa da este vyrobyt nejaky robot
+     * ci sa da este vyrobit nejaky robot
      */
     boolean existReadyRobots(){
         for(ButtonRobot i: robotsMenu) if(i.getCount()>0) return true;
         return false;
     }
 
+    private void finishedDialog(){
+        Pane dpane = new Pane();
+
+        Label finished = new Label("Number of robots finished: " + world.getNumFinished());
+        Label killed = new Label("Number of robots killed: "+ world.getNumKilled());
+        pane.getChildren().addAll(finished,killed);
+
+        Scene dscene = new Scene(dpane);
+        Stage dstage = new Stage();
+        dstage.setTitle("Game Finished");
+        dstage.setScene(dscene);
+        dstage.show();
+    }
 
 }

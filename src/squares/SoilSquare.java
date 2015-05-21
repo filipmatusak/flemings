@@ -1,5 +1,6 @@
 package squares;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class SoilSquare extends Square{
