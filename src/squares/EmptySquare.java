@@ -231,7 +231,6 @@ public class EmptySquare extends RobotHolder {
                 otherRobot.setPosition(thiz.getX(), thiz.getY());
                 if( downMax > 0 && !down.fallingRobot(otherRobot, height + 1, downMax -1)) {
                     //     world.timeLine.play();
-
                     otherRobot.endMoving();
                 }
             }
