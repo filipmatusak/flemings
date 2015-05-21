@@ -73,7 +73,7 @@ public class MapEditor {
         selectedColor = null;
 
         scene = new Scene(pane);
-        stage.setHeight(height*m.squareSize + 50);
+        stage.setHeight(height*m.squareSize + 30);
         stage.setWidth(width*m.squareSize);
         stage.setResizable(false);
 
