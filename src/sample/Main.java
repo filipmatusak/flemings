@@ -6,6 +6,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
+
 public class Main extends Application {
 
     public Scene scene;
@@ -44,6 +46,14 @@ public class Main extends Application {
 
     }
 
+    public void replayLevel(Map map) throws InterruptedException{
+        game = new Game(this,map);
+        try {
+            game.run();
+        } catch (InterruptedException e) {
+            //e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);

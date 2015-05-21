@@ -1,8 +1,10 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -22,6 +24,7 @@ public class Game {
     Main root;
     World world;
     Map map;
+    Map mapCopy;
     Stage stage;
     Scene scene;
     BorderPane pane;
@@ -34,7 +37,7 @@ public class Game {
     Label currentTime;
     ArrayList<ButtonRobot> robotsMenu;
     /** ciel hry - pocet robotov, ktorych treba zachranit */
-    int target;
+    int target = 0;
 
     public GameTimeLine timeLine;
 
@@ -42,6 +45,7 @@ public class Game {
     public Game(Main root, Map map){
         this.root = root;
         this.map = map;
+        this.mapCopy = map.clone();
         this.maxMoves = 100; //docasne
         this.robots = new LinkedList<>();
         this.time = 0;
@@ -175,16 +179,38 @@ public class Game {
 
     private void finishedDialog(){
         Pane dpane = new Pane();
-
+        VBox vbox = new VBox();
         Label finished = new Label("Number of robots finished: " + world.getNumFinished());
         Label killed = new Label("Number of robots killed: "+ world.getNumKilled());
-        pane.getChildren().addAll(finished,killed);
+        Label success = new Label();
+        if (world.getNumFinished() >= this.target){
+            success.setText("Level passed!");
+        }
+        else{
+            success.setText("Level failed!");
+        }
+        Button btnReplay = new Button("REPLAY");
 
-        Scene dscene = new Scene(dpane);
+        Button btnMenu = new Button("MENU");
+        Button btnQuit = new Button("QUIT");
+        vbox.getChildren().addAll(finished,killed,success,btnReplay,btnMenu,btnQuit);
+        dpane.getChildren().addAll(vbox);
+        Scene dscene = new Scene(dpane,200,200);
         Stage dstage = new Stage();
         dstage.setTitle("Game Finished");
         dstage.setScene(dscene);
         dstage.show();
-    }
 
+        btnReplay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dstage.close();
+                try {
+                    root.replayLevel(mapCopy);
+                } catch (InterruptedException e) {
+
+                }
+            }
+        });
+    }
 }
