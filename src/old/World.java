@@ -23,10 +23,10 @@ public class World {
     protected int entryRow, entryCol;
     /** zoznam robotov, ktore uz vosli do sveta
      * (niektori z nich mozu byt mrtvi, alebo ukonceni). */
-    public ArrayList<Robot> robots;
+    public static ArrayList<Robot> robots;
     public GameTimeLine timeLine;
     protected EntrySquare entrySquare;
-    Pane pane;
+    static Pane pane;
     int sizeOfSquare;
     Map map;
 
@@ -66,6 +66,7 @@ public class World {
     public boolean move() {
         boolean wasMove = false;
         for (Robot robot : robots) {
+            System.out.println("robot: " + robot.getName());
             // zastavime casovac kym sa nevykona tah robota, vsetky akcie,
             // ktore hybu robotmi si ho musia opat spustit
         //    root.game.timeLine.pause();
@@ -77,8 +78,10 @@ public class World {
                 printSituation();         // vypis celu plochu
             } else if(robot.isMoving()) {
                 wasMove = true;
-            } else  {
+            } else   {
+             //   System.out.println("killed");
                 pane.getChildren().remove(robot);
+                removeRobot(robot);
                 robot.endMoving();
                 //     root.game.timeLine.play();
             }
@@ -214,4 +217,9 @@ public class World {
     public void setTimeLine(GameTimeLine t){ timeLine = t;}
 
     public boolean canAddRobot(){return !entrySquare.hasRobot();}
+
+    public static void removeRobot(Robot r){
+        //robots.remove(r);
+        pane.getChildren().remove(r);
+    }
 }

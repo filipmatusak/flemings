@@ -19,7 +19,7 @@ public class FileCreator {
     public File openFile(Window window, Boolean save){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose File");
-    //    fileChooser.setInitialDirectory(new File("src/saves"));
+     //   fileChooser.setInitialDirectory(new File("../maps/"));
         File file;
         if(save) file = fileChooser.showSaveDialog(window);
         else file = fileChooser.showOpenDialog(window);

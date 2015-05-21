@@ -9,6 +9,7 @@ import javafx.util.Duration;
 import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
+import old.World;
 import robots.Robot;
 import sample.GameTimeLine;
 
@@ -46,6 +47,7 @@ public class EmptySquare extends RobotHolder {
           //  throw new RobotException("No robot to deregister");
         }
         // zrusime si robota
+    //    if(myRobot.isKilled()) world.removeRobot(myRobot);
         myRobot = null;
         // u horneho suseda sa musia vyrovnat s nasledkami vyprazdneneho policka
         up.emptiedBelow();
@@ -86,6 +88,9 @@ public class EmptySquare extends RobotHolder {
             // toto policko je teraz prazdne, prijmeme noveho robota
          //   System.out.println("down");
             otherRobot.moveTo(thiz);
+            if(down != null && down instanceof EmptySquare && ((EmptySquare) down).myRobot != null){
+                ((EmptySquare) down).myRobot.killed();
+            }
             animationFalling(otherRobot, height, downMax);
             return true;
         }
@@ -197,6 +202,7 @@ public class EmptySquare extends RobotHolder {
             public void handle(ActionEvent event) {
           //      otherRobot.moveTo(thiz);
                 if(!down.fallingRobot(otherRobot, 1, Integer.MAX_VALUE)){
+            //        otherRobot.setPosition(thiz.getX(), thiz.getY());
                     otherRobot.endMoving();
 
                 }
@@ -211,7 +217,8 @@ public class EmptySquare extends RobotHolder {
         Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/fallingConst / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                otherRobot.setY(otherRobot.getY()+1);
+                 if(!otherRobot.isKilled()) otherRobot.setY(otherRobot.getY()+1);
+                else World.removeRobot(otherRobot);
             }
         }));
         tl.setCycleCount(this.size);
@@ -221,8 +228,10 @@ public class EmptySquare extends RobotHolder {
             public void handle(ActionEvent event) {
                 // skusime, ci moze padnut este nizsie (zvysime height)
            //     System.out.println("down");
+                otherRobot.setPosition(thiz.getX(), thiz.getY());
                 if( downMax > 0 && !down.fallingRobot(otherRobot, height + 1, downMax -1)) {
                     //     world.timeLine.play();
+
                     otherRobot.endMoving();
                 }
             }

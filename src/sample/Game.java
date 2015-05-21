@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import old.Direction;
 import old.World;
 import robots.Robot;
 import squares.Square;
@@ -105,12 +106,39 @@ public class Game {
         this.init();
         System.out.println("Initial configuration");
         world.printSituation();
-      //  robots.add(new Robot("eva"));
-     //   robots.add(new Robot("walle"));
+
+     //   debug();
+
+//        robots.add(new Robot("eva"));
+//        robots.add(new Robot("walle"));
 
         timeLine.start();
         }
 
+    void debug(){
+        Robot a = new Robot("eva");
+        Robot b = new Robot("walle");
+        a.setY(map.getSquareSize());
+        a.setX(map.getSquareSize());
+        b.setY(2 * map.getSquareSize());
+        b.setX(3 * map.getSquareSize());
+        b.direction = Direction.LEFT;
+
+        pane.getChildren().add(a);
+        pane.getChildren().add(b);
+
+    //    System.out.println("Adding robot " + newRobot.getId());
+        // pridame ho na vstupne policko, ak tam je volno
+        boolean received = world.getSquare()[1][1].receiveRobot(a, false);
+        boolean received2 = world.getSquare()[2][3].receiveRobot(b, false);
+
+        world.robots.add(b);
+        world.robots.add(a);
+
+     //   pane.getChildren().remove(a);
+      //  pane.getChildren().remove(b);
+
+    }
 
     /**
      * NEFUNKCNE - funguje len prvy raz

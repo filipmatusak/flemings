@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
+import old.World;
 import sample.Map;
 
 /** Trieda Robot predstavuje zakladneho robota. Robot si pamata
@@ -32,7 +33,8 @@ public class Robot extends ImageView {
     protected Status status;
     protected Status oldStatus;
     /** Natocenie robota (dolava, doprava) */
-    protected Direction direction;
+    //protected
+    public Direction direction;
     /** Kolko robot spravil tahov */
     protected int time;
     /** Po kolkych tahoch (od zaciatku) sa meni spravanie */
@@ -158,7 +160,9 @@ public class Robot extends ImageView {
         System.out.println("Robot " + id + " killed");
         if (mySquare != null) {
             mySquare.deregisterRobot();
+
         }
+        World.removeRobot(this);
         oldStatus = Status.KILLED;
         status = Status.KILLED;
         endMoving();
