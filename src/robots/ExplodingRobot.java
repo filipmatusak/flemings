@@ -45,7 +45,7 @@ public class ExplodingRobot extends Robot {
     /** Spravi alternativny tah robota, t.j. ide vybuchnut */
     protected void alternativeMove() {
         System.out.println("Robot " + id + " exploding");
-      //  this.mySquare.actionExploding();
+        this.mySquare.actionExploding();
     }
 
 }

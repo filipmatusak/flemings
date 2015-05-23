@@ -95,6 +95,12 @@ public abstract class Square extends Rectangle {
         return false;
     }
 
+    public boolean digging(Square cell){
+        return false;
+    }
+
+
+
     /** Policko pod tymto polickom sa vyprazdilo, treba sa vyrovnat s
      * dosledkami, napr. padajuci roboti. V tejto abstraktnej triede
      * netreba robit nic.  Tuto metodu spravidla vola ine policko
@@ -111,7 +117,9 @@ public abstract class Square extends Rectangle {
 
     /** Akcia vybuchnutia policka
      */
-    public abstract void exploding();
+    public boolean exploding(){
+        return false;
+    }
 
     public Paint getColor() {
         return color;

@@ -2,6 +2,7 @@ package squares;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import robots.Robot;
 
 public class SoilSquare extends Square{
     /** Vrati jednoznakovu textovu reprezentaciu policka
@@ -19,14 +20,60 @@ public class SoilSquare extends Square{
     }
 
     /**
-     * pri vybuchnuti policka zmenime jeho typ
+     * Metoda sa postara o dosledky akcie digging na tomto policku. Policko sa
+     * zmeni na prazdne a policku nad nim odosle informaciu o tom, ze sa uvolnilo.
+     * Moze nan pripadne spadnut robot zhora.
      */
     @Override
-    public void exploding() {
-        Square b = new EmptySquare();
-        this.world.newSquare( b, row, column);
-
-        b.up.emptiedBelow();
+    public boolean digging(Square cell){
+        EmptySquare tmp = new EmptySquare();
+        world.newSquare(tmp, row, column);
+        up.emptiedBelow();
+        return true;
     }
+
+    /**
+     * Metoda sa vyrovnava s dosledkami vybuchu policka. Policko sa
+     * zmeni na prazdne a policku nad nim odosle informaciu o tom, ze sa uvolnilo.
+     * Moze nan pripadne spadnut robot zhora.
+     */
+    @Override
+    public boolean exploding(){
+        EmptySquare tmp = new EmptySquare();
+        world.newSquare(tmp, row, column);
+        up.emptiedBelow();
+        return true;
+    }
+
+//    /**
+//     * pri vybuchnuti policka zmenime jeho typ
+//     */
+//    @Override
+//    public void exploding() {
+//        Square b = new EmptySquare();
+//        this.world.newSquare( b, row, column);
+//
+//        b.up.emptiedBelow();
+//    }
+
+    /**
+     * Metoda vracia false, pretoze na policko s hlinou nesmie vojst robot.
+     */
+    @Override
+    public boolean receiveRobot(Robot otherRobot, Boolean move) {
+        return false;
+    }
+
+    /**
+     * Metoda vracia vzdy false, pretoze na policko s hlinou nemoze dopadnut robot.
+     * Oznami padajucemu robotovi, ze sem sa padat neda a padol z vysky height-1.
+     */
+    @Override
+    public boolean fallingRobot(Robot otherRobot, int height, Integer downMax) {
+        if (height>1) otherRobot.fell(height - 1);
+        return false;
+    }
+
+
 
 }

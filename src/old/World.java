@@ -69,6 +69,7 @@ public class World {
             // zastavime casovac kym sa nevykona tah robota, vsetky akcie,
             // ktore hybu robotmi si ho musia opat spustit
         //    root.game.timeLine.pause();
+            System.out.println(robot.getType());
             if (robot.isActive()) { // ak mame aktivneho robota
                 robot.setMoving();
                 System.out.println("Move of robot " + robot.getName());

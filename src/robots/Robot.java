@@ -207,6 +207,7 @@ public class Robot extends ImageView {
         boolean success = mySquare.actionMove(direction);
         if (!success) {
             direction = direction.otherDirection();
+            this.endMoving();
         }
     }
 

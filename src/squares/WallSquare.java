@@ -21,10 +21,10 @@ public class WallSquare extends Square {
         return "W";
     }
 
-    @Override
-    public void exploding() {
-
-    }
+//    @Override
+//    public void exploding() {
+//
+//    }
 
     public javafx.scene.shape.Rectangle print(){
         Rectangle r = new Rectangle(size,size, getColor());
@@ -33,5 +33,4 @@ public class WallSquare extends Square {
         System.out.println(row + " " + column);
         return r;
     }
-
 }
