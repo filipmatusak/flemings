@@ -57,10 +57,8 @@ public class MapEditor {
         }
         m = new Map(root, height, width);
         map = new ColoredRectangle[height][width];
-
         open();
         setClearMap();
-
     }
 
     void open(){
@@ -73,9 +71,7 @@ public class MapEditor {
         selectedColor = null;
 
         scene = new Scene(pane);
-        stage.setHeight(height*m.squareSize + 30);
-        stage.setWidth(width*m.squareSize);
-        stage.setResizable(false);
+
 
         initializeSquares();
         setSquares();
@@ -96,6 +92,12 @@ public class MapEditor {
         menuExit.setOnAction(event -> exit());
         pane.setTop(menuBar);
         pane.setCenter(drawingPane);
+
+        menuBar.setPrefHeight(30);
+   //     stage.setWidth(width*m.squareSize );
+    //    stage.setHeight(height * m.squareSize + menuBar.getPrefHeight() );
+
+        stage.setResizable(false);
 
         stage.setScene(scene);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

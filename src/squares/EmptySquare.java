@@ -158,15 +158,6 @@ public class EmptySquare extends RobotHolder {
         }
         if (direction == Direction.RIGHT) return right.digging(this);
         return left.digging(this);
-
-//        Square a, b;
-//        if(direction == Direction.LEFT) a = this.left;
-//        else a = this.right;
-//        b = new EmptySquare();
-//        if(!a.toString().equals("S")) return false;
-//        this.world.newSquare(b, a.row, a.column);
-//        b.up.emptiedBelow();
-//        return true;
     }
 
     /** Aktualny robot z tohto policka chce vybuchnut.  Bud mu akciu
