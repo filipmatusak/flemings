@@ -18,16 +18,12 @@ public class AllLevels {
     }
 
     public static File getNextLevel(File level){
-        System.out.println(level.toPath());
         ArrayList<File> list = AllLevels.getLevels();
         for (File file : list){
-            System.out.println(file.toPath());
         }
         int i = list.indexOf(level);
-        System.out.println(i);
         i++;
         if (i >= list.size()) return null;
-        System.out.println(list.get(i).toPath());
         return list.get(i);
     }
 }
