@@ -24,4 +24,12 @@ public class EntrySquare extends EmptySquare {
         }
     }
 
+    /** Pri vybuchnuti policka zabijeme robota,
+     * ktory je na nom
+     */
+    @Override
+    public void exploding() {
+        if(myRobot != null) myRobot.killed();
+    }
+
 }

@@ -1,15 +1,9 @@
 package squares;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import old.Direction;
 import old.RobotException;
 import robots.Robot;
-import sample.GameTimeLine;
 
 public class GlueSquare extends EmptySquare {
 
@@ -87,59 +81,9 @@ public class GlueSquare extends EmptySquare {
             return false;
         } else {
             otherRobot.moveTo(this);
-            if(move) animationMove(otherRobot);
+            if(move) animationMove(otherRobot,false);
             return true;
         }
     }
 
-    /**
-     * animacia pohybu
-     * */
-    public void animationMove(Robot otherRobot){
-        //ktorym smerom sa ideme hybat
-        final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
-        //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/movingConst / this.size), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                otherRobot.setX(otherRobot.getX()+x);
-            }
-        }));
-        tl.setCycleCount(this.size);
-        tl.play();
-        //na konci robota skusi nechat spadnut, ak nejde, uvolni tah
-        tl.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //      otherRobot.moveTo(thiz);
-                    otherRobot.endMoving();
-
-            }
-        });
-    }
-
-    /**
-     * animacia padania
-     */
-    public void animationFalling(Robot otherRobot, int height, Integer downMax){
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/ fallingConst/ this.size), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                otherRobot.setY(otherRobot.getY() + 1);
-            }
-        }));
-        tl.setCycleCount(this.size);
-        tl.play();
-        tl.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // skusime, ci moze padnut este nizsie (zvysime height)
-                //     System.out.println("down");
-                if( downMax > 0 && !down.fallingRobot(otherRobot, height + 1, downMax -1)) {
-                    //     world.timeLine.play();
-                    otherRobot.endMoving();
-                }
-            }
-        });
-    }
 }

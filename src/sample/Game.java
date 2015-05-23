@@ -55,8 +55,7 @@ public class Game {
         this.infoPane = new VBox();
         this.currentTime = new Label();
         this.stage = new Stage();
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>(
-        ) {
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 timeLine.stop();
@@ -73,15 +72,6 @@ public class Game {
         readyRobots = new ArrayList<>();
         for(int i = 0; i < numberOfRobotTypes; i++) readyRobots.add(5);
 
-        /*
-        Timeline tl = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                currentTime.setText("Current time: " + time.toString());
-            }
-        }));
-        tl.setCycleCount(Timeline.INDEFINITE);
-        tl.play();*/
 
     }
 

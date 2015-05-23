@@ -66,26 +66,20 @@ public class World {
     public boolean move() {
         boolean wasMove = false;
         for (Robot robot : robots) {
-            System.out.println("robot: " + robot.getName());
-            // zastavime casovac kym sa nevykona tah robota, vsetky akcie,
+            System.out.println("robot: " + robot.getIdd()/* + " stat " + robot.getStatus()*/);
             // ktore hybu robotmi si ho musia opat spustit
-        //    root.game.timeLine.pause();
             if (robot.isActive()) { // ak mame aktivneho robota
-                robot.setMoving();
                 System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
                 printSituation();         // vypis celu plochu
-            } else if(robot.isMoving()) {
+            } else if(robot.isMoving() || robot.isFalling()) {
                 wasMove = true;
             } else   {
-             //   System.out.println("killed");
                 pane.getChildren().remove(robot);
                 removeRobot(robot);
                 robot.endMoving();
-                //     root.game.timeLine.play();
             }
-
         }
         return wasMove;
     }
@@ -93,6 +87,7 @@ public class World {
     /** Do hry prida noveho robota. */
     public void addRobot(Robot newRobot) {
         robots.add(newRobot);  // pridame ho do pola robotov
+        newRobot.setId(robots.size());
 
         newRobot.setY(entryRow * map.getSquareSize());
         newRobot.setX(entryCol * map.getSquareSize());
