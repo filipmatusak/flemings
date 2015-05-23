@@ -23,7 +23,6 @@ public class StartupMenu {
     VBox vbox;
     Label label;
     Stage stage;
-    LevelsMenu levelsMenu;
     int width;
 
     public StartupMenu(Main root){
@@ -52,7 +51,7 @@ public class StartupMenu {
 
         Button level = new Button("CHOOSE LEVEL");
         level.setPrefWidth(width);
-        setButtonStyle(level);
+        Style.setButtonStyle(level);
         level.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -63,7 +62,7 @@ public class StartupMenu {
 
         Button map = new Button("NEW WORLD");
         map.setPrefWidth(width);
-        setButtonStyle(map);
+        Style.setButtonStyle(map);
         map.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -73,7 +72,7 @@ public class StartupMenu {
         });
         Button load = new Button("LOAD SAVED");
         load.setPrefWidth(width);
-        setButtonStyle(load);
+        Style.setButtonStyle(load);
         load.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -92,7 +91,7 @@ public class StartupMenu {
 
         Button exit = new Button("QUIT GAME");
         exit.setPrefWidth(width);
-        setButtonStyle(exit);
+        Style.setButtonStyle(exit);
         exit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -113,37 +112,5 @@ public class StartupMenu {
         stage.setScene(scene);
         stage.show();
 
-    }
-
-    /** Funkcia nastavi tlacidlu styl - zakladny a pri prechode mysou */
-    public void setButtonStyle(Button btn){
-        String buttonStyle =
-                "-fx-background-color: #090a0c,"
-                        +"linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),"
-                        +"linear-gradient(#20262b, #191d22),"
-                        +"radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));"
-                        +"-fx-text-fill: white;"
-                        +"-fx-font-family: 'Arial';";
-
-        String buttonFocusStyle =
-                "-fx-background-color: black;"
-               +"-fx-text-fill: white;"
-               +"-fx-font-family: 'Arial';";
-
-        btn.setStyle(buttonStyle);
-        btn.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                btn.setStyle(null);
-                btn.setStyle(buttonFocusStyle);
-            }
-        });
-        btn.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                btn.setStyle(null);
-                btn.setStyle(buttonStyle);
-            }
-        });
     }
 }

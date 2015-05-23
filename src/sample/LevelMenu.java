@@ -5,7 +5,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -33,7 +34,13 @@ public class LevelMenu {
         scene = new Scene(grid,  space*(1+col) + col*size, space*(1+row) + row*size);
         stage = new Stage();
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
+
+        Image image = new Image(getClass().getResourceAsStream("../graphics/robots/walle.png"));
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+        grid.setBackground(background);
 
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -67,6 +74,7 @@ public class LevelMenu {
                         }
                     }
                 });
+                Style.setLevelButtonStyle(b);
                 all.add(b);
             }
         }

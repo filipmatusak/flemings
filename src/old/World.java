@@ -146,6 +146,10 @@ public class World {
         return numFinished;
     }
 
+    public int getNumRobots(){
+        return robots.size();
+    }
+
     /** Metoda vrati pocet zabitych robotov */
     public int getNumKilled(){
         int numKilled = 0;

@@ -14,6 +14,8 @@ import javafx.stage.WindowEvent;
 import old.Direction;
 import old.World;
 import robots.Robot;
+import squares.EmptySquare;
+import squares.ExitSquare;
 import squares.Square;
 
 import java.util.ArrayList;
@@ -36,6 +38,10 @@ public class Game {
     ArrayList<Integer> readyRobots;
     Integer time;
     Label currentTime;
+    Label robotCount;
+    Label killedRobots;
+    Label savedRobots;
+    Label targetCount;
     ArrayList<ButtonRobot> robotsMenu;
     /** ciel hry - pocet robotov, ktorych treba zachranit */
     int target = 0;
@@ -54,7 +60,12 @@ public class Game {
         this.gamePane = new Pane();
         this.infoPane = new VBox();
         this.currentTime = new Label();
+        this.robotCount = new Label();
+        this.killedRobots = new Label();
+        this.savedRobots = new Label();
+        this.targetCount = new Label();
         this.stage = new Stage();
+        stage.setResizable(false);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -70,13 +81,15 @@ public class Game {
         //docasne, potom by ich mal dostat ako parameter
         Integer numberOfRobotTypes = new AllRobots().getTypes().size();
         readyRobots = new ArrayList<>();
-        for(int i = 0; i < numberOfRobotTypes; i++) readyRobots.add(5);
+        for(int i = 0; i < numberOfRobotTypes; i++) readyRobots.add(1);
 
 
     }
 
     public void move(){
         System.out.println(time + ":");
+        printLabelStats();
+
         boolean wasMove = world.move(); // sprav tah kazdym robotom
         if(!robots.isEmpty()){
             if(world.canAddRobot()) world.addRobot(robots.remove());
@@ -109,30 +122,6 @@ public class Game {
         timeLine.start();
         }
 
-    void debug(){
-        Robot a = new Robot("eva");
-        Robot b = new Robot("walle");
-        a.setY(map.getSquareSize());
-        a.setX(map.getSquareSize());
-        b.setY(2 * map.getSquareSize());
-        b.setX(3 * map.getSquareSize());
-        b.direction = Direction.LEFT;
-
-        pane.getChildren().add(a);
-        pane.getChildren().add(b);
-
-    //    System.out.println("Adding robot " + newRobot.getId());
-        // pridame ho na vstupne policko, ak tam je volno
-        boolean received = world.getSquare()[1][1].receiveRobot(a, false);
-        boolean received2 = world.getSquare()[2][3].receiveRobot(b, false);
-
-        world.robots.add(b);
-        world.robots.add(a);
-
-     //   pane.getChildren().remove(a);
-      //  pane.getChildren().remove(b);
-
-    }
 
     /**
      * NEFUNKCNE - funguje len prvy raz
@@ -161,10 +150,6 @@ public class Game {
 
         }
         for(Robot robot: world.robots) robot.toFront();
-        currentTime.setText("Current time: " + this.time.toString());
-        infoPane.getChildren().remove(currentTime);
-        infoPane.getChildren().add(currentTime);
-    //    gamePane.getChildren().addAll(world.robots);
     }
 
     /**
@@ -178,7 +163,45 @@ public class Game {
             ButtonRobot hb = new ButtonRobot(tmp, root, readyRobots.get(i++));
             robotsMenu.add(hb);
         }
+
+        Button replay = new Button("REPLAY");
+        Style.setButtonStyle(replay);
+        replay.setPrefWidth(100);
+        replay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    timeLine.stop();
+                    stage.close();
+                    root.replayLevel(mapCopy);
+                    //timeLine.start();
+                } catch (InterruptedException e) {
+
+                }
+            }
+        });
+
+        Button pause = new Button("PAUSE");
+        pause.setPrefWidth(100);
+        Style.setButtonStyle(pause);
+
+        Button quit = new Button("QUIT");
+        Style.setButtonStyle(quit);
+        quit.setPrefWidth(100);
+        quit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                stage.close();
+                root.startup.run();
+            }
+        });
+
+        printLabelStats();
+        targetCount.setText("TARGET: " + target);
+
         infoPane.getChildren().addAll(robotsMenu);
+        infoPane.getChildren().addAll(replay, pause, quit);
+        infoPane.getChildren().addAll(targetCount, currentTime, robotCount, killedRobots, savedRobots);
         pane.setRight(infoPane);
         pane.setLeft(gamePane);
         stage.setTitle("FlemmingZ");
@@ -208,9 +231,11 @@ public class Game {
             success.setText("Level failed!");
         }
         Button btnReplay = new Button("REPLAY");
-
+        Style.setButtonStyle(btnReplay);
         Button btnMenu = new Button("MENU");
+        Style.setButtonStyle(btnMenu);
         Button btnQuit = new Button("QUIT");
+        Style.setButtonStyle(btnQuit);
         vbox.getChildren().addAll(finished,killed,success,btnReplay,btnMenu,btnQuit);
         dpane.getChildren().addAll(vbox);
         Scene dscene = new Scene(dpane,200,200);
@@ -230,5 +255,25 @@ public class Game {
                 }
             }
         });
+    }
+
+    public void deregisterAll(){
+        for (Square[] row : map.getMap()){
+            for (Square square : row){
+                if (square instanceof EmptySquare){
+                    ((EmptySquare) square).deregisterRobot();
+                }
+                else if (square instanceof ExitSquare){
+                    ((ExitSquare) square).deregisterRobot();
+                }
+            }
+        }
+    }
+
+    public void printLabelStats(){
+        currentTime.setText("Current time: " + this.time.toString());
+        robotCount.setText("Used: " + world.getNumRobots());
+        killedRobots.setText("Killed: " + world.getNumKilled());
+        savedRobots.setText("Saved: " + world.getNumFinished());
     }
 }
