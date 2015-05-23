@@ -4,6 +4,8 @@ import javafx.scene.paint.Color;
 import squares.EntrySquare;
 import squares.Square;
 
+import java.util.ArrayList;
+
 
 /**
  * trieda reprezentujuca mapu
@@ -18,6 +20,8 @@ public class Map {
     Integer width = 20;
     /**Rozmery jedneho stvorceka na mape*/
     Integer squareSize = 20;
+    ArrayList<Integer> limits;
+    Integer target;
 
 
     public Map(Main root, int height, int width){
@@ -89,4 +93,9 @@ public class Map {
         }
         return clone;
     }
+
+    public void setTarget(Integer target){ this.target = target;}
+    public Integer getTarget(){ return target;}
+    public void setLimits(ArrayList<Integer> l){ this.limits = l;}
+    public ArrayList<Integer> getLimits(){ return limits;}
 }

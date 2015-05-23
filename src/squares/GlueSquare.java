@@ -14,14 +14,12 @@ public class GlueSquare extends EmptySquare {
      * rovno dalej.  Ked je policko prazdne, prilepime noveho robota.
      */
 
-    //upravuju rychlost animacii
-    final Double fallingConst = 1.0;
-    final Double movingConst = 1.0;
-
     public GlueSquare(){
         this.setColor(Color.GREENYELLOW);
         this.setStroke(Color.BLACK);
         this.setStrokeWidth(0.05);
+        fallingConst = 1.0;
+        movingConst = 1.0;
     }
 
     @Override

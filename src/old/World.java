@@ -90,6 +90,7 @@ public class World {
     public void addRobot(Robot newRobot) {
         robots.add(newRobot);  // pridame ho do pola robotov
         newRobot.setId(robots.size());
+        newRobot.setActive();
 
         newRobot.setY(entryRow * map.getSquareSize());
         newRobot.setX(entryCol * map.getSquareSize());

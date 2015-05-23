@@ -30,6 +30,7 @@ public class ButtonRobot extends HBox {
         this.setActions();
         this.thiz = this;
         this.getChildren().addAll(count, robot, type);
+        robot.setOnMouseClicked(null);
     }
 
     public void setActions(){

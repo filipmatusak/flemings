@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * RE: uz by to mohlo fungovat ;)
  */
 public class AllRobots {
-        public ArrayList<Robot> getTypes() {
+        public static ArrayList<Robot> getTypes() {
             ArrayList<Robot> list = new ArrayList<>();
             list.add(new DiggingRobot());
             list.add(new ExplodingRobot());

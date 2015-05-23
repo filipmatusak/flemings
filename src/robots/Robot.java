@@ -77,7 +77,6 @@ public class Robot extends ImageView {
         mySquare = null;
         this.id = id;
         this.maxHeight = maxHeight;
-        status = Status.ACTIVE;
         oldStatus = status;
         direction = Direction.RIGHT;
         time = 0;
@@ -251,6 +250,8 @@ public class Robot extends ImageView {
         status = Status.FALLING; }
 
     public void setId(Integer id){this.id = id.toString();}
+
+    public void setActive(){ this.status = Status.ACTIVE; }
 
     public String getStatus(){ return status.toString() + " old=" + oldStatus.toString(); }
 }

@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class LevelMenu {
@@ -60,11 +59,11 @@ public class LevelMenu {
                             root.game = new Game(root,map);
                             stage.close();
                             root.game.run();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                        } catch ( Exception e) {
+                            ExceptionPrinter.print(e.getMessage());
+                            //e.printStackTrace();
                         }
+
                     }
                 });
                 all.add(b);

@@ -15,6 +15,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
+import robots.Robot;
 import squares.EmptySquare;
 import squares.EntrySquare;
 import squares.ExitSquare;
@@ -22,6 +23,7 @@ import squares.WallSquare;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -41,7 +43,9 @@ public class MapEditor {
     Map m;
     Boolean close;
     Scene scene;
+    Settings settings;
     SquareChoiceMenu squareChoiceMenu;
+    static Integer maxRobotLimit;
 
     public MapEditor(Main root){
         this.root = root;
@@ -71,31 +75,35 @@ public class MapEditor {
         selectedColor = null;
 
         scene = new Scene(pane);
-
+        settings = new Settings();
 
         initializeSquares();
         setSquares();
 
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Menu");
+        Menu edit = new Menu("Edit");
         MenuItem menuPlay = new MenuItem("Play");
         MenuItem menuSave = new MenuItem("Save");
         MenuItem menuClear = new MenuItem("Clear");
         MenuItem menuOpen = new MenuItem("Open");
         MenuItem menuExit = new MenuItem("Exit");
-        menu.getItems().addAll(menuPlay, menuOpen, menuSave, menuClear, menuExit);
-        menuBar.getMenus().add(menu);
+        MenuItem menuRobots = new MenuItem("Robot Setting");
+        menu.getItems().addAll(menuPlay, menuOpen, menuSave, menuExit);
+        edit.getItems().addAll(menuClear, menuRobots);
+        menuBar.getMenus().addAll(menu, edit);
         menuPlay.setOnAction(event1 -> playThis());
         menuClear.setOnAction(event -> setClearMap());
         menuSave.setOnAction(event -> saveMap());
         menuOpen.setOnAction(event -> openMap());
         menuExit.setOnAction(event -> exit());
+        menuRobots.setOnAction(event -> settings.show());
         pane.setTop(menuBar);
         pane.setCenter(drawingPane);
 
-        menuBar.setPrefHeight(30);
-   //     stage.setWidth(width*m.squareSize );
-    //    stage.setHeight(height * m.squareSize + menuBar.getPrefHeight() );
+//        menuBar.setPrefHeight(30);
+//        stage.setWidth(width*m.squareSize );
+//        stage.setHeight(height * m.squareSize + menuBar.getPrefHeight() );
 
         stage.setResizable(false);
 
@@ -121,7 +129,82 @@ public class MapEditor {
         stage.show();
     }
 
-        void saveMap(){
+    class Settings extends Stage{
+
+        ArrayList<Spinner<Integer>> spinners;
+        Spinner<Integer> targetSpinner;
+
+        public Settings(){
+            spinners = new ArrayList<>();
+            GridPane pane = new GridPane();
+            maxRobotLimit = 100;
+            Double space = 10.0;
+            pane.setHgap(space);
+            pane.setVgap(space);
+            pane.setPadding(new Insets(space, space, space, space));
+
+            pane.add(new Label("Robots"), 1,1);
+
+            ArrayList<Robot> robots = AllRobots.getTypes();
+
+            for(int i = 0; i < robots.size(); i++){
+                Robot robot = robots.get(i);
+                robot.setOnMouseClicked(null);
+                Label label = new Label(robot.getType());
+                Spinner<Integer> spinner = new Spinner<Integer>(0, 100, 5);
+                spinner.setPrefWidth(77);
+                spinners.add(spinner);
+
+                pane.add(label, 1, 2+i);
+                pane.add(robot, 2, 2+i);
+                pane.add(spinner, 3, 2 + i);
+
+            }
+
+            Label target = new Label("Target");
+            targetSpinner = new Spinner<Integer>(0,getSum(),5);
+
+            targetSpinner.setPrefWidth(77);
+
+            pane.add(target, 6, 2);
+            pane.add(targetSpinner, 6, 3);
+
+            Scene scene = new Scene(pane);
+            this.setScene(scene);
+        }
+
+        void refresh(ArrayList<Integer> limits,Integer target ){
+            for(int i = 0; i < limits.size(); i++){
+                Spinner<Integer> spinner = spinners.get(i);
+                Integer a = limits.get(i);
+                Integer b = spinner.getValue();
+                if( a < b ) spinner.decrement(b - a);
+                else spinner.increment(a-b);
+            }
+            Spinner<Integer> spinner = targetSpinner;
+            Integer a = target;
+            Integer b = spinner.getValue();
+            if( a < b ) spinner.decrement(b-a);
+            else spinner.increment(a-b);
+        }
+
+        Integer getSum(){
+            Integer sum = 0;
+            for(Integer i: getRobotsLimits()) sum += i;
+            return sum;
+        }
+
+        ArrayList<Integer> getRobotsLimits(){
+            ArrayList<Integer> list = new ArrayList<>();
+            for(Spinner<Integer> spinner: spinners) list.add(spinner.getValue());
+            return list;
+        }
+
+        Integer getTarget(){ return targetSpinner.getValue(); }
+
+    }
+
+    void saveMap(){
         try {
             isMapCorrect();
         } catch (EditorExeption e){
@@ -130,7 +213,8 @@ public class MapEditor {
         }
         File file = root.fileCreator.openFile(stage, true);
         try {
-            if(file != null ) root.mapConvertor.fromMapEditor(map, file);
+            if(file != null ) root.mapConvertor
+                    .fromMapEditor(map, settings.getRobotsLimits(), settings.getTarget(), file);
         }
         catch (FileNotFoundException e) {
           //  e.printStackTrace();
@@ -154,12 +238,13 @@ public class MapEditor {
     void openMap(){
         File file = root.fileCreator.openFile(stage, false);
         try{
-            ColoredRectangle[][] newMap = root.mapConvertor.toMapEditor(file);
-            map = newMap;
+            MapConvertor.ToMapEditorResult result = root.mapConvertor.toMapEditor(file);
+            map = result.map;
             m = new Map(root, map.length, map[0].length);
             open();
             setSquares();
             refreshMap();
+            settings.refresh(result.limits, result.target);
         } catch (Exception e) {
             ExceptionPrinter.print(new EditorExeption("Wrong format!").getMessage());
         }
@@ -330,6 +415,8 @@ public class MapEditor {
 
 
     }
+
+    public static Integer getMaxRobotLimit(){ return maxRobotLimit; }
 
 
 }

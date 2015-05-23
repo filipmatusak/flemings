@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import old.World;
@@ -54,6 +55,7 @@ public class Game {
         this.infoPane = new VBox();
         this.currentTime = new Label();
         this.stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -68,7 +70,7 @@ public class Game {
         world.setTimeLine(timeLine);
 
         //docasne, potom by ich mal dostat ako parameter
-        Integer numberOfRobotTypes = new AllRobots().getTypes().size();
+        Integer numberOfRobotTypes = AllRobots.getTypes().size();
         readyRobots = new ArrayList<>();
         for(int i = 0; i < numberOfRobotTypes; i++) readyRobots.add(5);
 
@@ -120,8 +122,6 @@ public class Game {
             }
         }));
 
-     //   System.out.println(); for(Node x: gamePane.getChildren()) System.out.print("* "); System.out.println();
-
         for (Square[] aMap : world.getSquare()){
             for(Square x: aMap){
                 try{
@@ -133,7 +133,7 @@ public class Game {
             }
 
         }
-        for(Robot robot: world.robots) robot.toFront();
+        for(Robot robot: World.robots) robot.toFront();
         currentTime.setText("Current time: " + this.time.toString());
         infoPane.getChildren().remove(currentTime);
         infoPane.getChildren().add(currentTime);
@@ -147,8 +147,8 @@ public class Game {
         this.redraw();
         robotsMenu = new ArrayList<>();
         Integer i = 0;
-        for (Robot tmp : root.robotTypes.getTypes()) {
-            ButtonRobot hb = new ButtonRobot(tmp, root, readyRobots.get(i++));
+        for (Robot tmp : AllRobots.getTypes()) {
+            ButtonRobot hb = new ButtonRobot(tmp, root, map.getLimits().get(i++));
             robotsMenu.add(hb);
         }
         infoPane.getChildren().addAll(robotsMenu);

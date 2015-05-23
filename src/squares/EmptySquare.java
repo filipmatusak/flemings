@@ -22,8 +22,8 @@ public class EmptySquare extends RobotHolder {
     Robot myRobot;
     RobotHolder thiz;
     //upravuju rychlost animacii
-    final Double fallingConst = 40.0;
-    final Double movingConst = 3.0;
+     Double fallingConst = 40.0;
+     Double movingConst = 3.0;
 
     public EmptySquare(){
         super();
@@ -179,6 +179,7 @@ public class EmptySquare extends RobotHolder {
      * animacia pohybu
      * */
     public void animationMove(Robot otherRobot, Boolean canFall){
+        System.out.println("moving Const = " + movingConst);
         otherRobot.setMoving();
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
@@ -209,6 +210,7 @@ public class EmptySquare extends RobotHolder {
      * animacia padania
      */
     public void animationFalling(Robot otherRobot, int height, Integer downMax){
+        System.out.println("falling Const = " + fallingConst);
         otherRobot.setFalling();
         Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/fallingConst / this.size), new EventHandler<ActionEvent>() {
             @Override

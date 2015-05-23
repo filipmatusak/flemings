@@ -6,8 +6,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.File;
-
 public class Main extends Application {
 
     public Scene scene;
@@ -20,7 +18,7 @@ public class Main extends Application {
     public StartupMenu startup;
     public LevelMenu level;
     public Game game;
-    AllRobots robotTypes;
+    public AllRobots robotTypes;
 
 
     @Override
@@ -36,7 +34,9 @@ public class Main extends Application {
         startup = new StartupMenu(this);
         startup.run();
 
+
         mapEditor = new MapEditor(this);
+    //   mapEditor.run();
 
         fileCreator = new FileCreator(this);
         mapConvertor = new MapConvertor(this);
