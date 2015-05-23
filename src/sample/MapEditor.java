@@ -46,7 +46,6 @@ public class MapEditor {
     Settings settings;
     SquareChoiceMenu squareChoiceMenu;
 
-
     public MapEditor(Main root){
         this.root = root;
         thiz = this;
@@ -100,9 +99,6 @@ public class MapEditor {
         menuRobots.setOnAction(event -> settings.show());
         pane.setTop(menuBar);
         pane.setCenter(drawingPane);
-//        menuBar.setPrefHeight(30);
-//        stage.setWidth(width*m.squareSize );
-//        stage.setHeight(height * m.squareSize + menuBar.getPrefHeight() );
 
         stage.setResizable(false);
 
@@ -415,8 +411,6 @@ public class MapEditor {
 
 
     }
-
-
 
 
 }

@@ -17,6 +17,7 @@ public class Main extends Application {
     public MapEditor mapEditor;
     public StartupMenu startup;
     public LevelMenu level;
+    public File levelFile;
     public Game game;
     public AllRobots robotTypes;
 
@@ -47,6 +48,7 @@ public class Main extends Application {
     }
 
     public void replayLevel(Map map) throws InterruptedException{
+        game.deregisterAll();
         game = new Game(this,map);
         try {
             game.run();

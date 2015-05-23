@@ -67,6 +67,7 @@ public class EmptySquare extends RobotHolder {
     @Override
     public boolean receiveRobot(Robot otherRobot, Boolean move) {
         // ak uz mame robota, vratime false
+
         if (myRobot != null) {
             otherRobot.endMoving();
             return false;
