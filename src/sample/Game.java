@@ -150,9 +150,9 @@ public class Game {
 
         }
         for(Robot robot: World.robots) robot.toFront();
-        currentTime.setText("Current time: " + this.time.toString());
-        infoPane.getChildren().remove(currentTime);
-        infoPane.getChildren().add(currentTime);
+//        currentTime.setText("Current time: " + this.time.toString());
+//        infoPane.getChildren().remove(currentTime);
+//        infoPane.getChildren().add(currentTime);
     //    gamePane.getChildren().addAll(world.robots);
     }
 
@@ -251,7 +251,6 @@ public class Game {
                 dstage.close();
                 File nextLevel = AllLevels.getLevels().get(0);
                 if (root.levelFile != null) {
-                    System.out.println(root.levelFile.toPath());
                     File next = AllLevels.getNextLevel(root.levelFile);
                     if (next != null) nextLevel = next;
                 }

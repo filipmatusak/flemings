@@ -2,7 +2,7 @@ package sample;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 public class Style {
@@ -64,5 +64,25 @@ public class Style {
                 btn.setStyle(buttonStyle);
             }
         });
+    }
+
+    public static class MapSize{
+        public static void setMainLabel(Label label){
+            String labelStyle =
+                    "-fx-text-fill: black;"
+                            + "-fx-font-size: 20;"
+                            + "-fx-font-weight: bold;"
+                            + "-fx-effect: dropshadow( gaussian , derive(cadetblue, -20%) , 0,0,0,1 );"
+                            + "-fx-font-family: 'Roboto';";
+            label.setStyle(labelStyle);
+        }
+        public static void setLabel(Label label){
+            String labelStyle =
+                    "-fx-text-fill: black;"
+                            + "-fx-font-size: 15;"
+                            + "-fx-font-weight: bold;"
+                            + "-fx-effect: dropshadow( gaussian , derive(cadetblue, -20%) , 0,0,0,1 );";
+            label.setStyle(labelStyle);
+        }
     }
 }

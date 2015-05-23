@@ -7,9 +7,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -348,8 +347,15 @@ public class MapEditor {
         close = false;
         Dialog<Pair<Integer, Integer>> dialog = new Dialog<>();
         dialog.setTitle("New Map");
-        dialog.setHeaderText("Set size of map");
+     //   dialog.setHeaderText("Set size of map");
         Integer maxW = 60, maxH = 30, minW = 5, minH = 5;
+
+        Image image = new Image(getClass().getResourceAsStream("../graphics/plosak3.jpg"));
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+       // dialog.setBackground(background);
+       // dialog.setGraphic();
+        dialog.getDialogPane().setBackground(background);
 
         ButtonType createButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
@@ -357,19 +363,34 @@ public class MapEditor {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
+     //   grid.getRowConstraints().add(new RowConstraints(300));
         grid.setPadding(new Insets(20, 150, 10, 10));
+
+        Label label = new Label("Set size of map");
+           // label.setFont(new Font(50));
+        Style.MapSize.setMainLabel(label);
+//        grid.add(label);
+        grid.addRow(0,label);
 
         TextField heightField = new TextField();
         heightField.setPromptText(+minH + " - " + maxH);
         TextField widthField = new TextField();
         widthField.setPromptText(minW + " - " + maxW);
 
-        grid.add(new Label("Height:"), 0, 0);
-        grid.add(heightField, 1, 0);
-        grid.add(new Label("Width:"), 0, 1);
-        grid.add(widthField, 1, 1);
+        Label heightLabel = new Label("Height:");
+        Label widthLabel = new Label("Width:");
+        Style.MapSize.setLabel(heightLabel);
+        Style.MapSize.setLabel(widthLabel);
+        grid.add(heightLabel, 0, 1);
+        grid.add(heightField, 1, 1);
+        grid.add( widthLabel, 0, 2);
+        grid.add(widthField, 1, 2);
 
+        Node cancelButton = dialog.getDialogPane().lookupButton(ButtonType.CANCEL);
         Node createButton = dialog.getDialogPane().lookupButton(createButtonType);
+
+        Style.setButtonStyle((Button) cancelButton);
+        Style.setButtonStyle((Button)createButton);
         createButton.setDisable(true);
 
         class MyTextListener implements ChangeListener<String> {
