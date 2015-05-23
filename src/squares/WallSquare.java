@@ -1,7 +1,6 @@
 package squares;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /** Trieda reprezentujuca stvorcek typu stena.  Tento typ stvroceka sa
  * nijako nemeni a nemoze na neho prist robot. Dedi z triedy Square,
@@ -26,11 +25,5 @@ public class WallSquare extends Square {
 //
 //    }
 
-    public javafx.scene.shape.Rectangle print(){
-        Rectangle r = new Rectangle(size,size, getColor());
-        r.setY(column * size);
-        r.setX(row * size);
-        System.out.println(row + " " + column);
-        return r;
     }
 }

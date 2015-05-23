@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
+import old.World;
 import sample.Map;
 
 /** Trieda Robot predstavuje zakladneho robota. Robot si pamata
@@ -21,7 +22,7 @@ public class Robot extends ImageView {
     /** Mozne stavy robota */
     protected enum Status {
 
-        ACTIVE, FINISHED, KILLED, MOVING
+        ACTIVE, FINISHED, KILLED, MOVING, FALLING
     }
 
     /** Stvorcek, na ktorom robot prave je, alebo null, ak je mimo plochy */
@@ -32,7 +33,8 @@ public class Robot extends ImageView {
     protected Status status;
     protected Status oldStatus;
     /** Natocenie robota (dolava, doprava) */
-    protected Direction direction;
+    //protected
+    public Direction direction;
     /** Kolko robot spravil tahov */
     protected int time;
     /** Po kolkych tahoch (od zaciatku) sa meni spravanie */
@@ -93,7 +95,7 @@ public class Robot extends ImageView {
      * toho vyplyvajuce dosledky. Tuto metodu spravidla vola svet. */
     public void move() {
         // skontrolujem ze robot je aktivny
-        if (status != Status.ACTIVE && status != Status.MOVING) {
+        if (status != Status.ACTIVE && status != Status.MOVING && status != Status.FALLING) {
             throw new RobotException("Inactive robot cannot move");
         }
         // zvysime pocitadlo tahov
@@ -128,7 +130,7 @@ public class Robot extends ImageView {
      */
     public void moveTo(RobotHolder newSquare) {
         // ak uz sme na ploche, odregistrujme sa
-        if (mySquare != null) {
+        if (mySquare != null /*&& mySquare.equals(newSquare)*/) {
             mySquare.deregisterRobot();
         }
         // zaregistrujme nove policko
@@ -158,7 +160,9 @@ public class Robot extends ImageView {
         System.out.println("Robot " + id + " killed");
         if (mySquare != null) {
             mySquare.deregisterRobot();
+
         }
+        World.removeRobot(this);
         oldStatus = Status.KILLED;
         status = Status.KILLED;
         endMoving();
@@ -196,10 +200,12 @@ public class Robot extends ImageView {
         return status == Status.FINISHED;
     }
 
+    public boolean isFalling(){ return status == Status.FALLING;}
+
     /** Vrati meno robota */
-  /*  public String getId() {
+    public String getIdd() {
         return id;
-    }*/
+    }
 
     /** Spravi normalny tah robota, t.j. skusa ist dopredu
      * a ak sa neda, otoci sa. */
@@ -234,8 +240,17 @@ public class Robot extends ImageView {
     public Direction getDirection(){ return direction;}
 
     public void setMoving(){
-        oldStatus = status;
+        if(status!=Status.MOVING) oldStatus = status;
         status = Status.MOVING;}
     public void endMoving(){
         status = oldStatus; }
+
+    public void setFalling(){
+   //     System.out.println("status falling robot " + getIdd());
+        if(status!=Status.FALLING) oldStatus = status;
+        status = Status.FALLING; }
+
+    public void setId(Integer id){this.id = id.toString();}
+
+    public String getStatus(){ return status.toString() + " old=" + oldStatus.toString(); }
 }

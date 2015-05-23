@@ -49,7 +49,6 @@ public class ButtonRobot extends HBox {
             @Override
             public void handle(MouseEvent event) {
                 if (getCount() > 0){
-                    /** TODO:Pridat robota do hry */
                     try {
                         root.game.robots.add(robot.getClass().newInstance());
                     } catch (InstantiationException | IllegalAccessException e) {

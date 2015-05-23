@@ -18,9 +18,9 @@ public class ExitSquare extends EmptySquare {
     @Override
     public boolean receiveRobot(Robot otherRobot, Boolean move) {
         if (myRobot != null) {
-            throw new RobotException("There should not be a robot in exit");
+//            throw new RobotException("There should not be a robot in exit");
         }
-        animationMove(otherRobot);
+        animationMove(otherRobot, false);
         otherRobot.moveTo(this);
         otherRobot.finished();
 
@@ -46,5 +46,12 @@ public class ExitSquare extends EmptySquare {
         } else {
             return "*";
         }
+    }
+
+    /** Pri vybuchnuti policka zabijeme robota,
+     * ktory je na nom
+     */
+    @Override
+    public void exploding() {
     }
 }

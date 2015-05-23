@@ -23,10 +23,10 @@ public class World {
     protected int entryRow, entryCol;
     /** zoznam robotov, ktore uz vosli do sveta
      * (niektori z nich mozu byt mrtvi, alebo ukonceni). */
-    public ArrayList<Robot> robots;
+    public static ArrayList<Robot> robots;
     public GameTimeLine timeLine;
     protected EntrySquare entrySquare;
-    Pane pane;
+    static Pane pane;
     int sizeOfSquare;
     Map map;
 
@@ -66,24 +66,22 @@ public class World {
     public boolean move() {
         boolean wasMove = false;
         for (Robot robot : robots) {
-            // zastavime casovac kym sa nevykona tah robota, vsetky akcie,
+            System.out.println("robot: " + robot.getIdd()/* + " stat " + robot.getStatus()*/);
             // ktore hybu robotmi si ho musia opat spustit
         //    root.game.timeLine.pause();
             System.out.println(robot.getType());
             if (robot.isActive()) { // ak mame aktivneho robota
-                robot.setMoving();
                 System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
                 printSituation();         // vypis celu plochu
-            } else if(robot.isMoving()) {
+            } else if(robot.isMoving() || robot.isFalling()) {
                 wasMove = true;
-            } else  {
+            } else   {
                 pane.getChildren().remove(robot);
+                removeRobot(robot);
                 robot.endMoving();
-                //     root.game.timeLine.play();
             }
-
         }
         return wasMove;
     }
@@ -91,6 +89,7 @@ public class World {
     /** Do hry prida noveho robota. */
     public void addRobot(Robot newRobot) {
         robots.add(newRobot);  // pridame ho do pola robotov
+        newRobot.setId(robots.size());
 
         newRobot.setY(entryRow * map.getSquareSize());
         newRobot.setX(entryCol * map.getSquareSize());
@@ -215,4 +214,9 @@ public class World {
     public void setTimeLine(GameTimeLine t){ timeLine = t;}
 
     public boolean canAddRobot(){return !entrySquare.hasRobot();}
+
+    public static void removeRobot(Robot r){
+        //robots.remove(r);
+        pane.getChildren().remove(r);
+    }
 }
