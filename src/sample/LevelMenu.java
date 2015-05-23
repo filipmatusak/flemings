@@ -37,7 +37,7 @@ public class LevelMenu {
         stage.setResizable(false);
         stage.show();
 
-        Image image = new Image(getClass().getResourceAsStream("../graphics/robots/walle.png"));
+        Image image = new Image(getClass().getResourceAsStream("../graphics/robots/eva.png"));
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
         grid.setBackground(background);
@@ -63,8 +63,10 @@ public class LevelMenu {
                         assert b != null;
                         String levelPath = b.getId();
                         try {
+                            File level = fileEntry;
+                            root.levelFile = level;
                             Map map = root.mapConvertor.fileToMap(new File(levelPath));
-                            root.game = new Game(root,map);
+                            root.game = new Game(root, map);
                             stage.close();
                             root.game.run();
                         } catch (FileNotFoundException e) {

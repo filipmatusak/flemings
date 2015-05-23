@@ -18,6 +18,8 @@ import squares.EmptySquare;
 import squares.ExitSquare;
 import squares.Square;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -42,6 +44,7 @@ public class Game {
     Label killedRobots;
     Label savedRobots;
     Label targetCount;
+    Label activeRobots;
     ArrayList<ButtonRobot> robotsMenu;
     /** ciel hry - pocet robotov, ktorych treba zachranit */
     int target = 0;
@@ -64,6 +67,7 @@ public class Game {
         this.killedRobots = new Label();
         this.savedRobots = new Label();
         this.targetCount = new Label();
+        this.activeRobots = new Label();
         this.stage = new Stage();
         stage.setResizable(false);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -95,7 +99,7 @@ public class Game {
             if(world.canAddRobot()) world.addRobot(robots.remove());
         } else {
             // ak sa uz minuli novi roboti a nikto nie je aktivny, skoncime
-            if (robots.size() == 0 && !wasMove && !existReadyRobots()) {
+            if ((robots.size() == 0 && !existReadyRobots() && (!wasMove || world.getNumActive() == 0))) {
                 System.out.println("Nothing to do");
                 timeLine.stop();
                 stage.close();
@@ -201,7 +205,7 @@ public class Game {
 
         infoPane.getChildren().addAll(robotsMenu);
         infoPane.getChildren().addAll(replay, pause, quit);
-        infoPane.getChildren().addAll(targetCount, currentTime, robotCount, killedRobots, savedRobots);
+        infoPane.getChildren().addAll(targetCount, currentTime, robotCount, killedRobots, savedRobots, activeRobots);
         pane.setRight(infoPane);
         pane.setLeft(gamePane);
         stage.setTitle("FlemmingZ");
@@ -219,8 +223,13 @@ public class Game {
     }
 
     private void finishedDialog(){
+        int dwidth = 250;
         Pane dpane = new Pane();
         VBox vbox = new VBox();
+        Scene dscene = new Scene(dpane);
+        dpane.setPrefHeight(dwidth);
+        dpane.setPrefWidth(dwidth);
+        Stage dstage = new Stage();
         Label finished = new Label("Number of robots finished: " + world.getNumFinished());
         Label killed = new Label("Number of robots killed: "+ world.getNumKilled());
         Label success = new Label();
@@ -232,14 +241,56 @@ public class Game {
         }
         Button btnReplay = new Button("REPLAY");
         Style.setButtonStyle(btnReplay);
+        btnReplay.setPrefWidth(dwidth);
+        Button btnNext = new Button("NEXT LEVEL");
+        Style.setButtonStyle(btnNext);
+        btnNext.setPrefWidth(dwidth);
+        btnNext.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dstage.close();
+                File nextLevel = AllLevels.getLevels().get(0);
+                if (root.levelFile != null) {
+                    System.out.println(root.levelFile.toPath());
+                    File next = AllLevels.getNextLevel(root.levelFile);
+                    if (next != null) nextLevel = next;
+                }
+                Map map = null;
+                try {
+                    map = root.mapConvertor.fileToMap(nextLevel);
+                    root.levelFile = nextLevel;
+                    root.game = new Game(root, map);
+                    stage.close();
+                    root.game.run();
+                }
+                catch (InterruptedException e) {
+                }
+                catch (FileNotFoundException e) {
+                }
+            }
+        });
         Button btnMenu = new Button("MENU");
         Style.setButtonStyle(btnMenu);
+        btnMenu.setPrefWidth(dwidth);
+        btnMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dstage.close();
+                root.startup.run();
+            }
+        });
         Button btnQuit = new Button("QUIT");
         Style.setButtonStyle(btnQuit);
-        vbox.getChildren().addAll(finished,killed,success,btnReplay,btnMenu,btnQuit);
+        btnQuit.setPrefWidth(dwidth);
+        btnQuit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dstage.close();
+            }
+        });
+        vbox.getChildren().addAll(finished,killed,success,btnReplay,btnNext,btnMenu,btnQuit);
         dpane.getChildren().addAll(vbox);
-        Scene dscene = new Scene(dpane,200,200);
-        Stage dstage = new Stage();
+
         dstage.setTitle("Game Finished");
         dstage.setScene(dscene);
         dstage.show();
@@ -275,5 +326,6 @@ public class Game {
         robotCount.setText("Used: " + world.getNumRobots());
         killedRobots.setText("Killed: " + world.getNumKilled());
         savedRobots.setText("Saved: " + world.getNumFinished());
+        activeRobots.setText("Active: " + world.getNumActive());
     }
 }

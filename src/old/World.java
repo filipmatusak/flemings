@@ -150,10 +150,20 @@ public class World {
         return robots.size();
     }
 
+    public int getNumActive(){
+        int numActive = 0;
+        for (Robot robot : robots) { // spocitaj aktivnych
+            if (robot.isActive() || robot.isFalling() || robot.isMoving()) {
+                numActive++;
+            }
+        }
+        return numActive;
+    }
+
     /** Metoda vrati pocet zabitych robotov */
     public int getNumKilled(){
         int numKilled = 0;
-        for (Robot robot : robots) { // spocitaj uspesnych
+        for (Robot robot : robots) { // spocitaj zabitych
             if (robot.isKilled()) {
                 numKilled++;
             }

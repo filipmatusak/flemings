@@ -31,11 +31,13 @@ public class GlueSquare extends EmptySquare {
             if (height > 1) {  // ukoncime pad ineho robota
                 otherRobot.fell(height - 1);
             }
-            myRobot.killed();         // zabijeme nasho robota
+            myRobot.killed(); // zabijeme nasho robota
+            otherRobot.setStuck();
             return false;
         } else {
             // toto policko je teraz prazdne, prijmeme noveho robota
             otherRobot.moveTo(this);
+            otherRobot.setStuck();
             animationFalling(otherRobot, 1, 0);
             otherRobot.fell(height);
             return true;
@@ -78,9 +80,11 @@ public class GlueSquare extends EmptySquare {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
             otherRobot.endMoving();
+            otherRobot.setStuck();
             return false;
         } else {
             otherRobot.moveTo(this);
+            otherRobot.setStuck();
             if(move) animationMove(otherRobot,false);
             return true;
         }

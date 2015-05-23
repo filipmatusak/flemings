@@ -19,6 +19,7 @@ public class Main extends Application {
     public MapEditor mapEditor;
     public StartupMenu startup;
     public LevelMenu level;
+    public File levelFile;
     public Game game;
     AllRobots robotTypes;
 

@@ -22,7 +22,7 @@ public class Robot extends ImageView {
     /** Mozne stavy robota */
     protected enum Status {
 
-        ACTIVE, FINISHED, KILLED, MOVING, FALLING
+        ACTIVE, FINISHED, KILLED, MOVING, FALLING, STUCK
     }
 
     /** Stvorcek, na ktorom robot prave je, alebo null, ak je mimo plochy */
@@ -244,6 +244,11 @@ public class Robot extends ImageView {
         status = Status.MOVING;}
     public void endMoving(){
         status = oldStatus; }
+
+    public void setStuck(){
+        status = Status.STUCK;
+        oldStatus = Status.STUCK;
+    }
 
     public void setFalling(){
    //     System.out.println("status falling robot " + getIdd());
