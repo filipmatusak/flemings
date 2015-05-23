@@ -25,5 +25,5 @@ public class WallSquare extends Square {
 //
 //    }
 
-    }
+
 }

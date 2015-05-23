@@ -52,6 +52,7 @@ public class ExitSquare extends EmptySquare {
      * ktory je na nom
      */
     @Override
-    public void exploding() {
+    public boolean exploding() {
+        return false;
     }
 }

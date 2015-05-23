@@ -28,8 +28,9 @@ public class EntrySquare extends EmptySquare {
      * ktory je na nom
      */
     @Override
-    public void exploding() {
+    public boolean exploding() {
         if(myRobot != null) myRobot.killed();
+        return true;
     }
 
 }
