@@ -44,7 +44,7 @@ public class MapConvertor {
             ArrayList<Integer> limits = new ArrayList<>();
             for(Robot robot: AllRobots.getTypes()){
                 Integer x = in.nextInt();
-                if(x > MapEditor.getMaxRobotLimit() || x < 0) throw new EditorExeption("");
+                if(x > Map.getMaxRobotLimit() || x < 0) throw new EditorExeption("");
                 limits.add(x);
             }
 
@@ -56,6 +56,7 @@ public class MapConvertor {
         } catch (EditorExeption e){
             throw new EditorExeption("Wrong robot limit");
         } catch (Exception e){
+
             throw new EditorExeption("Wrong format");
         }
     }
@@ -109,8 +110,9 @@ public class MapConvertor {
             }
 
             ArrayList<Integer> limits = new ArrayList<>();
-            for (Robot robot : AllRobots.getTypes()) {
+            for(Robot robot: AllRobots.getTypes()){
                 Integer x = in.nextInt();
+                if(x > Map.getMaxRobotLimit() || x < 0) throw new EditorExeption("");
                 limits.add(x);
             }
 

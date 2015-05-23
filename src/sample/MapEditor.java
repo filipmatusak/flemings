@@ -45,7 +45,7 @@ public class MapEditor {
     Scene scene;
     Settings settings;
     SquareChoiceMenu squareChoiceMenu;
-    static Integer maxRobotLimit;
+
 
     public MapEditor(Main root){
         this.root = root;
@@ -100,7 +100,6 @@ public class MapEditor {
         menuRobots.setOnAction(event -> settings.show());
         pane.setTop(menuBar);
         pane.setCenter(drawingPane);
-
 //        menuBar.setPrefHeight(30);
 //        stage.setWidth(width*m.squareSize );
 //        stage.setHeight(height * m.squareSize + menuBar.getPrefHeight() );
@@ -125,7 +124,6 @@ public class MapEditor {
         pane.setOnMouseReleased(event -> {
             if (!event.isSecondaryButtonDown() && squareChoiceMenu != null) squareChoiceMenu.close();
         });
-
         stage.show();
     }
 
@@ -134,10 +132,12 @@ public class MapEditor {
         ArrayList<Spinner<Integer>> spinners;
         Spinner<Integer> targetSpinner;
 
+
+
         public Settings(){
             spinners = new ArrayList<>();
             GridPane pane = new GridPane();
-            maxRobotLimit = 100;
+
             Double space = 10.0;
             pane.setHgap(space);
             pane.setVgap(space);
@@ -162,7 +162,7 @@ public class MapEditor {
             }
 
             Label target = new Label("Target");
-            targetSpinner = new Spinner<Integer>(0,getSum(),5);
+            targetSpinner = new Spinner<Integer>(0,1000/*getSum()*/,5);
 
             targetSpinner.setPrefWidth(77);
 
@@ -246,7 +246,7 @@ public class MapEditor {
             refreshMap();
             settings.refresh(result.limits, result.target);
         } catch (Exception e) {
-            ExceptionPrinter.print(new EditorExeption("Wrong format!").getMessage());
+            ExceptionPrinter.print(e.getMessage());
         }
     }
 
@@ -416,7 +416,7 @@ public class MapEditor {
 
     }
 
-    public static Integer getMaxRobotLimit(){ return maxRobotLimit; }
+
 
 
 }

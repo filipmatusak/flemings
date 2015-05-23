@@ -22,7 +22,7 @@ public class Map {
     Integer squareSize = 20;
     ArrayList<Integer> limits;
     Integer target;
-
+    static Integer maxRobotLimit = 100;
 
     public Map(Main root, int height, int width){
         this.root = root;
@@ -98,4 +98,5 @@ public class Map {
     public Integer getTarget(){ return target;}
     public void setLimits(ArrayList<Integer> l){ this.limits = l;}
     public ArrayList<Integer> getLimits(){ return limits;}
+    public static Integer getMaxRobotLimit(){ return maxRobotLimit; }
 }
