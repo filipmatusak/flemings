@@ -34,6 +34,7 @@ public class SquareChoiceMenu {
         stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setAlwaysOnTop(true);
         pane = new Pane();
         allTypes = new AllSquares().getTypes();
         row = (allTypes.size()+1)/col;

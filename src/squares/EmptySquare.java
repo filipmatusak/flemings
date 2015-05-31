@@ -28,7 +28,6 @@ public class EmptySquare extends RobotHolder {
     public EmptySquare(){
         super();
         this.setColor(Color.BEIGE);
-        //this.setColor(Color.BROWN);
         this.setStroke(Color.BLACK);
         this.setStrokeWidth(0.05);
         thiz = this;
@@ -56,11 +55,9 @@ public class EmptySquare extends RobotHolder {
      * robot. */
     @Override
     public void registerRobot(Robot otherRobot) {
-        // ak uz mame robota, vyhod vynimku
         if (myRobot != null) {
 //            throw new RobotException("Two robots cannot be in the same square");
         }
-        // uloz noveho robota
         myRobot = otherRobot;
     }
 
@@ -80,7 +77,6 @@ public class EmptySquare extends RobotHolder {
 
     @Override
     public boolean fallingRobot(Robot otherRobot, int height, Integer downMax) {
-     //   System.out.println("chce padat " + otherRobot.getIdd());
         // ak mame na policku robota
         if(downMax == 0) return false;
         if(myRobot == null || myRobot.isFalling() || myRobot==otherRobot){
@@ -106,7 +102,6 @@ public class EmptySquare extends RobotHolder {
     @Override
     public boolean actionMove(Direction direction) {
         if (myRobot == null) {
-       //     return false;
             throw new RobotException("Cannot move null robot right");
         }
 
@@ -180,12 +175,12 @@ public class EmptySquare extends RobotHolder {
      * animacia pohybu
      * */
     public void animationMove(Robot otherRobot, Boolean canFall){
-        System.out.println("moving Const = " + movingConst);
         otherRobot.setMoving();
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
         //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/movingConst / this.size), new EventHandler<ActionEvent>() {
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/movingConst / this.size),
+                new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 otherRobot.setX(otherRobot.getX()+x);
@@ -197,7 +192,6 @@ public class EmptySquare extends RobotHolder {
         tl.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-          //      otherRobot.setPosition(thiz.getX(), thiz.getY());
                 otherRobot.moveTo(thiz);
                 otherRobot.endMoving();
                 if (canFall && !down.fallingRobot(otherRobot, 1, Integer.MAX_VALUE)) {
@@ -211,13 +205,11 @@ public class EmptySquare extends RobotHolder {
      * animacia padania
      */
     public void animationFalling(Robot otherRobot, int height, Integer downMax){
-        System.out.println("falling Const = " + fallingConst);
         otherRobot.setFalling();
         Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/fallingConst / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-         //       System.out.println("pada: " + otherRobot.getIdd() + " " +otherRobot.getY());
-                otherRobot.setY(otherRobot.getY()+1);
+                otherRobot.setY(otherRobot.getY() + 1);
             }
         }));
 
@@ -227,15 +219,35 @@ public class EmptySquare extends RobotHolder {
             @Override
             public void handle(ActionEvent event) {
                 // skusime, ci moze padnut este nizsie (zvysime height)
-                //     System.out.println("down");
                 otherRobot.moveTo(thiz);
                 otherRobot.endMoving();
-                if (downMax > 0 && !down.fallingRobot(otherRobot, height + 1, downMax - 1)) {
-
+                if (downMax > 0) {
+                    if (down != null) down.fallingRobot(otherRobot, height + 1, downMax - 1);
+                    else{
+                        dopad(otherRobot);
+                    }
                 }
             }
         });
         tl.play();
-  //      System.out.println("spustil: " + otherRobot.getIdd());
+    }
+
+    void dopad(Robot robot){
+        robot.setFalling();
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/fallingConst / this.size), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("pada");
+                robot.setY(robot.getY() + 1);
+            }
+        }));
+        tl.setCycleCount(this.size/2);
+        tl.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                robot.killed();
+            }
+        });
+        tl.play();
     }
 }

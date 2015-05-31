@@ -2,8 +2,6 @@ package sample;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -15,7 +13,6 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 import robots.Robot;
 import squares.EmptySquare;
@@ -105,12 +102,7 @@ public class MapEditor {
         stage.setResizable(false);
 
         stage.setScene(scene);
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                root.startup.show();
-            }
-        });
+        stage.setOnCloseRequest(event -> root.startup.show());
 
         pane.setOnMousePressed(event -> {
             if (squareChoiceMenu.isVisible()){
@@ -137,7 +129,7 @@ public class MapEditor {
             GridPane pane = new GridPane();
             this.initStyle(StageStyle.UNDECORATED);
             this.initModality(Modality.APPLICATION_MODAL);
-
+            this.setAlwaysOnTop(true);
             Double space = 10.0;
             pane.setHgap(space);
             pane.setVgap(space);
@@ -151,7 +143,7 @@ public class MapEditor {
                 Robot robot = robots.get(i);
                 robot.setOnMouseClicked(null);
                 Label label = new Label(robot.getType());
-                Spinner<Integer> spinner = new Spinner<Integer>(0, 100, 5);
+                Spinner<Integer> spinner = new Spinner<>(0, 100, 5);
                 spinner.setPrefWidth(77);
                 spinners.add(spinner);
 
@@ -162,7 +154,7 @@ public class MapEditor {
             }
 
             Label target = new Label("Target");
-            targetSpinner = new Spinner<Integer>(0,1000/*getSum()*/,5);
+            targetSpinner = new Spinner<>(0, 1000, 5);
 
             targetSpinner.setPrefWidth(77);
 
@@ -170,12 +162,7 @@ public class MapEditor {
             pane.add(targetSpinner, 6, 3);
             Button okButton = new Button("OK");
             Style.setButtonStyle(okButton);
-            okButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    thiz.close();
-                }
-            });
+            okButton.setOnAction(event -> thiz.close());
             pane.add(okButton, 6, 4);
 
             Scene scene = new Scene(pane);

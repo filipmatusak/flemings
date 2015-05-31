@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -32,6 +33,8 @@ public class LevelMenu {
         grid.setPadding(new Insets(space, space, space, space));
         scene = new Scene(grid,  space*(1+col) + col*size, space*(1+row) + row*size);
         stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setAlwaysOnTop(true);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

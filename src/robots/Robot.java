@@ -178,7 +178,7 @@ public class Robot extends ImageView {
         }
         System.out.println("Robot " + id + " finished");
         oldStatus = Status.FINISHED;
-        status = Status.FINISHED;
+    //    status = Status.FINISHED;
     }
 
     /** Vrati, ci je robot este aktivny na ploche */

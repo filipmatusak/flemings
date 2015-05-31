@@ -35,7 +35,7 @@ public class Game {
     BorderPane pane;
     Pane gamePane;
     VBox infoPane;
-    Integer maxMoves; //maximalne trvanie hry, malo by byt urcene levelom
+    Integer maxMoves;
     Queue<Robot> robots;
     ArrayList<Integer> readyRobots;
     Integer time;
@@ -70,6 +70,7 @@ public class Game {
         this.activeRobots = new Label();
         this.stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setAlwaysOnTop(true);
         stage.setResizable(false);
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -108,7 +109,6 @@ public class Game {
                 return;
             }
         }
-      //  this.redraw();
         this.time++;
 
         world.printStats(); // vypiseme celkove statistiky*/
@@ -118,9 +118,6 @@ public class Game {
         this.init();
         System.out.println("Initial configuration");
         world.printSituation();
-
-//        robots.add(new Robot("eva"));
-//        robots.add(new Robot("walle"));
 
         timeLine.start();
         }
@@ -150,10 +147,6 @@ public class Game {
 
         }
         for(Robot robot: World.robots) robot.toFront();
-//        currentTime.setText("Current time: " + this.time.toString());
-//        infoPane.getChildren().remove(currentTime);
-//        infoPane.getChildren().add(currentTime);
-    //    gamePane.getChildren().addAll(world.robots);
     }
 
     /**
@@ -178,7 +171,6 @@ public class Game {
                     timeLine.stop();
                     stage.close();
                     root.replayLevel(mapCopy);
-                    //timeLine.start();
                 } catch (InterruptedException e) {
 
                 }
@@ -262,9 +254,7 @@ public class Game {
                     stage.close();
                     root.game.run();
                 }
-                catch (InterruptedException e) {
-                }
-                catch (FileNotFoundException e) {
+                catch (InterruptedException | FileNotFoundException e) {
                 }
             }
         });
@@ -287,10 +277,12 @@ public class Game {
                 dstage.close();
             }
         });
-        vbox.getChildren().addAll(finished,killed,success,btnReplay,btnNext,btnMenu,btnQuit);
+        vbox.getChildren().addAll(finished, killed, success, btnReplay, btnNext, btnMenu, btnQuit);
         dpane.getChildren().addAll(vbox);
 
         dstage.setTitle("Game Finished");
+        dstage.initModality(Modality.APPLICATION_MODAL);
+        dstage.setAlwaysOnTop(true);
         dstage.setScene(dscene);
         dstage.show();
 
