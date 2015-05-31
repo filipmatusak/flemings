@@ -77,7 +77,11 @@ public class World {
                 printSituation();         // vypis celu plochu
             } else if(robot.isMoving() || robot.isFalling()) {
                 wasMove = true;
-            } else   {
+            }
+            else if (robot.isStuck()){
+                robot.endMoving();
+            }
+            else   {
                 pane.getChildren().remove(robot);
                 removeRobot(robot);
                 robot.endMoving();
