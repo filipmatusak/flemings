@@ -1,3 +1,20 @@
+28.5. TODO
+- zmenit obrazky Digging a Exploding robotovi
+- zmenit pozadie pri vybere levelov a nastaveni robotov v MapEditore
+- doplnit tlacidlo do okna v MapEditore
+- pridat defaultnu cestu suboru do Load Level a Save Map
+- opravit zabijanie robotov na GlueSquare
+- poupratovat
+    - odstranit vysku, cas
+    - zbytocne funkcie...
+- ako sa ma robot spravat, ked na spodku mapy nie je stena a on tam spadne?
+
+PROBLEMY
+Level 6
+- skus pustit na zaciatku viac robotov, ked sa niekto vrati na startovacie policko a zomrie tam, tak uz to blbne
+- tiez sa mi podarilo tak nejako ukoncit level, ze sa namiesto jedneho FinishedDialogu otvorilo nekonecne vela
+
+
 15.5.
 - Map v Game sa uz nevykresluje ako ColoredRectangle, ale ako Squares
 - okrem prazdnych policok sa vykresluju vsade okraje

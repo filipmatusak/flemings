@@ -201,6 +201,8 @@ public class Robot extends ImageView {
 
     public boolean isFalling(){ return status == Status.FALLING;}
 
+    public boolean isStuck(){ return status == Status.STUCK;}
+
     /** Vrati meno robota */
     public String getIdd() {
         return id;
