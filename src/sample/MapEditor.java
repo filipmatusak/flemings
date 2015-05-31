@@ -2,6 +2,7 @@ package sample;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -11,7 +12,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 import robots.Robot;
@@ -110,15 +113,16 @@ public class MapEditor {
         });
 
         pane.setOnMousePressed(event -> {
-            if (event.isSecondaryButtonDown()) {
+            if (squareChoiceMenu.isVisible()){
+                squareChoiceMenu.close();
+            }
+            else if (event.isSecondaryButtonDown()) {
                 squareChoiceMenu.show(event.getX() + stage.getX(),
                         event.getY() + stage.getY());
+                event.consume();
             }
         });
 
-        pane.setOnMouseReleased(event -> {
-            if (!event.isSecondaryButtonDown() && squareChoiceMenu != null) squareChoiceMenu.close();
-        });
         stage.show();
     }
 
@@ -127,11 +131,12 @@ public class MapEditor {
         ArrayList<Spinner<Integer>> spinners;
         Spinner<Integer> targetSpinner;
 
-
-
         public Settings(){
             spinners = new ArrayList<>();
+            Stage thiz = this;
             GridPane pane = new GridPane();
+            this.initStyle(StageStyle.UNDECORATED);
+            this.initModality(Modality.APPLICATION_MODAL);
 
             Double space = 10.0;
             pane.setHgap(space);
@@ -163,6 +168,15 @@ public class MapEditor {
 
             pane.add(target, 6, 2);
             pane.add(targetSpinner, 6, 3);
+            Button okButton = new Button("OK");
+            Style.setButtonStyle(okButton);
+            okButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    thiz.close();
+                }
+            });
+            pane.add(okButton, 6, 4);
 
             Scene scene = new Scene(pane);
             this.setScene(scene);
@@ -181,12 +195,6 @@ public class MapEditor {
             Integer b = spinner.getValue();
             if( a < b ) spinner.decrement(b-a);
             else spinner.increment(a-b);
-        }
-
-        Integer getSum(){
-            Integer sum = 0;
-            for(Integer i: getRobotsLimits()) sum += i;
-            return sum;
         }
 
         ArrayList<Integer> getRobotsLimits(){
@@ -347,14 +355,11 @@ public class MapEditor {
         close = false;
         Dialog<Pair<Integer, Integer>> dialog = new Dialog<>();
         dialog.setTitle("New Map");
-     //   dialog.setHeaderText("Set size of map");
         Integer maxW = 60, maxH = 30, minW = 5, minH = 5;
 
         Image image = new Image(getClass().getResourceAsStream("../graphics/plosak3.jpg"));
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
-       // dialog.setBackground(background);
-       // dialog.setGraphic();
         dialog.getDialogPane().setBackground(background);
 
         ButtonType createButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
@@ -363,13 +368,10 @@ public class MapEditor {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-     //   grid.getRowConstraints().add(new RowConstraints(300));
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         Label label = new Label("Set size of map");
-           // label.setFont(new Font(50));
         Style.MapSize.setMainLabel(label);
-//        grid.add(label);
         grid.addRow(0,label);
 
         TextField heightField = new TextField();

@@ -72,6 +72,4 @@ public class GameTimeLine {
     public void play(){ timeline.play();}
 
     public static Double getPeriod(){ return timePeriod; }
-
-
 }

@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.event.Event;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -49,9 +48,14 @@ public class SquareChoiceMenu {
             }
         });
 
-        scene.setOnMouseClicked(event -> close());
+        scene.setOnMouseClicked(event -> {
+            close();
+        });
 
-        scene.setOnMouseMoved(Event::consume);
+        scene.setOnMouseMoved(event -> {
+            isIn = true;
+            event.consume();
+        });
 
     }
 
@@ -94,10 +98,14 @@ public class SquareChoiceMenu {
 
     public void show(Double x, Double y){
         stage.setAlwaysOnTop(true);
-        stage.setX(x);
-        stage.setY(y + 20);
+        stage.setX(x-5);
+        stage.setY(y + 20-5);
         stage.show();
         isIn = false;
+    }
+
+    public boolean isVisible(){
+        return stage.isShowing();
     }
 
     public void close(){

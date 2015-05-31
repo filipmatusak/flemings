@@ -77,6 +77,7 @@ public class Robot extends ImageView {
         mySquare = null;
         this.id = id;
         this.maxHeight = maxHeight;
+        status = Status.ACTIVE;
         oldStatus = status;
         direction = Direction.RIGHT;
         time = 0;
