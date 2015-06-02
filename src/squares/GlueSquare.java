@@ -78,7 +78,6 @@ public class GlueSquare extends EmptySquare {
         // ak uz mame robota, vratime false
         if (myRobot != null) {
             otherRobot.endMoving();
-            otherRobot.setStuck();
             return false;
         } else {
             otherRobot.moveTo(this);
