@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public class AllRobots {
         public static ArrayList<Robot> getTypes() {
             ArrayList<Robot> list = new ArrayList<>();
+            list.add(new Robot());
             list.add(new DiggingRobot());
             list.add(new ExplodingRobot());
-            list.add(new Robot());
             return list;
         }
 }

@@ -20,7 +20,7 @@ public class ExplodingRobot extends Robot {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                 mySquare.actionExploding();
+                mySquare.actionExploding();
             }
         });
     }

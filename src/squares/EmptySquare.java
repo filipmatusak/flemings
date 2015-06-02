@@ -4,12 +4,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
 import robots.Robot;
+import sample.Game;
 import sample.GameTimeLine;
 
 /** Tato trieda reprezentuje prazdne policko, na ktorom moze
@@ -163,6 +167,33 @@ public class EmptySquare extends RobotHolder {
      */
     @Override
     public boolean actionExploding() {
+
+         ImageView imgView = new ImageView();
+         Image tempImg = new Image(getClass().getResource("../graphics/buch1.png").toExternalForm());
+        imgView.setImage(tempImg);
+        imgView.setLayoutY((row + 0.5) * size);
+        imgView.setLayoutX((column + 0.5) * size);
+        Pane p = Game.getGamePane();
+        imgView.setFitHeight(10);
+        imgView.setFitWidth(10);
+        p.getChildren().add(imgView);
+
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/20),
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                    //    System.out.println(GameTimeLine.getPeriod() + " boom");
+                        imgView.setLayoutY( imgView.getLayoutY() -7);
+                        imgView.setLayoutX( imgView.getLayoutX() -7);
+                        imgView.setFitHeight(imgView.getFitHeight() + 14);
+                        imgView.setFitWidth(imgView.getFitWidth() + 14);
+                    }
+                }));
+        tl.setCycleCount(10);
+        tl.play();
+        tl.setOnFinished(event -> p.getChildren().remove(imgView));
+
+
         this.exploding();
         this.up.exploding();
         this.right.exploding();

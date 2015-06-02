@@ -33,7 +33,7 @@ public class Game {
     Stage stage;
     Scene scene;
     BorderPane pane;
-    Pane gamePane;
+    static Pane gamePane;
     VBox infoPane;
     Integer maxMoves;
     Queue<Robot> robots;
@@ -318,5 +318,11 @@ public class Game {
         killedRobots.setText("Killed: " + world.getNumKilled());
         savedRobots.setText("Saved: " + world.getNumFinished());
         activeRobots.setText("Active: " + world.getNumActive());
+    }
+
+    public static Pane getGamePane(){ return gamePane; }
+
+    public static void explosion(Node node){
+        gamePane.getChildren().add(node);
     }
 }
