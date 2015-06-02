@@ -144,7 +144,7 @@ public class Robot extends ImageView {
      * Tuto metodu spravidla vola policko, na ktore
      * robot dopadol. */
     public void fell(int height) {
-        System.out.println("Robot " + id + " fell from height " + height);
+    //    System.out.println("Robot " + id + " fell from height " + height);
         if (height > maxHeight) {
             killed();
         }
@@ -157,7 +157,7 @@ public class Robot extends ImageView {
      * sam po vyhodnoteni inych udalosti alebo svet, ak ho nevie
      * pri prichode vlozit na vstupne policko. */
     public void killed() {
-        System.out.println("Robot " + id + " killed");
+   //     System.out.println("Robot " + id + " killed");
         if (mySquare != null) {
             mySquare.deregisterRobot();
 
@@ -176,9 +176,9 @@ public class Robot extends ImageView {
         if (mySquare != null) {
             mySquare.deregisterRobot();
         }
-        System.out.println("Robot " + id + " finished");
+ //       System.out.println("Robot " + id + " finished");
         oldStatus = Status.FINISHED;
-    //    status = Status.FINISHED;
+        status = Status.FINISHED;
     }
 
     /** Vrati, ci je robot este aktivny na ploche */
@@ -242,10 +242,12 @@ public class Robot extends ImageView {
     public Direction getDirection(){ return direction;}
 
     public void setMoving(){
-        if(status!=Status.MOVING) oldStatus = status;
+        if(status!=Status.MOVING && !isFinished()) oldStatus = status;
         status = Status.MOVING;}
     public void endMoving(){
-        status = oldStatus; }
+        status = oldStatus;
+        if(isFinished()) mySquare.deregisterRobot();
+    }
 
     public void setStuck(){
         status = Status.STUCK;
@@ -254,12 +256,12 @@ public class Robot extends ImageView {
 
     public void setFalling(){
    //     System.out.println("status falling robot " + getIdd());
-        if(status!=Status.FALLING) oldStatus = status;
+        if(status!=Status.FALLING && !isFinished()) oldStatus = status;
         status = Status.FALLING; }
 
     public void setId(Integer id){this.id = id.toString();}
 
     public void setActive(){ this.status = Status.ACTIVE; }
 
-    public String getStatus(){ return status.toString() + " old=" + oldStatus.toString(); }
+ //   public String getStatus(){ return status.toString() + " old=" + oldStatus.toString(); }
 }

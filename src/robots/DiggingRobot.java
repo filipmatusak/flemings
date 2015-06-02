@@ -5,11 +5,11 @@ import javafx.scene.input.KeyCode;
 import old.Direction;
 
 public class DiggingRobot extends Robot {
-    Image image = new Image(getClass().getResourceAsStream("../graphics/robots/walle.png"));
-
 
     public DiggingRobot(int changeTime, int maxHeight, String id) {
         super(changeTime, maxHeight, id);
+        image = new Image(getClass().getResourceAsStream("../graphics/robots/walle.png"));
+        super.setImage(image);
         this.shortcut = KeyCode.D;
         this.type = "Digging";
         this.limit = 5;

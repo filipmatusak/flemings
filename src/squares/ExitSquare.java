@@ -32,7 +32,8 @@ public class ExitSquare extends EmptySquare {
         if (myRobot != null) {
             throw new RobotException("There should not be a robot in exit");
         }
-        otherRobot.moveTo(this);
+      //  otherRobot.moveTo(this);
+        animationFalling(otherRobot, height, downMax);
         otherRobot.finished();
         return true;
     }

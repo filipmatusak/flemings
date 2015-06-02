@@ -66,7 +66,7 @@ public class World {
     public boolean move() {
         boolean wasMove = false;
         for (Robot robot : robots) {
-            System.out.println("robot: " + robot.getIdd()/* + " stat " + robot.getStatus()*/);
+    //        System.out.println("robot: " + robot.getIdd()/* + " stat " + robot.getStatus()*/);
             // ktore hybu robotmi si ho musia opat spustit
         //    root.game.timeLine.pause();
             System.out.println(robot.getType());
@@ -74,7 +74,7 @@ public class World {
                 System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
-                printSituation();         // vypis celu plochu
+            //    printSituation();         // vypis celu plochu
             } else if(robot.isMoving() || robot.isFalling()) {
                 wasMove = true;
             }
@@ -87,6 +87,7 @@ public class World {
                 robot.endMoving();
             }
         }
+        printSituation();
         return wasMove;
     }
 

@@ -342,7 +342,7 @@ public class MapEditor {
         close = false;
         Dialog<Pair<Integer, Integer>> dialog = new Dialog<>();
         dialog.setTitle("New Map");
-        Integer maxW = 60, maxH = 30, minW = 5, minH = 5;
+        Integer maxW = 30, maxH = 20, minW = 5, minH = 5;
 
         Image image = new Image(getClass().getResourceAsStream("../graphics/plosak3.jpg"));
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);

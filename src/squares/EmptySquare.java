@@ -179,14 +179,14 @@ public class EmptySquare extends RobotHolder {
         //ktorym smerom sa ideme hybat
         final Double x; if(otherRobot.getDirection() == Direction.LEFT) x = -1.0; else x = 1.0;
         //postupny pohyb robota;
-        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/movingConst / this.size),
+        Timeline tl = new Timeline(new KeyFrame(Duration.millis(GameTimeLine.getPeriod()/movingConst / this.size*2),
                 new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                otherRobot.setX(otherRobot.getX()+x);
+                otherRobot.setX(otherRobot.getX()+x*2);
             }
         }));
-        tl.setCycleCount(this.size);
+        tl.setCycleCount(this.size/2);
 
         //na konci robota skusi nechat spadnut, ak nejde, uvolni tah
         tl.setOnFinished(new EventHandler<ActionEvent>() {
@@ -237,7 +237,6 @@ public class EmptySquare extends RobotHolder {
         Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/fallingConst / this.size), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("pada");
                 robot.setY(robot.getY() + 1);
             }
         }));
