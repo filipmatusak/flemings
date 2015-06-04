@@ -79,7 +79,7 @@ public class StartupMenu {
                     stage.close();
                     root.game.run();
                 } catch (Exception e){
-                    ExceptionPrinter.print("Illegal Operation!");
+//                    ExceptionPrinter.print("Illegal Operation!");
                 }
             }
         });
@@ -102,7 +102,6 @@ public class StartupMenu {
         stage = new Stage();
         stage.setWidth(width);
         Scene scene = new Scene(pane);
-        scene.getStylesheets().addAll("styles/styles.css");
         stage.setTitle("FlemmingZ");
         stage.setResizable(false);
         stage.setScene(scene);

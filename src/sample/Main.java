@@ -36,11 +36,7 @@ public class Main extends Application {
 
         startup = new StartupMenu(this);
         startup.run();
-
-
         mapEditor = new MapEditor(this);
-    //   mapEditor.run();
-
         fileCreator = new FileCreator(this);
         mapConvertor = new MapConvertor(this);
         level = new LevelMenu(this);

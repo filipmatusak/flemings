@@ -12,6 +12,7 @@ public class SoilSquare extends Square{
         this.setColor(Color.DARKGRAY);
         this.setStroke(Color.BLACK);
         this.setStrokeWidth(0.05);
+        type = "Soil Square (can be dug)";
     }
 
      @Override

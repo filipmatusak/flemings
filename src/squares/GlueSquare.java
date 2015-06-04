@@ -20,6 +20,7 @@ public class GlueSquare extends EmptySquare {
         this.setStrokeWidth(0.05);
         fallingConst = 1.0;
         movingConst = 1.0;
+        type = "Glue Square (trap)";
     }
 
     @Override

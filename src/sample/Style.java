@@ -4,6 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 public class Style {
     public static void setButtonStyle(Button btn) {
@@ -39,9 +41,9 @@ public class Style {
 
     public static void setLevelButtonStyle(Button btn){
         String buttonStyle =
-                "-fx-background-color: white;"
+                "-fx-background-color: red;"
                         + "-fx-text-fill: black;"
-                        + "-fx-opacity: 0.3;"
+                        + "-fx-opacity: 0.1;"
                         + "-fx-font-family: 'Arial';";
 
         String buttonFocusStyle =
@@ -83,6 +85,24 @@ public class Style {
                             + "-fx-font-weight: bold;"
                             + "-fx-effect: dropshadow( gaussian , derive(cadetblue, -20%) , 0,0,0,1 );";
             label.setStyle(labelStyle);
+        }
+    }
+
+    public static void setTextStyle(Label label){
+
+        label.setStyle("-fx-text-fill: black;"+
+                        "-fx-font-weight: bold;"+
+                "-fx-font-family: Meiryo;"
+        );
+        label.setTextAlignment(TextAlignment.CENTER);
+    }
+
+    public static void setColor(Label label, Color col){
+        if (col.equals(Color.RED)){
+            label.setStyle("-fx-text-fill: red;");
+        }
+        else{
+            label.setStyle("-fx-text-fill: green;");
         }
     }
 }

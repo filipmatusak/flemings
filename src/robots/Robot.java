@@ -143,8 +143,7 @@ public class Robot extends ImageView {
      * Ak je vyska prilis velka, robot umiera.
      * Tuto metodu spravidla vola policko, na ktore
      * robot dopadol. */
-    public void fell(int height) {
-    //    System.out.println("Robot " + id + " fell from height " + height);
+    public void fell(int height) {System.out.println("Robot " + id + " fell from height " + height);
         if (height > maxHeight) {
             killed();
         }
@@ -157,12 +156,12 @@ public class Robot extends ImageView {
      * sam po vyhodnoteni inych udalosti alebo svet, ak ho nevie
      * pri prichode vlozit na vstupne policko. */
     public void killed() {
-   //     System.out.println("Robot " + id + " killed");
+        System.out.println("Robot " + id + " killed");
         if (mySquare != null) {
             mySquare.deregisterRobot();
 
         }
-        World.removeRobot(this);
+      //  World.removeRobot(this);
         oldStatus = Status.KILLED;
         status = Status.KILLED;
         endMoving();

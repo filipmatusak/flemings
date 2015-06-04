@@ -6,15 +6,17 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import old.RobotHolder;
 import old.World;
 import robots.Robot;
 import squares.EmptySquare;
+import squares.EntrySquare;
 import squares.ExitSquare;
 import squares.Square;
 
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Predicate;
+import javafx.scene.input.KeyEvent;
+
 
 public class Game {
     Main root;
@@ -69,6 +73,7 @@ public class Game {
         this.targetCount = new Label();
         this.activeRobots = new Label();
         this.stage = new Stage();
+        this.target = map.getTarget();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
@@ -92,7 +97,7 @@ public class Game {
 
     }
 
-    public void move(){
+    public void move() {
         System.out.println(time + ":");
         printLabelStats();
 
@@ -180,6 +185,18 @@ public class Game {
         Button pause = new Button("PAUSE");
         pause.setPrefWidth(100);
         Style.setButtonStyle(pause);
+        pause.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timeLine.change();
+                if (pause.getText() == "PAUSE"){
+                    pause.setText("RESUME");
+                }
+                else{
+                    pause.setText("PAUSE");
+                }
+            }
+        });
 
         Button quit = new Button("QUIT");
         Style.setButtonStyle(quit);
@@ -188,6 +205,7 @@ public class Game {
             @Override
             public void handle(ActionEvent event) {
                 stage.close();
+                timeLine.stop();
                 root.startup.run();
             }
         });
@@ -204,6 +222,19 @@ public class Game {
         stage.setScene(scene);
         stage.show();
 
+//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent event) {
+//                int i = 0;
+//                for (Robot robot : AllRobots.getTypes()) {
+//                    if (robot.getShortcut() == event.getCode()) {
+//                        robotsMenu.get(i).getOnMouseClicked().handle();
+//                    }
+//                    i++;
+//                }
+//            }
+//        });
+
     }
 
     /**
@@ -216,20 +247,29 @@ public class Game {
 
     private void finishedDialog(){
         int dwidth = 250;
-        Pane dpane = new Pane();
+        BorderPane dpane = new BorderPane();
+
+        Image image = new Image(getClass().getResourceAsStream("../graphics/robots/walle.jpg"));
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+        dpane.setBackground(background);
+
         VBox vbox = new VBox();
+        VBox vbox2 = new VBox();
         Scene dscene = new Scene(dpane);
         dpane.setPrefHeight(dwidth);
         dpane.setPrefWidth(dwidth);
         Stage dstage = new Stage();
-        Label finished = new Label("Number of robots finished: " + world.getNumFinished());
-        Label killed = new Label("Number of robots killed: "+ world.getNumKilled());
-        Label success = new Label();
+        Label finished = new Label("Finished: " + world.getNumFinished());
+        Label wasTarget = new Label("Target: "+ map.getTarget());
+        Style.setTextStyle(finished);
         if (world.getNumFinished() >= this.target){
-            success.setText("Level passed!");
+            dstage.setTitle("Level passed!");
+            Style.setColor(finished, Color.GREEN);
         }
         else{
-            success.setText("Level failed!");
+            dstage.setTitle("Level failed!");
+            Style.setColor(finished, Color.RED);
         }
         Button btnReplay = new Button("REPLAY");
         Style.setButtonStyle(btnReplay);
@@ -253,8 +293,7 @@ public class Game {
                     root.game = new Game(root, map);
                     stage.close();
                     root.game.run();
-                }
-                catch (InterruptedException | FileNotFoundException e) {
+                } catch (InterruptedException | FileNotFoundException e) {
                 }
             }
         });
@@ -277,13 +316,15 @@ public class Game {
                 dstage.close();
             }
         });
-        vbox.getChildren().addAll(finished, killed, success, btnReplay, btnNext, btnMenu, btnQuit);
-        dpane.getChildren().addAll(vbox);
+        vbox2.getChildren().addAll(wasTarget, finished);
+        vbox.getChildren().addAll(btnReplay, btnNext, btnMenu, btnQuit);
+        dpane.setBottom(vbox);
+        dpane.setTop(vbox2);
 
-        dstage.setTitle("Game Finished");
         dstage.initModality(Modality.APPLICATION_MODAL);
         dstage.setAlwaysOnTop(true);
         dstage.setScene(dscene);
+//        dstage.setResizable(false);
         dstage.show();
 
         btnReplay.setOnAction(new EventHandler<ActionEvent>() {
@@ -297,17 +338,23 @@ public class Game {
                 }
             }
         });
-    }
+    };
 
     public void deregisterAll(){
         for (Square[] row : map.getMap()){
             for (Square square : row){
-                if (square instanceof EmptySquare){
-                    ((EmptySquare) square).deregisterRobot();
+                if (square instanceof RobotHolder){
+                    ((RobotHolder) square).deregisterRobot();
                 }
-                else if (square instanceof ExitSquare){
-                    ((ExitSquare) square).deregisterRobot();
-                }
+//                if (square instanceof EmptySquare){
+//                    ((EmptySquare) square).deregisterRobot();
+//                }
+//                else if (square instanceof EntrySquare){
+//                    ((EntrySquare) square).deregisterRobot();
+//                }
+//                else if (square instanceof ExitSquare){
+//                    ((ExitSquare) square).deregisterRobot();
+//                }
             }
         }
     }

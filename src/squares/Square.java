@@ -29,6 +29,7 @@ public abstract class Square extends Rectangle {
 
     public Color color;
     public int size;
+    public String type;
 
 
     public void setSize(int s){
@@ -92,6 +93,7 @@ public abstract class Square extends Rectangle {
             otherRobot.fell(height-1);
         }
         otherRobot.endMoving();
+        if( otherRobot.isKilled()) World.removeRobot(otherRobot);
         return false;
     }
 
@@ -128,5 +130,9 @@ public abstract class Square extends Rectangle {
     public void setColor(Color color) {
         super.setFill(color);
         this.color = color;
+    }
+
+    public String getType() {
+        return type;
     }
 }

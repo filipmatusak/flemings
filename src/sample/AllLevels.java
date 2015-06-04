@@ -18,8 +18,6 @@ public class AllLevels {
 
     public static File getNextLevel(File level){
         ArrayList<File> list = AllLevels.getLevels();
-        for (File file : list){
-        }
         int i = list.indexOf(level);
         i++;
         if (i >= list.size()) return null;

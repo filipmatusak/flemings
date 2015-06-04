@@ -33,13 +33,14 @@ public class LevelMenu {
         grid.setPadding(new Insets(space, space, space, space));
         scene = new Scene(grid,  space*(1+col) + col*size, space*(1+row) + row*size);
         stage = new Stage();
+        stage.setTitle("Choose Level");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setAlwaysOnTop(true);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
 
-        Image image = new Image(getClass().getResourceAsStream("../graphics/robots/eva.png"));
+        Image image = new Image(getClass().getResourceAsStream("../graphics/robots/explo.jpg"));
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
         grid.setBackground(background);
@@ -71,7 +72,7 @@ public class LevelMenu {
                             root.game = new Game(root, map);
                             stage.close();
                             root.game.run();
-                        } catch ( Exception e) {
+                        } catch (Exception e) {
                             ExceptionPrinter.print(e.getMessage());
                             //e.printStackTrace();
                         }

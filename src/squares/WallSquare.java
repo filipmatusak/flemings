@@ -11,8 +11,9 @@ public class WallSquare extends Square {
 
     /** Vrati jednoznakovu textovu reprezentaciu policka
      * a pripadneho robota na nom. */
-    public WallSquare(){
+    public WallSquare() {
         setColor(Color.BURLYWOOD);
+        type = "Wall Square";
     }
 
      @Override

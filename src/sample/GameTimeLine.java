@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -13,7 +14,7 @@ import java.util.TreeSet;
  */
 public class GameTimeLine {
     Main root;
-    Timeline timeline;
+    static Timeline timeline;
     static Double timePeriod;
     Duration duration;
     Integer actions;
@@ -29,6 +30,8 @@ public class GameTimeLine {
         actions = 0;
         movingRobots = new TreeSet<>();
     }
+
+
 
     /**
      * akcia vyvolana kazdu periodu
@@ -70,6 +73,19 @@ public class GameTimeLine {
     }
     public void pause(){ timeline.stop();}
     public void play(){ timeline.play();}
+    public void change(){
+        if (timeline.getStatus().equals(Animation.Status.PAUSED)){
+            timeline.play();
+        }
+        else{
+            timeline.pause();
+        }
+    }
+
+    public static boolean isPaused(){
+        return timeline.getStatus().equals(Animation.Status.PAUSED);
+    }
+
 
     public static Double getPeriod(){ return timePeriod; }
 }

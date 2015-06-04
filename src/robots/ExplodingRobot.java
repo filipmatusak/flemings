@@ -5,8 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import old.Direction;
+import sample.GameTimeLine;
 
 public class ExplodingRobot extends Robot {
+
+
 
     public ExplodingRobot(int changeTime, int maxHeight, String id) {
         super(changeTime, maxHeight, id);
@@ -20,7 +23,9 @@ public class ExplodingRobot extends Robot {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mySquare.actionExploding();
+                if (!GameTimeLine.isPaused()){
+                    mySquare.actionExploding();
+                }
             }
         });
     }

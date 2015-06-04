@@ -19,4 +19,4 @@ W.....WWWWWW.......W
 W..................W
 W..............*...W
 WWWWWWWWWWWWWWWWWWWW
-5 5 5 5
+0 0 1 1

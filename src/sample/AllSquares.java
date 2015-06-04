@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public class AllSquares {
-    public ArrayList<Square> getTypes(){
+    public static ArrayList<Square> getTypes(){
         ArrayList<Square> list = new ArrayList<>();
         list.add(new EmptySquare());
         list.add(new WallSquare());

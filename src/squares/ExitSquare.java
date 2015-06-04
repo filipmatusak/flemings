@@ -14,6 +14,7 @@ public class ExitSquare extends EmptySquare {
         this.setColor(Color.MEDIUMSEAGREEN);
         this.setStroke(Color.BLACK);
         this.setStrokeWidth(0.05);
+        type = "Exit Square (finish)";
     }
     @Override
     public boolean receiveRobot(Robot otherRobot, Boolean move) {

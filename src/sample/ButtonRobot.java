@@ -2,7 +2,6 @@ package sample;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import robots.Robot;
@@ -59,15 +58,6 @@ public class ButtonRobot extends HBox {
                 }
             }
         });
-        this.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if ((getCount() > 0) && robot.getShortcut() == event.getCode()){
-                    /** TODO:Pridat robota do hry */
-                    setCount(getCount() - 1);
-                }
-            }
-        });
     }
 
     public void setCount(Integer value){
@@ -79,4 +69,5 @@ public class ButtonRobot extends HBox {
     public Integer getCount() {
         return Integer.parseInt(this.count.getText());
     }
+
 }

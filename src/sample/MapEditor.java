@@ -6,6 +6,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -20,6 +27,7 @@ import squares.EntrySquare;
 import squares.ExitSquare;
 import squares.WallSquare;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -44,6 +52,7 @@ public class MapEditor {
     Scene scene;
     Settings settings;
     SquareChoiceMenu squareChoiceMenu;
+    Helper helper;
 
     public MapEditor(Main root){
         this.root = root;
@@ -71,6 +80,7 @@ public class MapEditor {
         drawingPane = new Pane();
         stage = new Stage();
         selectedColor = null;
+        helper = new Helper();
 
         scene = new Scene(pane);
         settings = new Settings();
@@ -81,20 +91,22 @@ public class MapEditor {
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("Menu");
         Menu edit = new Menu("Edit");
-        MenuItem menuPlay = new MenuItem("Play");
+        Menu help = new Menu("Help");
         MenuItem menuSave = new MenuItem("Save");
         MenuItem menuClear = new MenuItem("Clear");
         MenuItem menuOpen = new MenuItem("Open");
         MenuItem menuExit = new MenuItem("Exit");
+        MenuItem menuHelp = new MenuItem("Help");
         MenuItem menuRobots = new MenuItem("Robot Setting");
-        menu.getItems().addAll(menuPlay, menuOpen, menuSave, menuExit);
+        menu.getItems().addAll( menuOpen, menuSave, menuExit);
         edit.getItems().addAll(menuClear, menuRobots);
-        menuBar.getMenus().addAll(menu, edit);
-        menuPlay.setOnAction(event1 -> playThis());
+        help.getItems().addAll(menuHelp);
+        menuBar.getMenus().addAll(menu, edit, help);
         menuClear.setOnAction(event -> setClearMap());
         menuSave.setOnAction(event -> saveMap());
         menuOpen.setOnAction(event -> openMap());
         menuExit.setOnAction(event -> exit());
+        menuHelp.setOnAction(event -> helper.show());
         menuRobots.setOnAction(event -> settings.show());
         pane.setTop(menuBar);
         pane.setCenter(drawingPane);
@@ -120,6 +132,10 @@ public class MapEditor {
 
     class Settings extends Stage{
 
+        Image image = new Image(getClass().getResourceAsStream("../graphics/robotsBG2.png"));
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+
         ArrayList<Spinner<Integer>> spinners;
         Spinner<Integer> targetSpinner;
 
@@ -127,7 +143,11 @@ public class MapEditor {
             spinners = new ArrayList<>();
             Stage thiz = this;
             GridPane pane = new GridPane();
+            pane.setBackground(background);
             this.initStyle(StageStyle.UNDECORATED);
+
+            pane.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.DASHED,
+                    CornerRadii.EMPTY ,BorderWidths.DEFAULT)));
             this.initModality(Modality.APPLICATION_MODAL);
             this.setAlwaysOnTop(true);
             Double space = 10.0;
@@ -135,35 +155,34 @@ public class MapEditor {
             pane.setVgap(space);
             pane.setPadding(new Insets(space, space, space, space));
 
-            pane.add(new Label("Robots"), 1,1);
-
             ArrayList<Robot> robots = AllRobots.getTypes();
 
             for(int i = 0; i < robots.size(); i++){
                 Robot robot = robots.get(i);
                 robot.setOnMouseClicked(null);
                 Label label = new Label(robot.getType());
+                Style.setTextStyle(label);
                 Spinner<Integer> spinner = new Spinner<>(0, 100, 5);
                 spinner.setPrefWidth(77);
                 spinners.add(spinner);
 
-                pane.add(label, 1, 2+i);
-                pane.add(robot, 2, 2+i);
-                pane.add(spinner, 3, 2 + i);
-
-            }
+                pane.add(label, 1, 1+i);
+                pane.add(robot, 2, 1+i);
+                pane.add(spinner, 3, 1 + i);
+        }
 
             Label target = new Label("Target");
+            Style.setTextStyle(target);
             targetSpinner = new Spinner<>(0, 1000, 5);
 
             targetSpinner.setPrefWidth(77);
 
-            pane.add(target, 6, 2);
-            pane.add(targetSpinner, 6, 3);
+            pane.add(target, 6, 1);
+            pane.add(targetSpinner, 6, 2);
             Button okButton = new Button("OK");
             Style.setButtonStyle(okButton);
             okButton.setOnAction(event -> thiz.close());
-            pane.add(okButton, 6, 4);
+            pane.add(okButton, 6, 3);
 
             Scene scene = new Scene(pane);
             this.setScene(scene);
@@ -211,15 +230,6 @@ public class MapEditor {
         }
     }
 
-    void playThis(){
-        stage.close();
-        try {
-            root.game.run();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     void exit(){
         root.startup.show();
         stage.close();
@@ -227,6 +237,9 @@ public class MapEditor {
 
     void openMap(){
         File file = root.fileCreator.openFile(stage, false);
+        if (file == null){
+            return;
+        }
         try{
             MapConvertor.ToMapEditorResult result = root.mapConvertor.toMapEditor(file);
             map = result.map;
@@ -344,7 +357,7 @@ public class MapEditor {
         dialog.setTitle("New Map");
         Integer maxW = 30, maxH = 20, minW = 5, minH = 5;
 
-        Image image = new Image(getClass().getResourceAsStream("../graphics/plosak3.jpg"));
+        Image image = new Image(getClass().getResourceAsStream("../graphics/robotsBG.png"));
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
         dialog.getDialogPane().setBackground(background);

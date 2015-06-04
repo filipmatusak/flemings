@@ -53,10 +53,11 @@ public class MapConvertor {
             map.setTarget(target);
 
             return map;
-        } catch (EditorExeption e){
+        } catch (EditorExeption e) {
             throw new EditorExeption("Wrong robot limit");
+        } catch (NullPointerException e) {
+            throw new EditorExeption("No file");
         } catch (Exception e){
-
             throw new EditorExeption("Wrong format");
         }
     }

@@ -31,6 +31,7 @@ public class EmptySquare extends RobotHolder {
 
     public EmptySquare(){
         super();
+        type = "Empty Square";
         this.setColor(Color.BEIGE);
         this.setStroke(Color.BLACK);
         this.setStrokeWidth(0.05);
@@ -255,7 +256,7 @@ public class EmptySquare extends RobotHolder {
                 if (downMax > 0) {
                     if (down != null) down.fallingRobot(otherRobot, height + 1, downMax - 1);
                     else{
-                        dopad(otherRobot);
+                        showFallout(otherRobot);
                     }
                 }
             }
@@ -263,7 +264,7 @@ public class EmptySquare extends RobotHolder {
         tl.play();
     }
 
-    void dopad(Robot robot){
+    void showFallout(Robot robot){
         robot.setFalling();
         Timeline tl = new Timeline(new KeyFrame(Duration.millis((GameTimeLine.getPeriod())/fallingConst / this.size), new EventHandler<ActionEvent>() {
             @Override
