@@ -65,7 +65,6 @@ public class Robot extends ImageView {
     public Robot(int changeTime, int maxHeight, String id) {
 
         super();
-        //TODO dat prec casy???
         changeTime = 1000000;
         maxHeight = 10000;
 
