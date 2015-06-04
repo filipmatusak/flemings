@@ -1,4 +1,6 @@
-package sample;
+/** Trieda reprezentuje okno s pomocnymi informaciami o typoch policok a robotov */
+
+package engine;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,6 +38,7 @@ public class Helper extends Stage {
         this.initModality(Modality.APPLICATION_MODAL);
         this.initStyle(StageStyle.UNDECORATED);
 
+        /** Zoznam stvorcekov aj s ich popismi*/
         Integer i = 0;
         for(Square square: AllSquares.getTypes()){
             square.setSize(30);
@@ -45,6 +48,7 @@ public class Helper extends Stage {
             pane.add(label, 1, i);
             i++;
         }
+        /** Zoznam robotov aj s ich popismi*/
         for(Robot robot: AllRobots.getTypes()){
             pane.add(robot, 0, i);
             Label label = new Label(robot.getType());
@@ -52,6 +56,7 @@ public class Helper extends Stage {
             pane.add(label, 1, i);
             i++;
         }
+        /** Tlacidlo na ukoncenie dialogu */
         Button ok = new Button("Thnx");
         Style.setButtonStyle(ok);
         pane.add(ok, 2, i - 1);

@@ -13,8 +13,8 @@ import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
 import robots.Robot;
-import sample.Game;
-import sample.GameTimeLine;
+import engine.Game;
+import engine.GameTimeLine;
 
 /** Tato trieda reprezentuje prazdne policko, na ktorom moze
  * a nemusi prave byt nejaky robot. Musi sa vyrovnat s tahmi tohto robota

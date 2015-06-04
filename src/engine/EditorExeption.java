@@ -1,4 +1,6 @@
-package sample;
+/** Trieda na vypis vynimiek, ktore nastali pri editovani mapy */
+
+package engine;
 
 import java.util.InputMismatchException;
 

@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import old.Direction;
-import sample.GameTimeLine;
+import engine.GameTimeLine;
 
 public class ExplodingRobot extends Robot {
 

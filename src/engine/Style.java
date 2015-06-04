@@ -1,4 +1,4 @@
-package sample;
+package engine;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -90,9 +90,9 @@ public class Style {
 
     public static void setTextStyle(Label label){
 
-        label.setStyle("-fx-text-fill: black;"+
-                        "-fx-font-weight: bold;"+
-                "-fx-font-family: Meiryo;"
+        label.setStyle("-fx-text-fill: black;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-font-family: Meiryo;"
         );
         label.setTextAlignment(TextAlignment.CENTER);
     }

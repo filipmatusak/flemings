@@ -20,11 +20,4 @@ public class WallSquare extends Square {
     public String toString() {
         return "W";
     }
-
-//    @Override
-//    public void exploding() {
-//
-//    }
-
-
 }

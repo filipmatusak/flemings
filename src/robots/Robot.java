@@ -6,8 +6,7 @@ import javafx.scene.input.KeyCode;
 import old.Direction;
 import old.RobotException;
 import old.RobotHolder;
-import old.World;
-import sample.Map;
+import engine.Map;
 
 /** Trieda Robot predstavuje zakladneho robota. Robot si pamata
  * policko, na ktorom stoji, ale okrem toho o svete nic nevie. Robot

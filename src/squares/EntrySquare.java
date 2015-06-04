@@ -43,24 +43,11 @@ public class EntrySquare extends EmptySquare {
             otherRobot.endMoving();
             return false;
         } else {
-        //    down.fallingRobot(myRobot, 1, Integer.MAX_VALUE);
             otherRobot.moveTo(this);
-            down.fallingRobot(myRobot,0,Integer.MAX_VALUE);
-        //    down.fallingRobot(myRobot, 1, Integer.MAX_VALUE);
-            if(move) animationMove(otherRobot, true);
+            down.fallingRobot(myRobot, 0, Integer.MAX_VALUE);
+            if (move) animationMove(otherRobot, true);
             return true;
         }
     }
-/*
-    @Override
-    public boolean actionMove(Direction direction) {
-        if (myRobot == null) {
-            //     return false;
-            throw new RobotException("Cannot move null robot right");
-        }
-
-        if(!super.fallingRobot(myRobot,0,Integer.MAX_VALUE)) return super.actionMove(direction);
-        return true;
-    }*/
 
 }

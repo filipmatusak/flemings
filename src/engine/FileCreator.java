@@ -1,13 +1,11 @@
-package sample;
+/** Trieda na pracu so subormi */
+
+package engine;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.io.File;
-
-/**
- * praca so subormi
- */
 
 public class FileCreator {
     Main root;
@@ -16,6 +14,7 @@ public class FileCreator {
         this.root = root;
     }
 
+    /** Funkcia vytvori dialog na otvorenie alebo ulozenie suboru */
     public File openFile(Window window, Boolean save){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose File");

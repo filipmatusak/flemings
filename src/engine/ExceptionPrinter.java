@@ -1,4 +1,6 @@
-package sample;
+/** Trieda vypise chybove hlasenie so zadanou spravou */
+
+package engine;
 
 import javafx.scene.control.Alert;
 

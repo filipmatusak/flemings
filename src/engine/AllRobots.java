@@ -1,4 +1,6 @@
-package sample;
+/** Trieda reprezentuje iterovatelny zoznam vsetkych robotov bez funkcii */
+
+package engine;
 
 import robots.DiggingRobot;
 import robots.ExplodingRobot;
@@ -7,10 +9,7 @@ import robots.Robot;
 import java.util.ArrayList;
 
 /**
- *ulozene vsetky typy robotov
- * PROBLEM: nemozeme takto vytvarat instancie robotov bez parametrov a ak ich vytvorime, mohli by si mysliet, ze su
- * sucastou hry -> spravit zoznam robotov inak
- * RE: uz by to mohlo fungovat ;)
+ * Vrati zoznam vsetkych robotov s potlacenymi funkciami (nereaguju na kliknutie, nehybu sa)
  */
 public class AllRobots {
         public static ArrayList<Robot> getTypes() {

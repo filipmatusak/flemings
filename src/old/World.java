@@ -2,9 +2,9 @@ package old;
 
 import javafx.scene.layout.Pane;
 import robots.Robot;
-import sample.GameTimeLine;
-import sample.Main;
-import sample.Map;
+import engine.GameTimeLine;
+import engine.Main;
+import engine.Map;
 import squares.EntrySquare;
 import squares.Square;
 
@@ -66,15 +66,10 @@ public class World {
     public boolean move() {
         boolean wasMove = false;
         for (Robot robot : robots) {
-    //        System.out.println("robot: " + robot.getIdd()/* + " stat " + robot.getStatus()*/);
-            // ktore hybu robotmi si ho musia opat spustit
-        //    root.game.timeLine.pause();
-            System.out.println(robot.getType());
             if (robot.isActive()) { // ak mame aktivneho robota
                 System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
-            //    printSituation();         // vypis celu plochu
             } else if(robot.isMoving() || robot.isFalling()) {
                 wasMove = true;
             }
@@ -87,7 +82,6 @@ public class World {
                 robot.endMoving();
             }
         }
-        printSituation();
         return wasMove;
     }
 
@@ -109,36 +103,6 @@ public class World {
         if (!received) {
             newRobot.killed();
         }
-        printSituation();
-    }
-
-    /** Vypise aktualnu situaciu hry na konzolu */
-    public void printSituation() {
-        for (int i = 0; i < nRows; i++) {
-            for (int j = 0; j < nCols; j++) {
-                System.out.print(squares[i][j].toString());
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-    /** Na konzolu vypise statistiky o pocte vsetkych,
-     * mrtvych a uspesnych robotov. */
-    public void printStats() {
-        int numKilled = 0;
-        int numFinished = 0;
-        for (Robot robot : robots) { // spocitaj mrtvych a uspesnych
-            if (robot.isKilled()) {
-                numKilled++;
-            }
-            if (robot.isFinished()) {
-                numFinished++;
-            }
-        }
-        System.out.println("The total number of robots: " + robots.size());
-        System.out.println("The number of robots killed: " + numKilled);
-        System.out.println("The number of robots finished: " + numFinished);
     }
 
     /** Metoda vrati pocet uspesnych robotov */
@@ -199,7 +163,7 @@ public class World {
         }
     }
 
-    /* Metoda, ktora do riadku row a stlpca col ulozi nove
+    /** Metoda, ktora do riadku row a stlpca col ulozi nove
      * policko square. Spravne nastavi susedov novemu policku
      * aj susedom oznami nove policko. Na policku by vsak nemal
      * stat robot.

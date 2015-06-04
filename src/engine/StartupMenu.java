@@ -1,4 +1,6 @@
-package sample;
+/** Trieda reprezentuje hlavne menu hry, ktore sa zobrazi po jej spusteni aj po uzavreti lubovolnych podokien*/
+
+package engine;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -6,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -33,6 +34,7 @@ public class StartupMenu {
         stage.show();
     }
 
+    /** Inicializacia a zobrazenie dialogu */
     public void run(){
 
         pane = new BorderPane();
@@ -48,6 +50,8 @@ public class StartupMenu {
         Button level = new Button("CHOOSE LEVEL");
         level.setPrefWidth(width);
         Style.setButtonStyle(level);
+
+        /** Tlacidlo na vyber levelu - spusti dialog so zoznamom levelov*/
         level.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -56,6 +60,7 @@ public class StartupMenu {
             }
         });
 
+        /** Tlacidlo na vytvorenie noveho levelu - spusti MapEditor */
         Button map = new Button("NEW WORLD");
         map.setPrefWidth(width);
         Style.setButtonStyle(map);
@@ -66,6 +71,8 @@ public class StartupMenu {
                 root.mapEditor.run();
             }
         });
+
+        /** Funkcia nacita level z ulozenych - moze ist o level alebo vlastnu mapu*/
         Button load = new Button("LOAD SAVED");
         load.setPrefWidth(width);
         Style.setButtonStyle(load);
@@ -79,12 +86,11 @@ public class StartupMenu {
                     stage.close();
                     root.game.run();
                 } catch (Exception e){
-//                    ExceptionPrinter.print("Illegal Operation!");
                 }
             }
         });
 
-
+        /** Funkcia zavrie okno a ukonci celu hru */
         Button exit = new Button("QUIT GAME");
         exit.setPrefWidth(width);
         Style.setButtonStyle(exit);

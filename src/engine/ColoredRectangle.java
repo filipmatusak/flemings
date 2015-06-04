@@ -1,11 +1,9 @@
-package sample;
+/** Pomocna trieda pre MapEditor - policko v mapEditore s funciami na prefarbenie policka*/
+
+package engine;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-
-/**
- * policko v mapEditore s funciami na prefarbenie policka
- */
 
 public class ColoredRectangle extends Rectangle {
     private Paint color;
@@ -17,6 +15,7 @@ public class ColoredRectangle extends Rectangle {
         return color;
     }
 
+    /** policko nastavi na novu farbu */
     public void setColor(Paint color) {
         this.color = color;
         this.setFill(color);

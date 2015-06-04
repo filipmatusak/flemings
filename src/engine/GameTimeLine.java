@@ -1,4 +1,6 @@
-package sample;
+/** Trieda reprezentujuce casovac, ktorym sa spusta nove kolo hry */
+
+package engine;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,9 +11,6 @@ import javafx.util.Duration;
 
 import java.util.TreeSet;
 
-/**
- * Casovas, ktorym spusta nove kolo hry
- */
 public class GameTimeLine {
     Main root;
     static Timeline timeline;
@@ -20,10 +19,9 @@ public class GameTimeLine {
     Integer actions;
     TreeSet<Integer> movingRobots;
 
-
     public GameTimeLine(Main root){
         this.root = root;
-        timePeriod = 1000.0;
+        timePeriod = 1000.0;    /** perioda, v akej sa vykresluju jednotlive animacie */
         duration = Duration.millis(timePeriod);
         timeline = new Timeline(new KeyFrame(duration, new Action()));
         timeline.setCycleCount(Timeline.INDEFINITE);
@@ -31,15 +29,11 @@ public class GameTimeLine {
         movingRobots = new TreeSet<>();
     }
 
-
-
-    /**
-     * akcia vyvolana kazdu periodu
-     */
+    /** akcia vyvolana kazdu periodu */
     class Action implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-            System.out.println("actions: " + actions);
+            //zavolame game.move(), ktora pohne vsetkymi robotmi v hre
             root.game.move();
         }
     }
@@ -52,9 +46,7 @@ public class GameTimeLine {
         timeline.stop();
     }
 
-    /**
-     * zmena periody o deltu v milisekundach
-     */
+    /** zmena periody o deltu v milisekundach */
     void changeTimePeriod(Double delta){
         timePeriod += delta;
         timePeriod = Double.max(timePeriod, 1);
@@ -65,27 +57,24 @@ public class GameTimeLine {
         timeline.play();
     }
 
-    public void faster(){
-        changeTimePeriod(-10.0);
-    }
-    public void slower(){
-        changeTimePeriod(10.0);
-    }
     public void pause(){ timeline.stop();}
     public void play(){ timeline.play();}
+
+    /** Funkcia volana z hry na pozastavenie alebo pokracovanie v hre */
     public void change(){
         if (timeline.getStatus().equals(Animation.Status.PAUSED)){
-            timeline.play();
+            this.play();
         }
         else{
-            timeline.pause();
+            this.pause();
         }
     }
 
+    /** Vrati status hry (pozastavena alebo beziaca) */
     public static boolean isPaused(){
         return timeline.getStatus().equals(Animation.Status.PAUSED);
     }
 
-
+    /** Vrati periodu, v akej su vykonavane akcie (rychlost animacii) */
     public static Double getPeriod(){ return timePeriod; }
 }

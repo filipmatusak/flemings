@@ -1,4 +1,6 @@
-package sample;
+/** Trieda reprezentuje okno a funkcie na editovanie mapy*/
+
+package engine;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -27,16 +29,11 @@ import squares.EntrySquare;
 import squares.ExitSquare;
 import squares.WallSquare;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
-
-/**
- * funkcie a okno MapEditora
- */
 
 public class MapEditor {
     Main root;
@@ -60,6 +57,7 @@ public class MapEditor {
         squareChoiceMenu = new SquareChoiceMenu(this);
     }
 
+    /** Vytvori novu mapu a nainicializuje ju na prazdnu s nakreslenymi okrajmi */
     public void run(){
         getMapSize();
         if(close){
@@ -72,6 +70,7 @@ public class MapEditor {
         setClearMap();
     }
 
+    /** Funkcia zabezpeci zobrazenie mapy a ovladacich prvkov*/
     void open(){
         if(stage!=null) stage.close();
         height = m.height;
@@ -81,6 +80,7 @@ public class MapEditor {
         stage = new Stage();
         selectedColor = null;
         helper = new Helper();
+        stage.setTitle("New World");
 
         scene = new Scene(pane);
         settings = new Settings();
@@ -130,8 +130,8 @@ public class MapEditor {
         stage.show();
     }
 
+    /** Pomocna trieda na nastavenie parametrov levelu */
     class Settings extends Stage{
-
         Image image = new Image(getClass().getResourceAsStream("../graphics/robotsBG2.png"));
         BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
@@ -188,6 +188,7 @@ public class MapEditor {
             this.setScene(scene);
         }
 
+        /** funkcia prepocita hodnoty parametrov*/
         void refresh(ArrayList<Integer> limits,Integer target ){
             for(int i = 0; i < limits.size(); i++){
                 Spinner<Integer> spinner = spinners.get(i);
@@ -213,6 +214,7 @@ public class MapEditor {
 
     }
 
+    /** Funkcia otvori dialog na ulozenie aktualne editovanej mapy*/
     void saveMap(){
         try {
             isMapCorrect();
@@ -226,15 +228,16 @@ public class MapEditor {
                     .fromMapEditor(map, settings.getRobotsLimits(), settings.getTarget(), file);
         }
         catch (FileNotFoundException e) {
-          //  e.printStackTrace();
         }
     }
 
+    /** Funkcia ukonci map editor */
     void exit(){
         root.startup.show();
         stage.close();
     }
 
+    /** Funkcia nacita mapu zo suboru */
     void openMap(){
         File file = root.fileCreator.openFile(stage, false);
         if (file == null){
@@ -293,7 +296,7 @@ public class MapEditor {
         }
     }
 
-    /**vyrobu prazdnu mapu s okrajovymi polickami*/
+    /**vyrobi prazdnu mapu s okrajovymi polickami*/
     void setClearMap(){
         for(int i = 0; i < height; i++){
             for(int j = 0; j < width; j++){
@@ -316,7 +319,7 @@ public class MapEditor {
         for (ColoredRectangle[] aMap : map) drawingPane.getChildren().addAll(aMap);
     }
 
-    /**nastavy listenery a okraje pre stvorce*/
+    /**nastavi listenery a okraje pre stvorce*/
     void setSquares(){
         for(int i = 0; i < height; i++){
             for(int j = 0; j < width; j++){
@@ -351,6 +354,7 @@ public class MapEditor {
         }
     }
 
+    /** vrati celkovu velkost mapy */
     void getMapSize(){
         close = false;
         Dialog<Pair<Integer, Integer>> dialog = new Dialog<>();
@@ -395,6 +399,7 @@ public class MapEditor {
         Style.setButtonStyle((Button)createButton);
         createButton.setDisable(true);
 
+        /** Funkcia nastavuje tlacidlo na stlacitelne alebo disabled podla toho, ci zadane rozmery vyhovuju limitom*/
         class MyTextListener implements ChangeListener<String> {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

@@ -1,4 +1,6 @@
-package sample;
+/** Pomocna trieda na zobrazenie  dialogu pre vyber typu policka v MapEditore. Tymto typom polica sa potom do mapy kresli*/
+
+package engine;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -11,10 +13,6 @@ import javafx.stage.StageStyle;
 import squares.Square;
 
 import java.util.ArrayList;
-
-/**
- * panel pre vyber policka na kreslenie
- */
 
 public class SquareChoiceMenu {
 
@@ -60,6 +58,7 @@ public class SquareChoiceMenu {
 
     }
 
+    /** Funkcia prida na panel policko kazdeho typu */
     void printSquares(){
         for(int i = 0; i < allTypes.size(); i++){
             pane.getChildren().add(allRectangles.get(i));
@@ -97,6 +96,7 @@ public class SquareChoiceMenu {
         }
     }
 
+    /** Funkcia zobrazi dialog na vyber policka */
     public void show(Double x, Double y){
         stage.setAlwaysOnTop(true);
         stage.setX(x-5);

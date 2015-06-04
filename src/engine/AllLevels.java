@@ -1,11 +1,12 @@
-package sample;
+/**
+ * Trieda reprezentuje zoznam vsetkych zatial vytvorenych levelov - sluzi na vypis levelov v uvodnom okne pre vyber levelov
+ */
+package engine;
 
 import java.io.File;
 import java.util.ArrayList;
 
-/**
- * zoznam vsetkych zatial vytvorenych levelov - sluzi na vypis levelov v uvodnom okne pre vyber levelov
- */
+/** Vrati zoznam vsetkych levelov */
 public class AllLevels {
     public static ArrayList<File> getLevels() {
         ArrayList<File> list = new ArrayList<>();
@@ -16,6 +17,7 @@ public class AllLevels {
         return list;
     }
 
+    /** Vrati nasledujuci level k zadanemu levelu alebo null, ak uz ide o posledny level */
     public static File getNextLevel(File level){
         ArrayList<File> list = AllLevels.getLevels();
         int i = list.indexOf(level);

@@ -46,17 +46,6 @@ public class SoilSquare extends Square{
         return true;
     }
 
-//    /**
-//     * pri vybuchnuti policka zmenime jeho typ
-//     */
-//    @Override
-//    public void exploding() {
-//        Square b = new EmptySquare();
-//        this.world.newSquare( b, row, column);
-//
-//        b.up.emptiedBelow();
-//    }
-
     /**
      * Metoda vracia false, pretoze na policko s hlinou nesmie vojst robot.
      */

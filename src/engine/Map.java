@@ -1,15 +1,14 @@
-package sample;
+/** Trieda reprezentujuca mapu sveta FlemingZ. Mapa sa sklada z matice policok typov popisanych v AllSquares. Pamata si
+ * konfiguraciu pre level spustany z nej - pocet robotov kazdeho typu, ktory sa do hry moze pridat a ciel hry - pocet
+ * robotov, ktorych treba zachranit. */
+
+package engine;
 
 import javafx.scene.paint.Color;
 import squares.EntrySquare;
 import squares.Square;
 
 import java.util.ArrayList;
-
-
-/**
- * trieda reprezentujuca mapu
- */
 
 public class Map {
     Main root;
@@ -22,7 +21,7 @@ public class Map {
     Integer squareSize = 20;
     ArrayList<Integer> limits;
     Integer target;
-    static Integer maxRobotLimit = 100;
+    static Integer maxRobotLimit = 100;     /** maximalny pocet robotov pridanych do hry pre kazdy typ*/
 
     public Map(Main root, int height, int width){
         this.root = root;
@@ -34,10 +33,7 @@ public class Map {
     public Square[][] getMap(){ return map;}
     public Integer getSquareSize(){ return squareSize;}
 
-    /**
-     * Vrati X-ovu suradnicu vstupneho policka v mape
-     * @return
-     */
+    /** Vrati X-ovu suradnicu vstupneho policka v mape alebo -1, ak sa tam take policko nenachadza */
     public Integer getEntryX(){
         for (int i=0; i<height; i++){
             for (int j=0; j<width; j++){
@@ -49,14 +45,11 @@ public class Map {
         return -1;
     }
 
-    /**
-     * Vrati Y-ovu suradnicu vstupneho policka v mape
-     * @return
-     */
-    public Integer getEntryY(){
-        for (int i=0; i<height; i++){
-            for (int j=0; j<width; j++){
-                if(map[i][j] instanceof EntrySquare){
+    /** Vrati Y-ovu suradnicu vstupneho policka v mape alebo -1, ak sa tam take policko nenachadza*/
+    public Integer getEntryY() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (map[i][j] instanceof EntrySquare) {
                     return j;
                 }
             }
@@ -64,24 +57,7 @@ public class Map {
         return -1;
     }
 
-    /**
-     * Mapa - verzia pre hru (bez listenerov)
-     * @return
-     */
-    public ColoredRectangle[][] getMapView(){
-        ColoredRectangle[][] mapView = new ColoredRectangle[height][width];
-        for(int i = 0; i < height; i++){
-            for(int j = 0; j < width; j++){
-                ColoredRectangle r = new ColoredRectangle(j*squareSize, i*squareSize, squareSize,squareSize);
-                r.setStroke(Color.BLACK);
-                r.setStrokeWidth(0.05);
-                r.setColor(map[i][j].getColor());
-                mapView[i][j] = r;
-            }
-        }
-        return mapView;
-    }
-
+    /** Funkcia vrati klon povodnej mapy - ukazuje na povodnu mapu pred hrou (pred menenim typov policok a akcii robotov) */
     @Override
     public Map clone(){
         Map clone = new Map(this.root, this.height, this.width);

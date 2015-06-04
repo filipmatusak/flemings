@@ -49,6 +49,7 @@ public class GlueSquare extends EmptySquare {
         if (myRobot == null) {
             throw new RobotException("Cannot move null robot right");
         }
+
         myRobot.endMoving();
         return false;
     }

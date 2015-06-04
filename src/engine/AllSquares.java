@@ -1,11 +1,13 @@
-package sample;
+/** Trieda reprezentuje zoznam vsetkych policok v hre*/
+
+package engine;
 
 import squares.*;
 
 import java.util.ArrayList;
 
 /**
- * ulozene vsetky typy policok
+ * Vrati zoznam policok - instanciu policka kazdeho typu
  */
 
 public class AllSquares {

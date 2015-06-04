@@ -1,4 +1,8 @@
-package sample;
+/** Trieda reprezentujuca samotnu hru. Moze vzniknut nacitanim levelu zo zoznamu alebo konvertovanim vlastnej mapy.
+ * Obsahuje hracie pole, tlacidla na pridavanie robotov, ovladaci panel na kontrolovanie hry a informacny panel so
+ * statistikami o pocte robotov*/
+
+package engine;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,46 +19,38 @@ import javafx.stage.WindowEvent;
 import old.RobotHolder;
 import old.World;
 import robots.Robot;
-import squares.EmptySquare;
-import squares.EntrySquare;
-import squares.ExitSquare;
 import squares.Square;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Predicate;
-import javafx.scene.input.KeyEvent;
 
 
 public class Game {
-    Main root;
-    World world;
-    Map map;
-    Map mapCopy;
+    Main root;      /** odkaz na hlavnu triedu*/
+    World world;    /** trieda, ktora obsahuje robotov a spravuje ich pohyb */
+    Map map;        /** hracie pole - mapa, ktora sa prekresluje pri zmene typu policok */
+    Map mapCopy;    /** kopia hracieho pola - rekonstrukcia povodnej mapy, pouzivana pri restartovani levelu*/
     Stage stage;
     Scene scene;
     BorderPane pane;
     static Pane gamePane;
-    VBox infoPane;
+    VBox infoPane;          /** obsahuje labely so statistikami o priebehu hry*/
     Integer maxMoves;
-    Queue<Robot> robots;
+    Queue<Robot> robots;    /** zoznam robotov, ktori pridu do hry (rad)*/
     ArrayList<Integer> readyRobots;
-    Integer time;
-    Label currentTime;
-    Label robotCount;
-    Label killedRobots;
-    Label savedRobots;
-    Label targetCount;
-    Label activeRobots;
+    Integer time;           /** aktualny cas */
+    Label currentTime;      /** info o aktualnom case */
+    Label robotCount;       /** info o pocte pouzitych robotov */
+    Label killedRobots;     /** info o pocte zabitych robotov */
+    Label savedRobots;      /** info o pocte zachranenych robotov */
+    Label targetCount;      /** info o targete pre dany level*/
+    Label activeRobots;     /** info o pocte aktivnych robotov - takych, co ziju a mozu sa hybat */
     ArrayList<ButtonRobot> robotsMenu;
-    /** ciel hry - pocet robotov, ktorych treba zachranit */
-    int target = 0;
-
-    public GameTimeLine timeLine;
-
+    int target = 0;         /** ciel hry - pocet robotov, ktorych treba zachranit */
+    public GameTimeLine timeLine; /** casovac, ktory sa stara o znazornovanie pohybu robotov a vsetky animacie */
 
     public Game(Main root, Map map){
         this.root = root;
@@ -88,26 +84,19 @@ public class Game {
         this.timeLine = new GameTimeLine(root);
         this.world = new World(map,map.getEntryX(), map.getEntryY(),gamePane,map.getSquareSize(),root);
         world.setTimeLine(timeLine);
-
-        //docasne, potom by ich mal dostat ako parameter
-        Integer numberOfRobotTypes = AllRobots.getTypes().size();
-        readyRobots = new ArrayList<>();
-        for(int i = 0; i < numberOfRobotTypes; i++) readyRobots.add(5);
-
-
     }
 
+    /** Funkcia sa vola v kazdom casovom okamihu - vykona pohyb kazdym robotom a aktualizuje stav */
     public void move() {
-        System.out.println(time + ":");
+        /** aktualizuje herne statistiky a vypise ich na infopanel */
         printLabelStats();
 
         boolean wasMove = world.move(); // sprav tah kazdym robotom
         if(!robots.isEmpty()){
             if(world.canAddRobot()) world.addRobot(robots.remove());
         } else {
-            // ak sa uz minuli novi roboti a nikto nie je aktivny, skoncime
+            /** ak sa uz minuli novi roboti a nikto nie je aktivny, skoncime */
             if ((robots.size() == 0 && !existReadyRobots() && (!wasMove || world.getNumActive() == 0))) {
-                System.out.println("Nothing to do");
                 timeLine.stop();
                 stage.close();
                 finishedDialog();
@@ -115,24 +104,16 @@ public class Game {
             }
         }
         this.time++;
-
-        world.printStats(); // vypiseme celkove statistiky*/
     }
 
+    /** Funkcia nastartuje hru */
     public void run() throws InterruptedException {
         this.init();
-        System.out.println("Initial configuration");
-        world.printSituation();
-
         timeLine.start();
         }
 
-    /**
-     * NEFUNKCNE - funguje len prvy raz
-     * Prekresli mapu a updatuje cas
-     */
+    /** Funkcia vykresli mapu na hraci plan a prida do hry robotov */
     public void redraw(){
-    //    gamePane.getChildren().clear();
         gamePane.getChildren().removeAll(gamePane.getChildren().filtered(new Predicate<Node>() {
             @Override
             public boolean test(Node node) {
@@ -140,6 +121,7 @@ public class Game {
             }
         }));
 
+        /** vykresli vsetky stvorceky z mapy na hraci plan */
         for (Square[] aMap : world.getSquare()){
             for(Square x: aMap){
                 try{
@@ -151,14 +133,15 @@ public class Game {
             }
 
         }
+        /** ulozi vsetkych robotov, ktori maju prist do hry, do radu */
         for(Robot robot: World.robots) robot.toFront();
     }
 
-    /**
-     * Vykresli okno, mapu levelu, tlacidla na pridanie vsetkych moznych robotov a nainicializuje cas
-     */
+    /** Vykresli okno, mapu levelu, tlacidla na pridanie vsetkych moznych robotov a nainicializuje cas */
     public void init(){
         this.redraw();
+
+        /** vykreslenie tlacidiel na pridavanie robotov */
         robotsMenu = new ArrayList<>();
         Integer i = 0;
         for (Robot tmp : AllRobots.getTypes()) {
@@ -166,6 +149,7 @@ public class Game {
             robotsMenu.add(hb);
         }
 
+        /** tlacidlo na restartovanie levelu */
         Button replay = new Button("REPLAY");
         Style.setButtonStyle(replay);
         replay.setPrefWidth(100);
@@ -182,9 +166,11 @@ public class Game {
             }
         });
 
+        /** tlacidlo na pozastavenie, resp. pokracovanie v hre */
         Button pause = new Button("PAUSE");
         pause.setPrefWidth(100);
         Style.setButtonStyle(pause);
+        /** po stlaceni sa zmeni stav hry (beziaca, pozastavena) a text na tlacidle */
         pause.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -198,6 +184,7 @@ public class Game {
             }
         });
 
+        /** tlacidlo na ukoncenie aktualnej hry - zobrazi sa startovaci dialog */
         Button quit = new Button("QUIT");
         Style.setButtonStyle(quit);
         quit.setPrefWidth(100);
@@ -210,6 +197,7 @@ public class Game {
             }
         });
 
+        /** aktualizuje statistiky a vypise ciel hry */
         printLabelStats();
         targetCount.setText("TARGET: " + target);
 
@@ -221,30 +209,17 @@ public class Game {
         stage.setTitle("FlemmingZ");
         stage.setScene(scene);
         stage.show();
-
-//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent event) {
-//                int i = 0;
-//                for (Robot robot : AllRobots.getTypes()) {
-//                    if (robot.getShortcut() == event.getCode()) {
-//                        robotsMenu.get(i).getOnMouseClicked().handle();
-//                    }
-//                    i++;
-//                }
-//            }
-//        });
-
     }
 
-    /**
-     * ci sa da este vyrobit nejaky robot
-     */
+    /** Funkcia vrati true, ak sa da este vyrobit nejaky robot */
     boolean existReadyRobots(){
         for(ButtonRobot i: robotsMenu) if(i.getCount()>0) return true;
         return false;
     }
 
+    /** Funkcia spusti dialog po ukonceni hry, ktory vypise informaciu o tom, ci bol level uspesne prejdeny, kolko bolo
+     * zachranenych robotov a dalsie menu s tlacidlami na navrat do menu, restartovanie levelu, spustenie nasledujuceho
+     * levelu a ukoncenie hry */
     private void finishedDialog(){
         int dwidth = 250;
         BorderPane dpane = new BorderPane();
@@ -271,9 +246,26 @@ public class Game {
             dstage.setTitle("Level failed!");
             Style.setColor(finished, Color.RED);
         }
+
+        /** Tlacidlo na restartovanie levelu. Spusti hru s tou istou povodnou mapou (ulozenou na zaciatku), pricom zo
+         * vsetkych policok najprv odregistruje robotov */
         Button btnReplay = new Button("REPLAY");
         Style.setButtonStyle(btnReplay);
         btnReplay.setPrefWidth(dwidth);
+        btnReplay.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dstage.close();
+                try {
+                    root.replayLevel(mapCopy);
+                } catch (InterruptedException e) {
+
+                }
+            }
+        });
+
+        /** Tlacidlo na spustenie dalsieho levelu. Ak je aktualny level posledny alebo ide o pouzivatelom vytvorenu mapu,
+         * spusti prvy level */
         Button btnNext = new Button("NEXT LEVEL");
         Style.setButtonStyle(btnNext);
         btnNext.setPrefWidth(dwidth);
@@ -297,6 +289,8 @@ public class Game {
                 }
             }
         });
+
+        /** Tlacidlo na navrat do hlavneho menu */
         Button btnMenu = new Button("MENU");
         Style.setButtonStyle(btnMenu);
         btnMenu.setPrefWidth(dwidth);
@@ -307,6 +301,8 @@ public class Game {
                 root.startup.run();
             }
         });
+
+        /** Tlacidlo na definitivne ukoncenie hry */
         Button btnQuit = new Button("QUIT");
         Style.setButtonStyle(btnQuit);
         btnQuit.setPrefWidth(dwidth);
@@ -316,49 +312,29 @@ public class Game {
                 dstage.close();
             }
         });
+
         vbox2.getChildren().addAll(wasTarget, finished);
         vbox.getChildren().addAll(btnReplay, btnNext, btnMenu, btnQuit);
         dpane.setBottom(vbox);
         dpane.setTop(vbox2);
-
         dstage.initModality(Modality.APPLICATION_MODAL);
         dstage.setAlwaysOnTop(true);
         dstage.setScene(dscene);
-//        dstage.setResizable(false);
         dstage.show();
-
-        btnReplay.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                dstage.close();
-                try {
-                    root.replayLevel(mapCopy);
-                } catch (InterruptedException e) {
-
-                }
-            }
-        });
     };
 
+    /** Funkcia odregistruje robotov zo vsetkych policok mapy*/
     public void deregisterAll(){
         for (Square[] row : map.getMap()){
             for (Square square : row){
                 if (square instanceof RobotHolder){
                     ((RobotHolder) square).deregisterRobot();
                 }
-//                if (square instanceof EmptySquare){
-//                    ((EmptySquare) square).deregisterRobot();
-//                }
-//                else if (square instanceof EntrySquare){
-//                    ((EntrySquare) square).deregisterRobot();
-//                }
-//                else if (square instanceof ExitSquare){
-//                    ((ExitSquare) square).deregisterRobot();
-//                }
             }
         }
     }
 
+    /** Funkcia vypise statistiky o poctoch robotov na infopanel */
     public void printLabelStats(){
         currentTime.setText("Current time: " + this.time.toString());
         robotCount.setText("Used: " + world.getNumRobots());
@@ -368,8 +344,4 @@ public class Game {
     }
 
     public static Pane getGamePane(){ return gamePane; }
-
-    public static void explosion(Node node){
-        gamePane.getChildren().add(node);
-    }
 }

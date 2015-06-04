@@ -19,7 +19,6 @@ public class ExitSquare extends EmptySquare {
     @Override
     public boolean receiveRobot(Robot otherRobot, Boolean move) {
         if (myRobot != null) {
-//            throw new RobotException("There should not be a robot in exit");
         }
         animationMove(otherRobot, false);
         otherRobot.moveTo(this);
@@ -33,7 +32,6 @@ public class ExitSquare extends EmptySquare {
         if (myRobot != null) {
             throw new RobotException("There should not be a robot in exit");
         }
-      //  otherRobot.moveTo(this);
         animationFalling(otherRobot, height, downMax);
         otherRobot.finished();
         return true;
