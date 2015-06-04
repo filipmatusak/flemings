@@ -67,7 +67,6 @@ public class World {
         boolean wasMove = false;
         for (Robot robot : robots) {
             if (robot.isActive()) { // ak mame aktivneho robota
-                System.out.println("Move of robot " + robot.getName());
                 robot.move();    // zavolame tah
                 wasMove = true;  // nasli sme aktivneho
             } else if(robot.isMoving() || robot.isFalling()) {
@@ -96,7 +95,6 @@ public class World {
 
         pane.getChildren().add(newRobot);
 
-        System.out.println("Adding robot " + newRobot.getId());
         // pridame ho na vstupne policko, ak tam je volno
         boolean received = squares[entryRow][entryCol].receiveRobot(newRobot, false);
         // ak nebolo volno, robot umiera
